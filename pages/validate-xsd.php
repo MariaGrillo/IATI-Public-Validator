@@ -28,7 +28,7 @@
 			  
 			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
 			//$xsd = "http://iatistandard.org/downloads/iati-activities-schema.xsd";
-			$xsd = "iati-schema/iati-activities-schema.xsd";
+			$xsd = $host . "/iati-schema/iati-activities-schema.xsd";
 			$schema = "Activity";
 			
 			//if ($myinputs['org'] == "1") { //sanitized $_GET['orgs']
