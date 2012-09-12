@@ -15,7 +15,7 @@
 		</div>
 <?php endif; ?>	
 	
-<?php if( (sizeof($_FILES)==0 || isset($error_msg) ) && !isset($file_path) ) :?>
+<?php if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error_msg) ) && !isset($file_path) ) :?>
 	<h2>Give me data!</h2>
 	<p>Then I can test it for you...</p>
 	<div class="row">
@@ -41,6 +41,9 @@
 
 <?php else: ?>
 		<?php
+			if (isset($_SESSION['uploadedfilepath'])) {
+				$file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
+			}
 			libxml_use_internal_errors(true);
 			$sxe = simplexml_load_file($file_path);
 			if (!$sxe) {
@@ -80,7 +83,7 @@
 			<div class="tab-pane" id="file">
 			  <!--<div class="span3">-->
 					<h3>File Details:</h3>
-					<div><?php echo $upload_msg; ?></div>
+					<div><?php echo $_SESSION['upload_msg']; ?></div>
 				<!--</div>-->
 			</div>
 		  <?php if (isset($error_detail)): ?>

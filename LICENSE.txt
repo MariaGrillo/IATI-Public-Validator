@@ -21,4 +21,13 @@ Copyright 2012 caprenter <caprenter@gmail.com>
 ==Bootstrap==
 http://twitter.github.com/bootstrap/
 The download version of Bootstrap is named assets/ in this application
+assests/css/validate-me.css has been added
+as have the images listed below.
 
+==Images==
+Additional images have been added to the assets/img directory
+ cross.png
+ tick.png
+ question.png
+are all derived from gnome icon sets: see http://art.gnome.org/themes/icon
+logo.png is the IATI logo so please don't mess with that without asking!

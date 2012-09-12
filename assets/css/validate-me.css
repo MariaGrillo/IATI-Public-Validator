@@ -1,0 +1,32 @@
+/*Custom CSS file for the Validate Me Application*/
+/*This CSS should override all other CSS*/
+
+.reset {
+text-align:right;
+}
+.hero-unit {
+padding: 20px 40px;
+}
+
+.fail {
+background: url('../img/cross.png') no-repeat 50px 10px;
+}
+.success {
+background: url('../img/tick.png') no-repeat 110px 11px;
+}
+
+#errors {
+text-align:left;
+}
+#errors td {
+padding: 0.5em;
+}
+#errors .odd {
+background: #eee;
+}
+#errors .even {
+background: #ddd;
+}
+.error, .fatal, .warning {
+width:15%;
+}

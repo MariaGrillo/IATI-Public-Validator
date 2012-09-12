@@ -1,7 +1,9 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
+session_start();
 include "functions/process_files.php";
 include "settings.php";
+$tests = array('default','reset','xsd','basic');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +16,7 @@ include "settings.php";
 
     <!-- Le styles -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
+    
     <style type="text/css">
       body {
         /*padding-top: 60px;*/
@@ -24,6 +27,7 @@ include "settings.php";
 	  }
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/validate-me.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -48,7 +52,7 @@ include "settings.php";
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="<?php echo $host ?>">IATI Public Validator</a>
+          <!--<a class="brand" href="<?php echo $host ?>">IATI Public Validator</a>-->
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="<?php echo $host ?>">Home</a></li>
@@ -76,17 +80,33 @@ include "settings.php";
         </div>
       </div>
     </div>
-	
+	<header class="jumbotron subhead" id="overview">
+	  <div class="container">
+		  <div class="row">
+			<div class="span10">
+				<p class="lead">
+					<a href="<?php echo $host; ?>"><img src="assets/img/logo.png" width="" height="" alt="IATI Logo" /></a>
+					IATI Public Validator
+				</p>
+			</div>
+			<div span="2" class="reset">
+				<?php if (isset($_SESSION['uploadedfilepath'])) :?>
+					<p class="lead"><br/><a href="<?php echo $host; ?>?test=reset"" class="btn btn-large btn-success">Load New File</a></p>
+				<?php endif; ?>
+			</div>
+		</div>
+	  </div>
+	</header>
 	<div class="container">
 		<div class="row">
 			<div class="span2">
 				<div class="well sidebar-nav">
 					<ul class="nav nav-list">
 					  <li class="nav-header">Sidebar</li>
-					  <li><a href="#">Well Formed</a></li>
-					  <li><a href="#">Valid against xsd</a></li>
-					  <li><a href="#">Link</a></li>
-					  <li class="nav-header">Sidebar</li>
+					  <li><a href="<?php echo $host; ?>">Well Formed</a></li>
+					  <li><a href="<?php echo $host; ?>?test=xsd">Validate</a></li>
+					  <!--<li><a href="#">Link</a></li>
+					  <li class="nav-header">Sidebar</li>-->
 					  <!--<li><a href="#">Link</a></li>
 					  <li><a href="#">Link</a></li>
 					  <li><a href="#">Link</a></li>
@@ -103,7 +123,42 @@ include "settings.php";
 			<div class="span10">
 				<!-- Main hero unit for a primary marketing message or call to action -->
 				<div class="hero-unit">
-					<?php include "pages/front.php"; ?>
+					<?php 
+						if (isset($_GET['test'])) {
+							$test = filter_var($_GET['test'], FILTER_SANITIZE_STRING);
+						} else {
+							$test = "default";
+						}
+
+					switch ($test) {
+						case "xsd":
+							echo "validate";
+							if (isset($_SESSION['uploadedfilepath'])) {
+								include "pages/validate-xsd.php";
+							} else {
+								echo "validate";
+								include "pages/front.php";
+							}
+							break;
+						case "reset";
+							unset($_SESSION['uploadedfilepath']);
+							unset($_SESSION['upload_msg']);
+							echo "reset";
+							include "pages/front.php"; 
+							break;
+						default:
+							echo "home";
+							include "pages/front.php"; 
+							break;
+					}
+					/*if (isset($_SESSION['uploadedfilepath'])) {
+						include "pages/validate-xsd.php";
+					} else {
+						include "pages/front.php";
+					}*/
+						
+					//include "pages/front.php"; 
+					?>
 						
 				</div>
 			</div>
@@ -171,6 +226,10 @@ include "settings.php";
 		$('#myTab a').click(function (e) {
 		  e.preventDefault();
 		  $(this).tab('show');
+		})
+		$('#intext a').click(function (e) {
+		  e.preventDefault();
+		  $('#myTab a[href="#extra"]').tab('show');
 		})
 		$(function () {
 			$('#myTab a[href="#status"]').tab('show');
