@@ -55,7 +55,7 @@ function fetch_data_from_url ($xurl, $cacheFile,$freshness = 0) {
 			  if ($response_code == '200') {
 				//echo "writing";
 				//Write the data to a file
-				echo $cacheFile;
+				//echo $cacheFile;
 				file_put_contents($cacheFile,$output);
 					$upload_msg = "Fetched: " . $xml_url;
 					$upload_msg .= "<br/>Type: " . $file_type;
@@ -77,7 +77,7 @@ function fetch_data_from_url ($xurl, $cacheFile,$freshness = 0) {
 function nice_file_name($url) {
 $url = preg_replace("/http:\/\//","",$url);
 $url = preg_replace("/\//","_",$url);
-echo $url;
+//echo $url;
 return $url;
 }
 ?>

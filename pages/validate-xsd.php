@@ -64,11 +64,11 @@
 						<div class="span5">-->
 							<?php if ($valid == TRUE): ?>
 								<h3 class="success">Success</h3>
-								<div>This file validates against the IATI <?php echo $schema; ?> Schema<br/><br/></div>
+								<div class="alert alert-success">This file validates against the IATI <?php echo $schema; ?> Schema</div>
 							<?php else: ?>
 								<h3 class="fail">Fail</h3>
 								<div id="intext">
-									This file does NOT validate against the IATI <?php echo $schema; ?> Schema<br/><br/>
+									<div class="alert alert-error">This file does NOT validate against the IATI <?php echo $schema; ?> Schema</div>
 									There are <?php echo count(libxml_get_errors()); ?> errors.<br/><br/>
 									See <a href="#extra">Extra info</a> for details.
 								</div>
