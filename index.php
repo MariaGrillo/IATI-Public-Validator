@@ -3,7 +3,43 @@
 session_start();
 include "functions/process_files.php";
 include "settings.php";
-$tests = array('default','reset','xsd','basic');
+$tests = array('default','reset','xsd','elements','basic');
+if (isset($_GET['test'])) {
+	$test = filter_var($_GET['test'], FILTER_SANITIZE_STRING);
+} else {
+	$test = "default";
+}
+switch ($test) {
+	case "xsd":
+		//echo "validate";
+		if (isset($_SESSION['uploadedfilepath'])) {
+			$page =  "pages/validate-xsd.php";
+		} else {
+			//echo "validate";
+			$page = "pages/front.php";
+		}
+		break;
+	case "elements":
+		//echo "validate";
+		if (isset($_SESSION['uploadedfilepath'])) {
+			$page = "pages/found_elements.php";
+		} else {
+			//echo "validate";
+			$page = "pages/front.php";
+		}
+		break;
+	case "reset";
+		unset($_SESSION['uploadedfilepath']);
+		unset ($_SESSION['wellformed']);
+		unset($_SESSION['upload_msg']);
+		//echo "reset";
+		$page = "pages/front.php"; 
+		break;
+	default:
+		//echo "home";
+		$page = "pages/front.php"; 
+		break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +91,7 @@ $tests = array('default','reset','xsd','basic');
           <!--<a class="brand" href="<?php echo $host ?>">IATI Public Validator</a>-->
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="<?php echo $host ?>">Home</a></li>
+              <li class="active"><a href="<?php echo $host ?>"><i class="icon-home"></i> Home</a></li>
               <!--<li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
               <li class="dropdown">
@@ -102,7 +138,7 @@ $tests = array('default','reset','xsd','basic');
 			<div class="span2">
 				<div class="well sidebar-nav">
 					<ul class="nav nav-list">
-					  <li class="nav-header">Sidebar</li>
+					  <li class="nav-header">Tests</li>
 					  <li><a href="<?php echo $host; ?>">Well Formed</a></li>
 					  <li><a href="<?php echo $host; ?>?test=xsd">Validate</a></li>
 					  <!--<li><a href="#">Link</a></li>
@@ -119,38 +155,23 @@ $tests = array('default','reset','xsd','basic');
 					  <li><a href="#">Link</a></li>-->
 					</ul>
 				  </div><!--/.well -->
+				  <!--Stats Nav-->
+				  <?php if (isset($_SESSION['wellformed'])): ?>
+				  <div class="well sidebar-nav">
+					<ul class="nav nav-list">
+					  <li class="nav-header">File Statistics</li>
+					  <li><a href="<?php echo $host; ?>?test=elements">Elements</a></li>
+					</ul>
+				  </div><!--/.well -->
+				  <?php endif; ?>
 			</div>
 			<div class="span10">
 				<!-- Main hero unit for a primary marketing message or call to action -->
 				<div class="hero-unit">
 					<?php 
-						if (isset($_GET['test'])) {
-							$test = filter_var($_GET['test'], FILTER_SANITIZE_STRING);
-						} else {
-							$test = "default";
-						}
+						include $page;
 
-					switch ($test) {
-						case "xsd":
-							echo "validate";
-							if (isset($_SESSION['uploadedfilepath'])) {
-								include "pages/validate-xsd.php";
-							} else {
-								echo "validate";
-								include "pages/front.php";
-							}
-							break;
-						case "reset";
-							unset($_SESSION['uploadedfilepath']);
-							unset($_SESSION['upload_msg']);
-							echo "reset";
-							include "pages/front.php"; 
-							break;
-						default:
-							echo "home";
-							include "pages/front.php"; 
-							break;
-					}
+					
 					/*if (isset($_SESSION['uploadedfilepath'])) {
 						include "pages/validate-xsd.php";
 					} else {
@@ -163,24 +184,40 @@ $tests = array('default','reset','xsd','basic');
 				</div>
 			</div>
 		</div>
-    
-    
+		
+	  <!--ABOUT-->
+	  <hr>
+	  <div class="row">
+        <div class="span12">
+			<h3>About the IATI Public Validator</h3>
+			<p>This is a designed as a quick, simple service to allow people to check their IATI XML files.</p>
+			<p>Because IATI files can be varied, complex or even very simple depending on the reporting organisations needs, 'validation' is a difficult concept.</p>
+			<p>This tool performs some basic checks around the XML, and then some complience checks against the IATI Standard, an agreed set of political desires, that are not enforced by the IATI schema.</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+        <div class="span12">
+			 <h3>Other IATI Sites</h3>
+		</div>
+	</div>
       <!-- Example row of columns -->
       <div class="row">
+		 
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h4>IATI Standard</h4>
+          <p>Documentation about the IATI standard can be found at <a href="http://iatistandard.org/">http://iatistandard.org/</a>.<br/> We also have a wiki at: <a href="http://wiki.iatistandard.org/">http://wiki.iatistandard.org/</a>. </p>
+          <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
         </div>
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h4>IATI Data</h4>
+          <p>Published IATI data can be found on the Registry at <a href="http://iatiregistry.org">http://iatiregistry.org</a>.</p>
+          <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
        </div>
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h4>Support</h4>
+          <p>The IATI knowledge base and support system can be found at <a href="http://support.iatistandard.org">http://support.iatistandard.org</a>.</p>
+          <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
         </div>
       </div>
 	</div>
@@ -192,7 +229,10 @@ $tests = array('default','reset','xsd','basic');
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
         <p>IATI-Public Validator is free software. Source on <a href="https://github.com/caprenter/IATI-Public_Validator">GitHub</a></p>
-        <p>Built with <a href="http://twitter.github.com/bootstrap">Bootstrap</a> Bootstrap is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>. </p>
+        <p>
+			Built with <a href="http://twitter.github.com/bootstrap">Bootstrap</a> Bootstrap is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.<br/>
+			Icons by <a href="http://glyphicons.com/">Glyphicons</a>.
+        </p>
         <!--<ul class="footer-links">
           <li><a href="http://blog.getbootstrap.com">Read the blog</a></li>
           <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Submit issues</a></li>

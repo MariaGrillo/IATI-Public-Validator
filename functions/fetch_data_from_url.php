@@ -48,8 +48,7 @@ function fetch_data_from_url ($xurl, $cacheFile,$freshness = 0) {
 		  if (empty($output)) {
 		  $last_modified = filemtime($cacheFile);
 
-			$error_msg = 'Sorry, we can\'t grab the data you requested.<br/>This data was last updated: ';
-			$error_msg .= date("m/d/y H:i:s", $last_modified);
+			$error_msg = 'Sorry, we can\'t grab the data you requested.';
 		  } else {
 		  //echo $response_code;
 		  // If the response is 200 - i.e. ok, then we proceed to parse the feed
@@ -63,6 +62,9 @@ function fetch_data_from_url ($xurl, $cacheFile,$freshness = 0) {
 					$upload_msg .= "<br/>Size: " . $download_size;
 					$upload_msg  .= "<br/>Time to fetch: " . $retrieved;
 					//echo $upload_msg;
+					$_SESSION['uploadedfilepath']=$cacheFile;
+					$_SESSION['wellformed']=TRUE;
+					$_SESSION['upload_msg'] = $upload_msg;
 					return TRUE;
 			 } else { //end 'if response code =200 - ie. we've refreshed the data in the cache
 			  //print ('could not refresh the cache');

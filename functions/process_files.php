@@ -19,7 +19,7 @@ if(sizeof($_FILES)!=0) {
 		$upload_msg = "File: " . $_FILES["file"]["name"] . "<br />";
 		$upload_msg .= "Type: " . $_FILES["file"]["type"] . "<br />";
 		$upload_msg .= "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-		$upload_msg .= "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+		//$upload_msg .= "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
 
 		//if (file_exists("upload/" . $_FILES["file"]["name"]))
 		//  {
@@ -29,10 +29,11 @@ if(sizeof($_FILES)!=0) {
 		// {
 		  move_uploaded_file($_FILES["file"]["tmp_name"],
 		  "upload/" . $_FILES["file"]["name"]);
-		  $upload_msg .= "Stored in: " . "upload/" . $_FILES["file"]["name"];
+		  //$upload_msg .= "Stored in: " . "upload/" . $_FILES["file"]["name"];
 		  $file_path = "upload/" . $_FILES["file"]["name"];
 			//Set the filepath as a session variable
 			$_SESSION['uploadedfilepath']=$file_path;
+			$_SESSION['wellformed']=TRUE;
 			$_SESSION['upload_msg'] = $upload_msg;
 		 // }
 		}
