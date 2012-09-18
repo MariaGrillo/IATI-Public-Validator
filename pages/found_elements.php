@@ -25,8 +25,21 @@
 			$file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
 			libxml_use_internal_errors(true);
 			
-			$all_elements = get_elements_from_schema("iati-schema/iati-activities-schema.xsd");
+			//Which schema should we use - detect it in the xml!
+			$xml = new DOMDocument();
+			$xml->load($file_path);
+			  
+			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
+				$schema = "activity";
+			} else {
+				$schema = "organisation";
+			}
+			unset($xml); //Destroy this now to #save memory
+			
+			//Set up an array of all top level elements in the schema
+			$all_elements = get_elements_from_schema($schema);
 			sort($all_elements);
+			//Set up an array of all the elements found in the supplied file
 			$found_elements = get_elements_from_supplied_file($file_path); //this returns all elements
 			if ($found_elements) {
 				$unique_found_elements = array_unique($found_elements);

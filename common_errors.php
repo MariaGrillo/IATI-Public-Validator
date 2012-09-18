@@ -1,63 +1,11 @@
 <?php
-//error_reporting(0);
-session_start();
-include "functions/process_files.php";
 include "settings.php";
-$tests = array('default','reset','xsd','elements','basic');
-if (isset($_GET['test'])) {
-	$test = filter_var($_GET['test'], FILTER_SANITIZE_STRING);
-} else {
-	$test = "default";
-}
-switch ($test) {
-	case "basic":
-		//echo "validate";
-		if (isset($_SESSION['uploadedfilepath'])) {
-			$page =  "pages/overview.php";
-		} else {
-			//echo "validate";
-			$page = "pages/front.php";
-		}
-		break;
-	case "xsd":
-		//echo "validate";
-		if (isset($_SESSION['uploadedfilepath'])) {
-			$page =  "pages/validate-xsd.php";
-		} else {
-			//echo "validate";
-			$page = "pages/front.php";
-		}
-		break;
-	case "elements":
-		//echo "validate";
-		if (isset($_SESSION['uploadedfilepath'])) {
-			$page = "pages/found_elements.php";
-		} else {
-			//echo "validate";
-			$page = "pages/front.php";
-		}
-		break;
-	case "reset";
-		unset($_SESSION['uploadedfilepath']);
-		unset ($_SESSION['wellformed']);
-		unset($_SESSION['upload_msg']);
-		if (isset($_SESSION['url'])) {
-			unset($_SESSION['url']);
-		}
-		//echo "reset";
-		$page = "pages/front.php"; 
-		break;
-	default:
-		//echo "home";
-		$page = "pages/front.php"; 
-		break;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>IATI Public Validator</title>
+    <title>IATI Public Validator - Common Errors</title>
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">-->
@@ -106,8 +54,8 @@ switch ($test) {
           <!--<a class="brand" href="<?php echo $host ?>">IATI Public Validator</a>-->
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="<?php echo $host ?>"><i class="icon-home"></i> Home</a></li>
-              <li><a href="<?php echo $host ?>common_errors.php"><i class="icon-asterisk"></i> Common errors</a></li>
+              <li><a href="<?php echo $host ?>"><i class="icon-home"></i> Home</a></li>
+              <li class="active"><a href="<?php echo $host ?>common_errors.php"><i class="icon-asterisk"></i> Common errors</a></li>
               <!--<li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
               <li class="dropdown">
@@ -151,100 +99,37 @@ switch ($test) {
 	</header>
 	
 	<div class="container">
-		<div class="row">
-			
-			
-			
-		<div class="span10" style="float:right">
-				<!-- Main hero unit for a primary marketing message or call to action -->
-				<div class="hero-unit">
-					<?php 
-						if (isset($_SESSION['url'])) {
-							if (filter_var($_SESSION['url'], FILTER_VALIDATE_URL) == TRUE) {
-								//Note this should have already been sanitised, so this is an additional (unecessary?) check
-								$testing_file_name = htmlentities($_SESSION['url']);
-							}
-						} elseif (isset($_SESSION['uploadedfilepath'])) {
-							if (strstr($_SESSION['uploadedfilepath'], "paste")) {
-								$testing_file_name = "Pasted code";
-							} else {
-								$testing_file_name = basename($_SESSION['uploadedfilepath']);
-							}
-						}
-						if (isset($_SESSION['url']) || isset($_SESSION['uploadedfilepath'])) {
-							echo '<div class="alert alert-info"><strong>Testing:</strong> ' . $testing_file_name . '</div>';
-						}
-					?>
-					<?php 
-						include $page;
 
-					
-					/*if (isset($_SESSION['uploadedfilepath'])) {
-						include "pages/validate-xsd.php";
-					} else {
-						include "pages/front.php";
-					}*/
-						
-					//include "pages/front.php"; 
-					?>
-						
-				</div>
-			</div>
-			
-			<div class="span2" style="float:left">
-				<div class="well sidebar-nav">
-					<?php if (isset($_SESSION['uploadedfilepath'])): ?>
-					<ul class="nav nav-list">
-					  <li class="nav-header">Tests</li>
-					  <li><a href="<?php echo $host; ?>">Well Formed</a></li>
-					  <?php if (isset($_SESSION['wellformed']) && $_SESSION['wellformed'] == TRUE): ?>
-						<li><a href="<?php echo $host; ?>?test=xsd">Validate</a></li>
-					  <?php endif; ?>
-					  
-					  <!--<li><a href="#">Link</a></li>
-					  <li class="nav-header">Sidebar</li>-->
-					  <!--<li><a href="#">Link</a></li>
-					  <li><a href="#">Link</a></li>
-					  <li><a href="#">Link</a></li>
-					  <li><a href="#">Link</a></li>
-					  <li><a href="#">Link</a></li>
-					  <li><a href="#">Link</a></li>
-					  <li class="nav-header">Sidebar</li>
-					  <li><a href="#">Link</a></li>
-					  <li><a href="#">Link</a></li>
-					  <li><a href="#">Link</a></li>-->
-					</ul>
-					<?php else: ?>
-					<p>Let us test your data.</p>
-					<p>Upload a file, paste some code or point us to a file on the internet and we can give you some basic information about how well the data performs agains the IATI standard.</p>
-					<?php endif; ?>
-				  </div><!--/.well -->
-				  <!--Stats Nav-->
-				  <?php if (isset($_SESSION['wellformed']) && $_SESSION['wellformed'] == TRUE): ?>
-					  <div class="well sidebar-nav">
-						<ul class="nav nav-list">
-						  <li class="nav-header">File Statistics</li>
-						  <li><a href="<?php echo $host; ?>?test=basic">Basic Info</a></li>
-						  <li><a href="<?php echo $host; ?>?test=elements">Elements</a></li>
-						</ul>
-					  </div><!--/.well -->
-				  <?php endif; ?>
-				  
-			</div>
-			
-			
-			
-		</div>
 		
 		
 	  <!--ABOUT-->
-	  <hr>
 	  <div class="row">
         <div class="span12">
-			<h3>About the IATI Public Validator</h3>
-			<p>This is a designed as a quick, simple service to allow people to check their IATI XML files.</p>
-			<p>Because IATI files can be varied, complex or even very simple depending on the reporting organisations needs, 'validation' is a difficult concept.</p>
-			<p>This tool performs some basic checks around the XML, and then some complience checks against the IATI Standard, an agreed set of political desires, that are not enforced by the IATI schema.</p>
+			<h2>Common Errors</h2>
+			<p>Don't panic!</p>
+			<p>Errors in your XML files are pretty common. Often what looks like a whole load of errors can easily be fixed. Below are the most common errors we encounter in people's files.</p>
+			<hr>
+			<h3>Well Formed XML</h3>
+			<p>Well Formed XML means that machines will be able to read your data. If it is not well formed, they can't and we need to fix it. Some common problems are outlined below:</p>
+			<h4>Opening and ending tag mismatch</h4>
+			<p>Usually this is down to a typo somewhere. Each tag or element must be consistent. <br/>&lt;iati-activities&gt;&lt;/iati-activities&gt; is good &lt;iatiactivities&gt;&lt;/iati-activities&gt; is bad.</p>
+			<hr>
+			<h3>Validation Errors</h3>
+			<h4>attribute 'iso-date': '' is not a valid value of the atomic type 'xs:date'.</h4>
+			<p>Dates in IATI should look like YYYY-MM-DD, e.g. the 22nd August 2012 would be written as: 2012-08-22.</p>
+			<h4> attribute 'generated-datetime': '2011-10-17 14:00:00' is not a valid value of the atomic type 'xs:dateTime'.</h4>
+			<p>A datetime (as opposed to a date) specifies both a time and a date. A common error is to missout the 'T' that separates the date from the time. <br/>
+			So in the example above, this would validate: 2011-10-17T14:00:00<br/>
+			Other common errors are not providing the Date as YYYY-MM-DD or the time as HH:MM:SS<br/>
+			You can also specify a time zone and sometimes people dont that quite right.</p>
+			<h4>attribute 'percentage': '' is not a valid value of the atomic type 'xs:positiveInteger'.</h4>
+			<p>In some circumstances we require you to supply just a number. People sometimes include commas, currency symbols, percentage signs, or write their number as a decimal. If you want to say twenty percent, just write 20.</p>
+			<h4>The attribute '' is not allowed.</h4>
+			<p>This means you've put something in that doesn't need to be there. Simply remove it!</p>
+			<h4>Character content other than whitespace is not allowed because the content type is 'element-only'.</h4>
+			<p>This usually means somthing has been typed where it shouldn't have been. All content should be inside the IATI element tags. This is usually a sign that something has strayed outside!</p>
+			
+			
 		</div>
 	</div>
 	<hr>
@@ -313,23 +198,7 @@ switch ($test) {
     <script src="assets/js/bootstrap-typeahead.js"></script> -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script>
-		//This is the tabs
-		$('#myTab a').click(function (e) {
-		  e.preventDefault();
-		  $(this).tab('show');
-		})
-		$('#intext a').click(function (e) {
-		  e.preventDefault();
-		  $('#myTab a[href="#extra"]').tab('show');
-		})
-		$(function () {
-			$('#myTab a[href="#status"]').tab('show');
-			$('#myTab a[href="#file"]').tab();
-			$('#myTab a[href="#extra"]').tab();
-			//$('#myTab a[href="#settings"]').tab();
-		})
-	</script>
+
 
   </body>
 </html>

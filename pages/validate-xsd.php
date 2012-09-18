@@ -69,9 +69,11 @@
 								<h3 class="fail">Fail</h3>
 								<div id="intext">
 									<div class="alert alert-error">This file does NOT validate against the IATI <?php echo $schema; ?> Schema</div>
-									There are <?php echo count(libxml_get_errors()); ?> errors.<br/><br/>
-									See <a href="#extra">Extra info</a> for details.
+									<?php echo libxml_error_count(); ?> <br/><br/>
+									See <a href="#extra">Extra info</a> for details about the errors.
 								</div>
+									See <a href="<?php echo $host; ?>common_errors.php">Common errors</a> for help in understanding the errors.
+								
 							<?php endif; ?>
 						<!--</div>
 					</div>
@@ -79,6 +81,7 @@
 		    </div>
 		  <?php if ($valid == FALSE): ?>
 			<div class="tab-pane" id="extra">
+				<p style="font-size:1.1em">See <a href="<?php echo $host; ?>common_errors.php">Common errors</a> for help in understanding the errors.</p>
 				<?php libxml_display_all_errors(); ?>
 			</div>
 		  <?php endif; ?>
@@ -87,6 +90,19 @@
  
 <?php endif; ?>
 <?php
+
+function libxml_error_count() {
+	$errors = libxml_get_errors();
+	$codes = array();
+	foreach ($errors as $error) {
+		$code = $error->code; 
+		$codes[] = $code;
+	}
+	$codes = array_unique($codes);
+	$response =  "<p class=\"text-error\">There are " . count($codes) . " different types of error in the file.</p>";
+	$response .=  "<p class=\"text-info\">Fixing them will remove " . count($errors) . " errors from the file.</p>";
+	return $response;
+}
 
 function libxml_display_all_errors() {
     $errors = libxml_get_errors();

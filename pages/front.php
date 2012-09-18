@@ -98,6 +98,7 @@
 				}
 				$error_detail . "</ul>";
 			} else {
+				$_SESSION['wellformed'] = TRUE;
 				$test_result = '<div class="alert alert-success"><strong>Great.</strong> This is a well formed xml file.</div>';
 			}
 		?>
@@ -120,6 +121,12 @@
 							<!--<h3>Well-formed check:</h3>-->
 							<?php echo $test_result; ?>
 							<div>This check tells us if machines are going to be able to read this file.<br/><br/></div>
+							<?php if (isset($error_detail)): ?>
+								<div id="intext">
+									See <a href="#extra">Extra info</a> for details about the errors.
+								</div>
+								See <a href="<?php echo $host; ?>common_errors.php">Common errors</a> for help in understanding the errors.
+							<?php endif; ?>
 							
 						<!--</div>
 					</div>

@@ -1,4 +1,4 @@
-<iati-activities version="1.01" generated-datetime="2011-10-17T14:00:00">
+<iati-activities version="1.01" generated-datetime="2011-10-17 14:00:00">
 <ir:registry-record xml:lang="en" file-id="21020" source-url="http://maps.aidsalliance.org/iati/aidsalliance.xml" publisher-id="21020" publisher-role="Reporting" contact-email="iati@aidsalliance.org" activity-period="All Periods" last-updated-datetime="2011-09-30T11:16:15Z" generated-datetime="2011-09-30T11:16:15Z" verification-status="1" format="xml" license="IATI" xmlns:ir="http://iatiregistry.org/ns/record#"/>
 <iati-activity   xml:lang="en" xmlns:aidsalliance="http://www.aidsalliance.org/ns#" default-currency="USD" hierarchy="1" last-updated-datetime="2011-10-17T14:00:00">
 <iati-identifier>21020-3DFMYAN</iati-identifier>

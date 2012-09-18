@@ -30,3 +30,11 @@ background: #ddd;
 .error, .fatal, .warning {
 width:15%;
 }
+.hero-unit p.text-error {
+color: #B94A48;
+font-size:1.2em;
+}
+.hero-unit p.text-info {
+color: #3A87AD;
+font-size:1.2em;
+}
