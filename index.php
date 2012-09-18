@@ -32,6 +32,9 @@ switch ($test) {
 		unset($_SESSION['uploadedfilepath']);
 		unset ($_SESSION['wellformed']);
 		unset($_SESSION['upload_msg']);
+		if (isset($_SESSION['url'])) {
+			unset($_SESSION['url']);
+		}
 		//echo "reset";
 		$page = "pages/front.php"; 
 		break;
@@ -60,6 +63,9 @@ switch ($test) {
       }
       .navbar-static-top {
 		  padding-bottom: 20px;
+	  }
+	  legend {
+		  display:none;
 	  }
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -133,10 +139,13 @@ switch ($test) {
 		</div>
 	  </div>
 	</header>
+	
 	<div class="container">
 		<div class="row">
+			
 			<div class="span2">
 				<div class="well sidebar-nav">
+					<?php if (isset($_SESSION['uploadedfilepath'])): ?>
 					<ul class="nav nav-list">
 					  <li class="nav-header">Tests</li>
 					  <li><a href="<?php echo $host; ?>">Well Formed</a></li>
@@ -154,20 +163,43 @@ switch ($test) {
 					  <li><a href="#">Link</a></li>
 					  <li><a href="#">Link</a></li>-->
 					</ul>
+					<?php else: ?>
+					<p>Let us test your data.</p>
+					<p>Upload a file, paste some code or point us to a file on the internet and we can give you some basic information about how well the data performs agains the IATI standard.</p>
+					<?php endif; ?>
 				  </div><!--/.well -->
 				  <!--Stats Nav-->
-				  <?php if (isset($_SESSION['wellformed'])): ?>
-				  <div class="well sidebar-nav">
-					<ul class="nav nav-list">
-					  <li class="nav-header">File Statistics</li>
-					  <li><a href="<?php echo $host; ?>?test=elements">Elements</a></li>
-					</ul>
-				  </div><!--/.well -->
+				  <?php if (isset($_SESSION['wellformed']) && $_SESSION['wellformed'] == TRUE): ?>
+					  <div class="well sidebar-nav">
+						<ul class="nav nav-list">
+						  <li class="nav-header">File Statistics</li>
+						  <li><a href="<?php echo $host; ?>?test=elements">Elements</a></li>
+						</ul>
+					  </div><!--/.well -->
 				  <?php endif; ?>
+				  
 			</div>
-			<div class="span10">
+			
+		<div class="span10">
 				<!-- Main hero unit for a primary marketing message or call to action -->
 				<div class="hero-unit">
+					<?php 
+						if (isset($_SESSION['url'])) {
+							if (filter_var($_SESSION['url'], FILTER_VALIDATE_URL) == TRUE) {
+								//Note this should have already been sanitised, so this is an additional (unecessary?) check
+								$testing_file_name = htmlentities($_SESSION['url']);
+							}
+						} elseif (isset($_SESSION['uploadedfilepath'])) {
+							if (strstr($_SESSION['uploadedfilepath'], "paste")) {
+								$testing_file_name = "Pasted code";
+							} else {
+								$testing_file_name = basename($_SESSION['uploadedfilepath']);
+							}
+						}
+						if (isset($_SESSION['url']) || isset($_SESSION['uploadedfilepath'])) {
+							echo '<div class="alert alert-info"><strong>Testing:</strong> ' . $testing_file_name . '</div>';
+						}
+					?>
 					<?php 
 						include $page;
 
@@ -184,6 +216,7 @@ switch ($test) {
 				</div>
 			</div>
 		</div>
+		
 		
 	  <!--ABOUT-->
 	  <hr>

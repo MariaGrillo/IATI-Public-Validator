@@ -28,13 +28,19 @@
 			$all_elements = get_elements_from_schema("iati-schema/iati-activities-schema.xsd");
 			sort($all_elements);
 			$found_elements = get_elements_from_supplied_file($file_path); //this returns all elements
-			$unique_found_elements = array_unique($found_elements);
+			if ($found_elements) {
+				$unique_found_elements = array_unique($found_elements);
+			} else {
+				$unique_found_elements = array();
+			}
 
 		?>
 		<h2>Found Elements</h2>
 		<ul class="nav nav-tabs" id="myTab">
 		  <li class="active"><a href="#status">Overview</a></li>
-		  <li><a href="#extra">Extra info</a></li>
+		  <?php if ($found_elements): ?>
+			<li><a href="#extra">Extra info</a></li>
+		  <?php endif; ?>
 		</ul>
 		 
 		<div class="tab-content">
@@ -69,7 +75,7 @@
 									
 						} else {
 							echo '<div class="span4">';
-							echo '<pclass="cross>We didn\'t find any atop level IATI elements in the XML supplied</p>';
+							echo '<pclass="cross>We didn\'t find any top level IATI elements in the XML supplied</p>';
 							echo '</div>';
 						}
 							
@@ -77,7 +83,7 @@
 				</div><!--span9-->
 			</div>
 		</div>
-
+	<?php if ($found_elements): ?>
 	<div class="tab-pane" id="extra">
 		<?php 
 			$element_counts = array_count_values($found_elements);
@@ -89,9 +95,10 @@
 				echo  "<td>$value</td>";
 				echo '</tr>';
 			}
-			print("</tbody></table>");
+			print("</tbody></table>");	
 		 ?>
 	</div>
+	<?php endif; ?>
 
 		</div>
  

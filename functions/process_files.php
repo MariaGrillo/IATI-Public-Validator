@@ -33,7 +33,6 @@ if(sizeof($_FILES)!=0) {
 		  $file_path = "upload/" . $_FILES["file"]["name"];
 			//Set the filepath as a session variable
 			$_SESSION['uploadedfilepath']=$file_path;
-			$_SESSION['wellformed']=TRUE;
 			$_SESSION['upload_msg'] = $upload_msg;
 		 // }
 		}
@@ -57,6 +56,17 @@ if(sizeof($_FILES)!=0) {
 	if (fetch_data_from_url($url, "upload/" . nice_file_name($url)) == TRUE) {
 		$file_path = "upload/" . nice_file_name($url);
 	}
+}
+
+//user pastes a sample into the page
+ if (isset($_POST["paste"]) && $_POST["paste"]) {
+	 $xml = filter_var($_POST['paste'], FILTER_SANITIZE_STRING);
+	  $xml = $_POST['paste'];
+	 //echo $xml;
+	file_put_contents("./upload/paste_".time().".xml",$xml);
+	$file_path = "upload/paste_".time().".xml";
+	$_SESSION['uploadedfilepath']=$file_path;
+	$_SESSION['upload_msg'] = "Pasted data";
 }
 //echo $file_path;
 ?> 

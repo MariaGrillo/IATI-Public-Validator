@@ -16,12 +16,16 @@ function get_elements_from_supplied_file($file) {
 		//print_r($xml);
 		//SimpleXMLIterator just runs over the xml and returns the elements found in this file. I think this is just top level
 		//which is what I want.
-		$xmlIterator = new SimpleXMLIterator($xml);
-		for( $xmlIterator->rewind(); $xmlIterator->valid(); $xmlIterator->next() ) {
-			foreach($xmlIterator->getChildren() as $name => $data) {
-			//echo "The $name is '$data' from the class " . get_class($data) . "\n";
-			$found_elements[] = $name;
+		if (simplexml_load_string($xml)) {
+			$xmlIterator = new SimpleXMLIterator($xml);
+			for( $xmlIterator->rewind(); $xmlIterator->valid(); $xmlIterator->next() ) {
+				foreach($xmlIterator->getChildren() as $name => $data) {
+				//echo "The $name is '$data' from the class " . get_class($data) . "\n";
+				$found_elements[] = $name;
+				}
 			}
+		} else {
+			return FALSE;
 		}
 	}
 	return $found_elements;

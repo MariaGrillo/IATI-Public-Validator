@@ -1,0 +1,25 @@
+Documenting what tests we need to run on the application
+
+File Uploads
+------------
+Size <10MB
+Only XML files allowed
+
+Fetch URL
+---------
+Good URL
+Bad URL
+
+Paste Code
+----------
+Well formed code
+Non-well formed code
+Empty text (Return to home page)
+Attempted injection
+
+Tests on Data
+-------------
+Well formed xml
+Not well formed xml
+Valid against the standard
+Not Valid agianst the standard
