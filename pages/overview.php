@@ -39,7 +39,7 @@
 					//print_r($currencies);
 					$currencies = array_unique($currencies);
 					$hierarchies = $xml->xpath("//@hierarchy");
-					print_r($hierarchies);
+					//print_r($hierarchies);
 					$hierarchies = array_unique($hierarchies);
 					
 				}
@@ -104,7 +104,7 @@
 					<?php 							
 							echo '<div class="well span2">';
 							echo '<h3>Languages</h3>';
-							if (isset($languages)) {
+							if (isset($languages) && $languages != NULL) {
 								echo '<ul>';
 								foreach ($languages as $language) {
 									echo "<li>$language</li>";
