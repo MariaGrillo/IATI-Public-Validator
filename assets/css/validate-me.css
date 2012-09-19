@@ -1,5 +1,16 @@
 /*Custom CSS file for the Validate Me Application*/
 /*This CSS should override all other CSS*/
+body {
+/*padding-top: 60px;*/
+padding-bottom: 40px;
+}
+.navbar-static-top {
+  padding-bottom: 20px;
+}
+legend {
+  display:none;
+}
+
 
 .reset {
 text-align:right;

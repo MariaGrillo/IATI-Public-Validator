@@ -28,9 +28,9 @@ if(sizeof($_FILES)!=0) {
 		//else
 		// {
 		  move_uploaded_file($_FILES["file"]["tmp_name"],
-		  "upload/" . $_FILES["file"]["name"]);
+		  "upload/" . $_FILES["file"]["name"] . "_" . time());
 		  //$upload_msg .= "Stored in: " . "upload/" . $_FILES["file"]["name"];
-		  $file_path = "upload/" . $_FILES["file"]["name"];
+		  $file_path = "upload/" . $_FILES["file"]["name"] . "_" . time();
 			//Set the filepath as a session variable
 			$_SESSION['uploadedfilepath']=$file_path;
 			$_SESSION['upload_msg'] = $upload_msg;
@@ -53,8 +53,9 @@ if(sizeof($_FILES)!=0) {
 	
 	//Fetch the data from the URL
 	include "functions/fetch_data_from_url.php";
-	if (fetch_data_from_url($url, "upload/" . nice_file_name($url)) == TRUE) {
-		$file_path = "upload/" . nice_file_name($url);
+  $cacheFile = "upload/" . nice_file_name($url) . "_" . time();
+	if (fetch_data_from_url($url, $cacheFile) == TRUE) {
+		$file_path = $cacheFile;
 	}
 }
 
