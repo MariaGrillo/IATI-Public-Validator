@@ -128,7 +128,7 @@ switch ($test) {
             //It could be a file name or the URL or pasted code
 						if (isset($_SESSION['url'])) { //Is it a URL?
 							if (filter_var($_SESSION['url'], FILTER_VALIDATE_URL) == TRUE) {
-								//Note this should have already been sanitised, so this is an additional (unecessary?) check
+								//Note this should have already been sanitised, so this is an additional (uneccesary?) check
 								$testing_file_name = htmlentities($_SESSION['url']);
 							}
 						} elseif (isset($_SESSION['uploadedfilepath'])) { //Has it been either uploaded or pasted
@@ -169,7 +169,7 @@ switch ($test) {
 					</ul>
 					<?php else: //We don't have a file to test so display some instructions?>
             <p>Let us test your data.</p>
-            <p>Upload a file, paste some code or point us to a file on the internet and we can give you some basic information about how well the data performs agains the IATI standard.</p>
+            <p>Upload a file, paste some code or point us to a file on the internet and we can give you some basic information about how well the data performs against the IATI standard.</p>
 					<?php endif; ?>
         </div><!--/.well -->
         
@@ -195,8 +195,8 @@ switch ($test) {
       <div class="span12">
         <h3>About the IATI Public Validator</h3>
         <p>This is a designed as a quick, simple service to allow people to check their IATI XML files.</p>
-        <p>Because IATI files can be varied, complex or even very simple depending on the reporting organisations needs, 'validation' is a difficult concept.</p>
-        <p>This tool performs some basic checks around the XML, and then some complience checks against the IATI Standard, an agreed set of political desires, that are not enforced by the IATI schema.</p>
+        <p>Because IATI files can be varied, complex or even very simple depending on the reporting organisation's needs, 'validation' is a difficult concept.</p>
+        <p>This tool performs some basic checks around the XML, and then some compliance checks against the IATI Standard, an agreed set of political desires, that are not enforced by the IATI schema.</p>
       </div>
     </div>
     <!--Other Sites-->

@@ -118,16 +118,16 @@ include "settings.php";
 			<h4>attribute 'iso-date': '' is not a valid value of the atomic type 'xs:date'.</h4>
 			<p>Dates in IATI should look like YYYY-MM-DD, e.g. the 22nd August 2012 would be written as: 2012-08-22.</p>
 			<h4> attribute 'generated-datetime': '2011-10-17 14:00:00' is not a valid value of the atomic type 'xs:dateTime'.</h4>
-			<p>A datetime (as opposed to a date) specifies both a time and a date. A common error is to missout the 'T' that separates the date from the time. <br/>
+			<p>A datetime (as opposed to a date) specifies both a time and a date. A common error is to miss out the 'T' that separates the date from the time. <br/>
 			So in the example above, this would validate: 2011-10-17T14:00:00<br/>
 			Other common errors are not providing the Date as YYYY-MM-DD or the time as HH:MM:SS<br/>
-			You can also specify a time zone and sometimes people dont that quite right.</p>
+			You can also specify a timezone and sometimes people don't get that bit quite right.</p>
 			<h4>attribute 'percentage': '' is not a valid value of the atomic type 'xs:positiveInteger'.</h4>
 			<p>In some circumstances we require you to supply just a number. People sometimes include commas, currency symbols, percentage signs, or write their number as a decimal. If you want to say twenty percent, just write 20.</p>
 			<h4>The attribute '' is not allowed.</h4>
 			<p>This means you've put something in that doesn't need to be there. Simply remove it!</p>
 			<h4>Character content other than whitespace is not allowed because the content type is 'element-only'.</h4>
-			<p>This usually means somthing has been typed where it shouldn't have been. All content should be inside the IATI element tags. This is usually a sign that something has strayed outside!</p>
+			<p>This usually means something has been typed where it shouldn't have been. All content should be inside the IATI element tags. This is usually a sign that something has strayed outside!</p>
 			
 			
 		</div>
