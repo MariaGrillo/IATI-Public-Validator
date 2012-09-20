@@ -34,9 +34,10 @@ function fetch_data_from_url ($xurl, $cacheFile) {
 
 		  if (empty($output)) {
 		    //$last_modified = filemtime($cacheFile);
-			$_SESSION['uploadedfilepath'] = $cacheFile;
-			$error_msg = 'We could not fetch the data you requested.';
-			$_SESSION['upload_msg'] = $error_msg;
+        $_SESSION['uploadedfilepath'] = $cacheFile;
+        $error_msg = 'We could not fetch the data you requested.';
+        $_SESSION['upload_msg'] = $error_msg;
+        record_in_log('fail','fetch','Curl returned an empty output');
 		  } else {
 		  //echo $response_code;
 		  // If the response is 200 - i.e. ok, then we proceed to parse the feed
@@ -54,12 +55,14 @@ function fetch_data_from_url ($xurl, $cacheFile) {
 					$_SESSION['wellformed']=TRUE;
 					$_SESSION['upload_msg'] = $upload_msg;
 					$_SESSION['url'] = $xml_url;
+          record_in_log('success','fetch','File of size: ' . round((filesize($cacheFile) / 1024),2) . ' Kb fetched');
 					return TRUE;
 			 } else { //end 'if response code =200 - ie. we've refreshed the data in the cache
-				$_SESSION['uploadedfilepath'] = $cacheFile;
+				//$_SESSION['uploadedfilepath'] = $cacheFile;
 				$error_msg = 'We could not fetch the data you requested.';
 				$_SESSION['upload_msg'] = $error_msg;
-				$_SESSION['url'] = $xml_url;
+				//$_SESSION['url'] = $xml_url;
+        record_in_log('fail','fetch','Curl response code was not 200');
 			//print ('could not refresh the cache');
 			} //end 'if response code =200 else
 		  } //end if output empty else..

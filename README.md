@@ -6,14 +6,19 @@ This is an application to help people check any random file for IATI complience.
 the plan is to build a modular application adding tests as we go.
 
 Basic functions are:
-Test for well formedness
-Test for validation against the iati schema
+* Test for well formedness
+* Test for validation against the iati schema
+Some basic statistics:
+* Elements found
+* Basic info
 
 Quick Start
 -----------
-
 Checkout the files to your webserver.
-You will need to add an 'upload' directory to the root of the project and make it writable by your webserver
+You will need to add an 'upload' directory to the root of the project and make it writable by your webserver.
+Make a copy of example.settings.php and rename it settings.php
+Edit the configuration information in that file and save it. 
+Don't forget to set a path for your log file. Basic info is collected about the use of the upload functions.
 
 IATI Schema
 -----------
@@ -30,9 +35,13 @@ How it works
 ------------
 
 Once a file is uploaded or pulled from the web, the path to the file (and file details) are saved in session variable.
-This then allows us to perform various tests on that file.
+Files are stored locally with an appended time stamp. This way more than one person can load a file of the same name (or from the same URL).
+Data generated against that file can then also be stored uniquely.
+
+Once we have a file, we can perform various tests.
 The index.php file controls all page views. 
 Each test is contained in it's own 'page' within the pages/ directory.
+Apart from the well formed and validation checks, results are stored in files in json format. This is then used to display the results.
 Which page gets called is controlled by the $_GET variables passed by the URL. These are sanitised by an array of allowed values at the top of index.php
 
 Tests

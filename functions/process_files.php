@@ -1,4 +1,5 @@
 <?php
+include("functions/log.php");
 //User uploads a file
 if(sizeof($_FILES)!=0) {
 	//thanks: http://www.w3schools.com/php/php_file_upload.asp
@@ -34,12 +35,15 @@ if(sizeof($_FILES)!=0) {
 			//Set the filepath as a session variable
 			$_SESSION['uploadedfilepath']=$file_path;
 			$_SESSION['upload_msg'] = $upload_msg;
+      record_in_log('success','upload','File of size: ' . round(($_FILES["file"]["size"] / 1024),2) . ' Kb uploaded');
+      
 		 // }
 		}
 	  }
 	else
 	  {
 	  $error_msg = "We can only test XML files, and they must be smaller than 10MB<br/>Please try with a different file.";
+    record_in_log('error','upload','Rejected on upload');
 	  }
  }
  
@@ -49,14 +53,16 @@ if(sizeof($_FILES)!=0) {
 		$url = htmlentities($_POST["url"]);
 		//$url = $_POST["url"];
 		//echo $url;
-	}
 	
-	//Fetch the data from the URL
-	include "functions/fetch_data_from_url.php";
-  $cacheFile = "upload/" . nice_file_name($url) . "_" . time();
-	if (fetch_data_from_url($url, $cacheFile) == TRUE) {
-		$file_path = $cacheFile;
-	}
+    //Fetch the data from the URL
+    include "functions/fetch_data_from_url.php";
+    $cacheFile = "upload/" . nice_file_name($url) . "_" . time();
+    if (fetch_data_from_url($url, $cacheFile) == TRUE) {
+      $file_path = $cacheFile;
+    }
+  } else {
+    $error_msg = "That does not seem to be a valid URL. Please try again.";
+  }
 }
 
 //user pastes a sample into the page
@@ -68,6 +74,7 @@ if(sizeof($_FILES)!=0) {
 	$file_path = "upload/paste_".time().".xml";
 	$_SESSION['uploadedfilepath']=$file_path;
 	$_SESSION['upload_msg'] = "Pasted data";
+  record_in_log('success','pasted','File of size: ' . round((filesize($file_path) / 1024),2) . ' Kb pasted');
 }
 //echo $file_path;
 ?> 

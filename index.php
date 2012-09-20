@@ -1,8 +1,8 @@
 <?php
 //error_reporting(0);
 session_start(); //We use sessions to track the uploaded file through the application
-include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
 include "settings.php"; //site installation specifics
+include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
 $tests = array('default','reset','xsd','elements','basic'); //array of allowed $_GET values corresponding to the pages of the tests
 
 //Sanitize the $_GET vars
@@ -71,7 +71,7 @@ switch ($test) {
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <!--<link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo $host; ?>/favicon.ico"><!--
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
@@ -142,7 +142,7 @@ switch ($test) {
 							}
 						}
             //Finally only display the HTML if we have a file 
-						if (isset($_SESSION['url']) || isset($_SESSION['uploadedfilepath'])) {
+						if (isset($_SESSION['uploadedfilepath'])) {
               $time = get_time(basename($_SESSION['uploadedfilepath']));
 							echo '<div class="alert alert-info"><strong>Testing:</strong> ' . $testing_file_name . '<br/><strong>Uploaded:</strong> ' . $time . ' GMT</div>';
 						}
@@ -232,14 +232,14 @@ switch ($test) {
     <footer class="footer">
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>IATI-Public Validator is free software. Source on <a href="https://github.com/caprenter/IATI-Public_Validator">GitHub</a></p>
+        <p>IATI-Public Validator is free software. <br/>Source on <a href="https://github.com/caprenter/IATI-Public_Validator">GitHub</a>. <a href="https://github.com/caprenter/IATI-Public_Validator/issues?state=open">Submit issues</a>.</p>
         <p>
           Built with <a href="http://twitter.github.com/bootstrap">Bootstrap</a> Bootstrap is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.<br/>
-          Icons by <a href="http://glyphicons.com/">Glyphicons</a>.
+          Icons from <a href="http://glyphicons.com">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
         </p>
         <!--<ul class="footer-links">
           <li><a href="http://blog.getbootstrap.com">Read the blog</a></li>
-          <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Submit issues</a></li>
+          <li><a href="https://github.com/caprenter/IATI-Public_Validator/issues?state=open">Submit issues</a></li>
           <li><a href="https://github.com/twitter/bootstrap/wiki">Roadmap and changelog</a></li>
         </ul>-->
       </div>

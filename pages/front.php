@@ -15,7 +15,7 @@
 		</div>
 <?php endif; ?>	
 	
-<?php if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error_msg) ) && !isset($file_path) ) :?>
+<?php if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error_msg) ) || !isset($file_path) ) :?>
 	<p class="lead">Test IATI XML</p>
 	<div class="row">
 		<div class="span9">

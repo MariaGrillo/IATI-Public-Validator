@@ -31,3 +31,4 @@ Additional images have been added to the assets/img directory
  question.png
 are all derived from gnome icon sets: see http://art.gnome.org/themes/icon
 logo.png is the IATI logo so please don't mess with that without asking!
+The faviocon.ico is derived from the tick.png above.
