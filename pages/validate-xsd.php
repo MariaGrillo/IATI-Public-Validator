@@ -22,7 +22,9 @@
 		<?php
 			$file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
 			libxml_use_internal_errors(true);
-			
+			if (file_exists($file_path)) {
+        //echo "found file";
+      }
 			$xml = new DOMDocument();
 			$xml->load($file_path);
 			  
@@ -30,6 +32,8 @@
 			$xsd = "http://iatistandard.org/downloads/iati-activities-schema.xsd";
 			//$xsd = $host . "/iati-schema/iati-activities-schema.xsd";
 			$schema = "Activity";
+      //echo $file_path;
+      //print_r($xml);
 			
 			//if ($myinputs['org'] == "1") { //sanitized $_GET['orgs']
 			//  continue;
@@ -41,6 +45,7 @@
 			
 			if ($xml->schemaValidate($xsd)) {
 				$valid = TRUE;
+        //echo "yeeesss";
 			} else {
 				$valid = FALSE;
 				//libxml_display_all_errors();

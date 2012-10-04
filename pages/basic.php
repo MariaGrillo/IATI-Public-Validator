@@ -32,11 +32,41 @@
       libxml_use_internal_errors(true); //Save errors to memory, not the screen
 
       include ('functions/xml_child_exists.php');
-      if ($xml = simplexml_load_file($file_path)) {
-        $namespaces = $xml->getNamespaces(true);
+      //Load XML into the DOM to get file info
+      $xml = new DOMDocument();
+      if ($xml->load($file_path)) {
+        if($xml->xmlEncoding == NULL) {
+          $encoding = "Non declared";
+        } else {
+          $encoding = $xml->xmlEncoding;
+        }
+        if ($xml->xmlStandalone == 0) {
+          $standalone = "no";
+        } elseif ($xml->xmlStandalone == 1) {
+          $standalone = "yes";
+        } else {
+          $standalone = NULL;
+        }
+        if ($xml->xmlVersion == NULL) {
+          $version = "Assumed: XML 1.0";
+        } else {
+          $version = "Declared: XML " . $xml->xmlVersion;
+        }
+      }
+      //Covert to simpleXML for convenience
+      if ($xml = simplexml_import_dom($xml)) {
+      //if ($xml = simplexml_load_file($file_path)) {
+        $namespaces = $xml->getNamespaces(true);        
+        
         //var_dump($namespaces);
         if(!xml_child_exists($xml, "//iati-organisation")) {//ignore organisation files
           $basic=array(); //array to store our values in. This will be encode to json
+          $basic['docDeclaration'] = array( "version" => $version,
+                                            "standalone" => $standalone,
+                                            "encoding" => $encoding
+                                            );
+          
+          
           $basic['generated'] = (string)$xml->attributes()->{'generated-datetime'};
           $basic['version'] = (string)$xml->attributes()->version;
           $basic['activities'] = count($xml->xpath("//iati-activity"));
@@ -74,9 +104,9 @@
           $string = file_get_contents($file_path);
           $encoding = mb_detect_encoding($string,"UTF-8",true);
           if ($encoding != FALSE) {
-            $basic['encoding'] = $encoding;
+            $basic['DetectEncoding'] = $encoding;
           } else {
-            $basic['encoding'] = "Not detected";
+            $basic['DetectEncoding'] = "Not detected";
           }
 
           
@@ -195,8 +225,25 @@
         <div class="span9">
             <?php 							
                 echo '<div class="well span2">';
-                echo '<h3>Encoding</h3>';
-                echo "<p class=\"text-error\">" . $json->encoding . "</p>";
+                echo '<h3>Document </h3>';
+                if ($json->docDeclaration->version == "Assumed: XML 1.0") {
+                  echo "<p class=\"text-error\">" . $json->docDeclaration->version . "</p>";;
+                } else {
+                  echo  $json->docDeclaration->version . "<br/>";
+                }
+                if ($json->docDeclaration->encoding == "Non declared") {
+                  echo "<p class=\"text-error\">" . $json->docDeclaration->encoding . "</p>";;
+                } else {
+                  echo "Encoding: " . $json->docDeclaration->encoding . "<br/>";
+                }
+                if ($json->docDeclaration->standalone != NULL) {
+                  echo "<p class=\"text-info\">Standalone: " . $json->docDeclaration->standalone . "</p>";
+                }
+                if ($json->DetectEncoding=="Not detected") {
+                  echo "<p class=\"text-error\">" . $json->DetectEncoding . "</p>";
+                } else {
+                  echo "<h5>Encoding detected:</h5> " . $json->DetectEncoding;
+                }
                 echo '</div>';
                 
                 echo '<div class="well span2">';
