@@ -83,6 +83,7 @@ switch ($test) {
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <?php if (isset($google_analytics_code)) { echo $google_analytics_code; } ?>
   </head>
 
   <body>

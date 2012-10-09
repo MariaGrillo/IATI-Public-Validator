@@ -18,7 +18,7 @@ Checkout the files to your webserver.
 You will need to add an 'upload' directory to the root of the project and make it writable by your webserver.
 Make a copy of example.settings.php and rename it settings.php
 Edit the configuration information in that file and save it. 
-Don't forget to set a path for your log file. Basic info is collected about the use of the upload functions.
+Don't forget to set a path for your log file. Basic info is collected about the use of the upload functions. You may need to enable write permissions on your log file.
 
 IATI Schema
 -----------
