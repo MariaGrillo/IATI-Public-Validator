@@ -83,6 +83,7 @@ switch ($test) {
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <?php if (isset($zen_css)) { echo $zen_css; } //This is our zenddesk support code pulled from a custom settings.php file - most people can ignore this ?>
     <?php if (isset($google_analytics_code)) { echo $google_analytics_code; } ?>
   </head>
 
@@ -285,7 +286,7 @@ switch ($test) {
       //  { $("#example").popover();  
       //  }); 
       </script>
-
+      <?php if (isset($zen_script)) { echo $zen_script; } //This is our zenddesk support code pulled from a custom settings.php file - most people can ignore this ?>
   </body>
 </html>
 <?php
