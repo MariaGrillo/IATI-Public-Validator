@@ -99,12 +99,19 @@
 function libxml_error_count() {
 	$errors = libxml_get_errors();
 	$codes = array();
+  $messages = array();
 	foreach ($errors as $error) {
 		$code = $error->code; 
 		$codes[] = $code;
+    $message = trim($error->message);
+    $messages[] = $message;
 	}
 	$codes = array_unique($codes);
-	$response =  "<p class=\"text-error\">There are " . count($codes) . " different types of error in the file.</p>";
+  $messages = array_unique($messages);
+  //$messages = $codes = array("gg");
+	//$response =  "<p class=\"text-error\">There are " . count($codes) . " different types of error code in the file.</p>";
+  $response =  "<p class=\"text-error\">" . count($messages) . " " . (count($messages) == 1 ? '' : 'different') . " error message" . (count($messages) == 1 ? ' is' : 's are') . " reported.</p>";
+  $response .=  "<p class=\"text-error\">" . count($codes) . " type" . (count($codes) == 1 ? '' : 's') . " of  error code" . (count($codes) == 1 ? ' is' : 's are') . " reported.</p>";
 	$response .=  "<p class=\"text-info\">Fixing them will remove " . count($errors) . " errors from the file.</p>";
 	return $response;
 }
