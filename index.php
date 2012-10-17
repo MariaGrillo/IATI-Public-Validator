@@ -14,6 +14,17 @@ if (isset($_GET['test'])) {
 } else {
 	$test = "default";
 }
+
+if (isset($_GET['perm'])) {
+	$exisiting_file = filter_var($_GET['perm'], FILTER_SANITIZE_STRING);
+  //echo $exisiting_file;
+	if (file_exists("upload/" . $exisiting_file)) {
+		$_SESSION['uploadedfilepath'] = $file_path = "upload/" . $exisiting_file;
+    //echo $_SESSION['uploadedfilepath'];
+	} else {
+    $error_msg = "The tempory link you are trying to reach does not exist or has expired";
+  }
+}
 //Switch on test to decide which pages to load
 switch ($test) {
 	case "basic": //Menu - File Statistics - Basic info
@@ -102,6 +113,7 @@ switch ($test) {
           <ul class="nav">
             <li class="active"><a href="<?php echo $host ?>"><i class="icon-home"></i> Home</a></li>
             <li><a href="<?php echo $host ?>common_errors.php"><i class="icon-asterisk"></i> Common errors</a></li>
+            <li><a href="<?php echo $host ?>developers.php"><i class="icon-asterisk"></i> Developers</a></li>
             <!--<li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>-->
           </ul>
@@ -152,8 +164,19 @@ switch ($test) {
 						}
             //Finally only display the HTML if we have a file 
 						if (isset($_SESSION['uploadedfilepath'])) {
-              $time = get_time(basename($_SESSION['uploadedfilepath']));
-							echo '<div class="alert alert-info"><strong>Testing:</strong> ' . $testing_file_name . '<br/><strong>Uploaded:</strong> ' . $time . ' GMT</div>';
+              $day_time = get_time(basename($_SESSION['uploadedfilepath']));
+              $day = $day_time[1];
+              $time = $day_time[0];
+              $today = date("z");
+              if ($today == $day) {
+                $day = "Today";
+              } elseif ($today - $day == 1) {
+                $day = "Yesterday";
+              } else {
+                $day = $today - $day . " days ago";
+              }
+                
+							echo '<div class="alert alert-info"><strong>Testing:</strong> ' . $testing_file_name . '<br/><strong>Uploaded:</strong> ' . $day . ' at ' . $time . ' GMT</div>';
 						}
 					?>
 					<?php 
@@ -197,7 +220,18 @@ switch ($test) {
 			
 		</div><!--end Row-->
 		
-		
+    <?php if (isset($_SESSION['uploadedfilepath'])) : ?>
+		<div class="row">
+      <div class="span10 offset2">
+        <h4>Share these results</h4>
+        <p>
+          The link below will return you to the home page with the file you are inspecting pre-loaded into the system.<br/>
+          Links expire approximately 3 days after a file has been submitted.<br/>
+          <a href="<?php echo $host . "?perm=" . htmlentities(basename($_SESSION['uploadedfilepath'])); ?>">Share these results</a><br/>
+        </p>
+      </div>
+    </div>
+    <?php endif; ?>
 	  <!--ABOUT-->
 	  <hr>
 	  <div class="row">
@@ -206,6 +240,7 @@ switch ($test) {
         <p>This is a designed as a quick, simple service to allow people to check their IATI XML files.</p>
         <p>Because IATI files can be varied, complex or even very simple depending on the reporting organisation's needs, 'validation' is a difficult concept.</p>
         <p>This tool performs some basic checks around the XML, and then some compliance checks against the IATI Standard, an agreed set of political desires, that are not enforced by the IATI schema.</p>
+        <p>Data submitted to the site is saved to allow us to test the data. Files are removed every three days as part of regular server maintenance.</p>
       </div>
     </div>
     <!--Other Sites-->
@@ -302,6 +337,8 @@ function get_time($file_path) {
   $time = explode("_",$file_path);
   $time = array_pop($time);
   $time = trim($time,".xml"); //for the paste case!
+  $day = date("z",$time);
   $time = date("H:i:s",$time);
-  return $time;
+  
+  return array($time,$day);
 }

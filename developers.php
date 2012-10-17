@@ -5,7 +5,7 @@ include "settings.php";
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>IATI Public Validator - Common Errors</title>
+    <title>IATI Public Validator - Developers</title>
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">-->
@@ -56,8 +56,8 @@ include "settings.php";
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="<?php echo $host ?>"><i class="icon-home"></i> Home</a></li>
-              <li class="active"><a href="<?php echo $host ?>common_errors.php"><i class="icon-asterisk"></i> Common errors</a></li>
-              <li><a href="<?php echo $host ?>developers.php"><i class="icon-asterisk"></i> Developers</a></li>
+              <li><a href="<?php echo $host ?>common_errors.php"><i class="icon-asterisk"></i> Common errors</a></li>
+              <li class="active"><a href="<?php echo $host ?>developers.php"><i class="icon-asterisk"></i> Developers</a></li>
               <!--<li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
               <li class="dropdown">
@@ -107,29 +107,19 @@ include "settings.php";
 	  <!--ABOUT-->
 	  <div class="row">
         <div class="span12">
-			<h2>Common Errors</h2>
-			<p>Don't panic!</p>
-			<p>Errors in your XML files are pretty common. Often what looks like a whole load of errors can easily be fixed. Below are the most common errors we encounter in people's files.</p>
+			<h2>Developers</h2>
+			<h3>Validation of IATI data files</h3>
+			<p>If an IATI data file fails to validate against the schema, this is not the end of the world!</p>
+      <p>Files fail validation for many good, practical reasons from a publishers point of view, and yet still provide useful accessable data for other people to use.<br/>However, valid files do make it much easier for data users to work with your data, and passing the 2 basic rules of:</p>
+      <ul><li>Well formed XML</li><li>Validation against IATI schema</li></ul><p>should be seen as basic requirements of your data</p>
+       
 			<hr>
-			<h3>Well Formed XML</h3>
-			<p>Well Formed XML means that machines will be able to read your data. If it is not well formed, they can't and we need to fix it. Some common problems are outlined below:</p>
-			<h4>Opening and ending tag mismatch</h4>
-			<p>Usually this is down to a typo somewhere. Each tag or element must be consistent. <br/>&lt;iati-activities&gt;&lt;/iati-activities&gt; is good &lt;iatiactivities&gt;&lt;/iati-activities&gt; is bad.</p>
-			<hr>
-			<h3>Validation Errors</h3>
-			<h4>attribute 'iso-date': '' is not a valid value of the atomic type 'xs:date'.</h4>
-			<p>Dates in IATI should look like YYYY-MM-DD, e.g. the 22nd August 2012 would be written as: 2012-08-22.</p>
-			<h4> attribute 'generated-datetime': '2011-10-17 14:00:00' is not a valid value of the atomic type 'xs:dateTime'.</h4>
-			<p>A datetime (as opposed to a date) specifies both a time and a date. A common error is to miss out the 'T' that separates the date from the time. <br/>
-			So in the example above, this would validate: 2011-10-17T14:00:00<br/>
-			Other common errors are not providing the Date as YYYY-MM-DD or the time as HH:MM:SS<br/>
-			You can also specify a timezone and sometimes people don't get that bit quite right.</p>
-			<h4>attribute 'percentage': '' is not a valid value of the atomic type 'xs:positiveInteger'.</h4>
-			<p>In some circumstances we require you to supply just a number. People sometimes include commas, currency symbols, percentage signs, or write their number as a decimal. If you want to say twenty percent, just write 20.</p>
-			<h4>The attribute '' is not allowed.</h4>
-			<p>This means you've put something in that doesn't need to be there. Simply remove it!</p>
-			<h4>Character content other than whitespace is not allowed because the content type is 'element-only'.</h4>
-			<p>This usually means something has been typed where it shouldn't have been. All content should be inside the IATI element tags. This is usually a sign that something has strayed outside!</p>
+			<h3>About this tool</h3>
+			<p>This tool is built using PHP's XML parsers. (Both the <a href="http://www.php.net/manual/en/book.dom.php">DOM</a> and <a href="http://php.net/manual/en/book.simplexml.php">SimpleXML</a> parsers)</p>
+			
+      <hr>
+			<h3>Validation files on your local machine</h3>
+			<p>xmllint is a really useful tool for checking file validation on your local machine. Information on <a href="http://wiki.iatistandard.org/tools/xml_validation/start">how to use xmllint with IATI data</a> can be found on our wiki.</p>
 			
 			
 		</div>

@@ -42,12 +42,24 @@
 			$xsd = "http://iatistandard.org/downloads/iati-organisations-schema.xsd";
 			$schema = "Organisation";
 			}
-			
+			$reader = new XMLReader();
+
+      $reader->open($file_path);
+      $valid = $reader->setSchema($xsd); //Validate against our schema
+      while ($reader->read()) {
+        if (! $reader->isValid()) {
+          
+          $invalid = TRUE;
+          echo "invalid";
+          $valid = FALSE;
+          break;
+        }
+      }
 			if ($xml->schemaValidate($xsd)) {
-				$valid = TRUE;
+				//$valid = TRUE;
         //echo "yeeesss";
 			} else {
-				$valid = FALSE;
+				//$valid = FALSE;
 				//libxml_display_all_errors();
 			}
 			
