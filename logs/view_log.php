@@ -24,13 +24,14 @@ if (isset($_GET['days'])) {
 }
 
 echo "<h2>Days: " . $days . "</h2>";
+$upload_dir =  "../upload";
 echo 'Upload Directory Size: ' . round((getDirSize($upload_dir)/ 1024),2) . "KB"  . "<br/>";
 //echo $log_file . "<br/>";
 
 //we have a number of different messages logged.
 $severities = array("success","error","fail");
 $types = array("upload","fetch","pasted");
-$upload_dir =  "../upload";
+
 
 echo "Log Size: " . round((filesize("log.txt") / 1024),2) . "KB"  . "<br/>";
 
