@@ -52,7 +52,7 @@ function fetch_data_from_url ($xurl, $cacheFile) {
 					$upload_msg  .= "<br/>Time to fetch: " . $retrieved;
 					//echo $upload_msg;
 					$_SESSION['uploadedfilepath']=$cacheFile;
-					$_SESSION['wellformed']=TRUE;
+					$_SESSION['wellformed'] = FALSE; //Assume it's wrong then test it later!
 					$_SESSION['upload_msg'] = $upload_msg;
 					$_SESSION['url'] = $xml_url;
           record_in_log('success','fetch','File of size: ' . round((filesize($cacheFile) / 1024),2) . ' Kb fetched');

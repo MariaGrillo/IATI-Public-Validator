@@ -15,7 +15,18 @@
 		</div>
 <?php endif; ?>	
 	
-<?php if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error_msg) ) || !isset($file_path) ) :?>
+
+<?php //Upload file not present, error meesage set, wellformed not set (this is set at false after data has been received and not yet tested)
+if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error_msg) ) || !isset($_SESSION['wellformed']) ) :?>
+<?php //debug
+  /*
+  echo sizeof($_FILES) . '<br/>'; 
+  echo $_SESSION['uploadedfilepath'] . '<br/>'; 
+  echo $error_msg . '<br/>';
+  echo $file_path . '<br/>'; 
+  echo $_SESSION['wellformed'] . '<br/>'; 
+  */
+?>
 	<p class="lead">Test IATI XML</p>
 	<div class="row">
 		<div class="span9">

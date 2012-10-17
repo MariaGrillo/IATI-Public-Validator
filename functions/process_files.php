@@ -38,6 +38,7 @@ if(sizeof($_FILES)!=0) {
 			//Set the filepath as a session variable
 			$_SESSION['uploadedfilepath']=$file_path;
 			$_SESSION['upload_msg'] = $upload_msg;
+      $_SESSION['wellformed'] = FALSE; //Assume it's wrong then test it!
       record_in_log('success','upload','File of size: ' . round(($_FILES["file"]["size"] / 1024),2) . ' Kb uploaded');
       
 		 // }
@@ -77,6 +78,7 @@ if(sizeof($_FILES)!=0) {
 	$file_path = "upload/paste_".time().".xml";
 	$_SESSION['uploadedfilepath']=$file_path;
 	$_SESSION['upload_msg'] = "Pasted data";
+  $_SESSION['wellformed'] = FALSE; //Assume it's wrong then test it!
   record_in_log('success','pasted','File of size: ' . round((filesize($file_path) / 1024),2) . ' Kb pasted');
 }
 //echo $file_path;

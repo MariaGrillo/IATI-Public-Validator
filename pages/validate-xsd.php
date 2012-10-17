@@ -50,7 +50,7 @@
         if (! $reader->isValid()) {
           
           $invalid = TRUE;
-          echo "invalid";
+          //echo "invalid";
           $valid = FALSE;
           break;
         }
