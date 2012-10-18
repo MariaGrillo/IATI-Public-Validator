@@ -20,6 +20,7 @@ if (isset($_GET['perm'])) {
   //echo $exisiting_file;
 	if (file_exists("upload/" . $exisiting_file)) {
 		$_SESSION['uploadedfilepath'] = $file_path = "upload/" . $exisiting_file;
+    $_SESSION['wellformed'] = FALSE; //Set this so we go straight to the wellformed results
     //echo $_SESSION['uploadedfilepath'];
 	} else {
     $error_msg = "The tempory link you are trying to reach does not exist or has expired";
