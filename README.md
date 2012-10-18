@@ -19,6 +19,12 @@ You will need to add an 'upload' directory to the root of the project and make i
 Make a copy of example.settings.php and rename it settings.php
 Edit the configuration information in that file and save it. 
 Don't forget to set a path for your log file. Basic info is collected about the use of the upload functions. You may need to enable write permissions on your log file.
+To clear out the 'upload' directory you can (copy) and alter the example.remove_files.php file and hit it on a cron run
+
+About file upload size
+----------------------
+The application sets a limit in the functions/process_files.php file, BUT yoiur webserver will probably also have an upload limit in place.
+Alter your php.ini file or checkout the override rules in the .htaccess file included in the project. Obviously this only works if your webserver reads the .htaccess file.
 
 IATI Schema
 -----------
