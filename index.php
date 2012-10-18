@@ -156,10 +156,12 @@ switch ($test) {
 							if (strstr($_SESSION['uploadedfilepath'], "paste")) { //Pasted code is saved with the filename like pasted.time()
 								$testing_file_name = "Pasted code";
 							} else {
+                //Filename of type basename_time().xml
 								$testing_file_name = basename($_SESSION['uploadedfilepath']);
+                $extension = end(explode(".", $testing_file_name));
                 $testing_file_name = explode("_",$testing_file_name);
                 array_pop($testing_file_name);
-                $testing_file_name = implode("_",$testing_file_name);
+                $testing_file_name = implode("_",$testing_file_name) . "." . $extension;
 							}
 						}
             //Finally only display the HTML if we have a file 
