@@ -146,7 +146,16 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 			<div class="tab-pane" id="file">
 			  <!--<div class="span3">-->
 					<!--<h3>File Details:</h3>-->
-					<div><?php echo $_SESSION['upload_msg']; ?></div>
+					<div>
+            <?php 
+              if (isset($_SESSION['upload_msg'])) {
+                echo $_SESSION['upload_msg']; 
+              } else {
+                echo "File: " . $testing_file_name . "<br/>";
+                echo "Size: " . round(filesize($file_path) / 1024,2) . "KB";
+              }
+            ?>
+          </div>
 				<!--</div>-->
 			</div>
 		  <?php if (isset($error_detail)): ?>
