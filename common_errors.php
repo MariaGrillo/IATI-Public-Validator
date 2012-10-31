@@ -93,7 +93,7 @@ include "settings.php";
 			</div>
 			<div span="2" class="reset">
 				<?php if (isset($_SESSION['uploadedfilepath'])) :?>
-					<p class="lead"><br/><a href="<?php echo $host; ?>?test=reset"" class="btn btn-large btn-success">Load New File</a></p>
+					<p class="lead"><br/><a href="<?php echo $host; ?>?test=reset" class="btn btn-large btn-success">Load New File</a></p>
 				<?php endif; ?>
 			</div>
 		</div>
