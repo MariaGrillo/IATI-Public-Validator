@@ -30,10 +30,10 @@
         }
         
         $path_to_corpus = $dir . "/"; //path to directory //$dir is set in settings.php
-        echo $output_dir . '<br/>';
-        echo $corpus. '<br/>';
-        echo $path_to_corpus. '<br/>';
-        echo $file_path. '<br/>';
+        //echo $output_dir . '<br/>';
+        //echo $corpus. '<br/>';
+        //echo $path_to_corpus. '<br/>';
+        //echo $file_path. '<br/>';
         format_as_json($output_dir,$corpus,$path_to_corpus,$file_path);
         $json = file_get_contents($file_path . "_transparency.json");
         //echo $json;

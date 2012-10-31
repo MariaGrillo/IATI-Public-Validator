@@ -19,7 +19,7 @@ function format_as_json ($output_dir,$corpus,$path_to_corpus,$file_path = FALSE)
   global $test_meta;      //This is the data about the tests held in an accessible array. Declared as global so we can use it in the get_score function
   
   $output_file = $output_dir . $corpus . '_transparency.json';
-  echo $output_file;
+  //echo $output_file;
   //Get the existing data on this provider from a file
   //If file doesn't exist create the start of one
   if (!file_exists($output_file)) {
@@ -126,18 +126,18 @@ function format_as_json ($output_dir,$corpus,$path_to_corpus,$file_path = FALSE)
       
       //Tracable Transactions
       $no_disbursements = $data["no_disbursements"][$hierarchy];
-      echo $no_disbursements . PHP_EOL;
+      //echo $no_disbursements . PHP_EOL;
       $no_incoming_funds = $data["no_incoming_funds"][$hierarchy];
-      echo $no_incoming_funds . PHP_EOL;
+      //echo $no_incoming_funds . PHP_EOL;
       $transactions_that_should_be_traced = $no_disbursements + $no_incoming_funds;
-      echo $transactions_that_should_be_traced . PHP_EOL;
+      //echo $transactions_that_should_be_traced . PHP_EOL;
       $no_tracable_transactions = $data["no_tracable_transactions"][$hierarchy];
-      echo $no_tracable_transactions . PHP_EOL;
+      //echo $no_tracable_transactions . PHP_EOL;
      // die;
       if ($no_tracable_transactions > 0 ) { //avoid divide by zero
         $percent_tracable = 100 * round(( $no_tracable_transactions / $transactions_that_should_be_traced),2);
         $tracable_threashold = $test_meta["test"]["Financial transaction recipient / Provider activity Id"]["threashold"];
-        echo $test_meta["test"]["Financial transaction recipient / Provider activity Id"]["threashold"]; 
+        //echo $test_meta["test"]["Financial transaction recipient / Provider activity Id"]["threashold"]; 
         if ($percent_tracable >= $tracable_threashold) {
           //echo "yes"; die;
           $tracable_score = $test_meta["test"]["Financial transaction recipient / Provider activity Id"]["score"];
@@ -165,7 +165,7 @@ function format_as_json ($output_dir,$corpus,$path_to_corpus,$file_path = FALSE)
       $activities_with_structure_locations = array_merge($activities_with_coordinates,$activities_with_adminstrative); //if arrays are empty this is ok!
       $activities_with_structure_locations = array_unique($activities_with_structure_locations); //need to unique them as activities can have both
       $activities_with_structure_locations_count = count($activities_with_structure_locations);
-      echo $activities_with_structure_locations_count . PHP_EOL;
+      //echo $activities_with_structure_locations_count . PHP_EOL;
 
       $activities_with_location_count = 0;
       $activities_with_location = array();
@@ -175,7 +175,7 @@ function format_as_json ($output_dir,$corpus,$path_to_corpus,$file_path = FALSE)
       //$activities_with_location = array_merge($activities_with_location,$activities_with_structure_locations);
       $activities_with_location = array_unique($activities_with_location);
       $activities_with_location_count = count($activities_with_location);
-      echo $activities_with_location_count . PHP_EOL;
+      //echo $activities_with_location_count . PHP_EOL;
       
       //
       $location_level_1 = $activities_with_location_count;
@@ -196,7 +196,7 @@ function format_as_json ($output_dir,$corpus,$path_to_corpus,$file_path = FALSE)
       $activities_with_dac_sector = array_merge($activities_sector_declared_dac,$activities_sector_assumed_dac); //probably don't need to 'unique' this, but won't hurt
       $activities_with_dac_sector = array_unique($activities_with_dac_sector);
       $activities_with_dac_sector_count = count($activities_with_dac_sector);
-      echo $activities_with_dac_sector_count . PHP_EOL;
+      //echo $activities_with_dac_sector_count . PHP_EOL;
      // die;
      // die;
       //Last-updated-datetime
@@ -206,7 +206,7 @@ function format_as_json ($output_dir,$corpus,$path_to_corpus,$file_path = FALSE)
       foreach ($attribute_values as $value) { //Loop through all possible results
         
         if (isset($data["activities_with_attribute"][$hierarchy][$value])) {
-          echo $value . PHP_EOL;
+          //echo $value . PHP_EOL;
           $count = count(array_unique($data["activities_with_attribute"][$hierarchy][$value]));
           //if (in_array($value, $attribute_start_values)) {
           if ($value == "start") {
@@ -225,11 +225,11 @@ function format_as_json ($output_dir,$corpus,$path_to_corpus,$file_path = FALSE)
         $activies_in_country_lang = array_unique($activies_in_country_lang);
       }
       $activies_in_country_lang_count = count($activies_in_country_lang);
-      echo $activies_in_country_lang_count; //die;
+      //echo $activies_in_country_lang_count; //die;
     } 
   }
-  echo $start . PHP_EOL;
-  echo $end . PHP_EOL;
+  //echo $start . PHP_EOL;
+  //echo $end . PHP_EOL;
 
   //Work out the scores
   $start_score = get_score($start,"Activity Dates (Start Date)");
