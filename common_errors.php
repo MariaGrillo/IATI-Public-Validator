@@ -115,7 +115,11 @@ include "settings.php";
 			<p>Well Formed XML means that machines will be able to read your data. If it is not well formed, they can't and we need to fix it. Some common problems are outlined below:</p>
 			<h4>Opening and ending tag mismatch</h4>
 			<p>Usually this is down to a typo somewhere. Each tag or element must be consistent. <br/>&lt;iati-activities&gt;&lt;/iati-activities&gt; is good &lt;iatiactivities&gt;&lt;/iati-activities&gt; is bad.</p>
-			<hr>
+			<h4>PCDATA invalid Char value 25</h4>
+      <p>XML files are fussy about the data they contain. This error means that somewhere you have a character in the XML that shouldn't be there. These can be quite hard to track down. Sometimes they can be things copied an pasted from Word documents like curly quotes.</p>
+      <h4>xmlParseEntityRef: no name</h4>
+      <p>This often refers to an unencoded ampersand (&amp;). These should be declared in your text as &amp;amp;</p>
+      <hr>
 			<h3>Validation Errors</h3>
 			<h4>attribute 'iso-date': '' is not a valid value of the atomic type 'xs:date'.</h4>
 			<p>Dates in IATI should look like YYYY-MM-DD, e.g. the 22nd August 2012 would be written as: 2012-08-22.</p>

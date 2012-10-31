@@ -3,7 +3,7 @@
 session_start(); //We use sessions to track the uploaded file through the application
 include "settings.php"; //site installation specifics
 include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
-$tests = array('default','reset','xsd','elements','basic','compliance1'); //array of allowed $_GET values corresponding to the pages of the tests
+$tests = array('default','reset','xsd','elements','basic','compliance1','transparency'); //array of allowed $_GET values corresponding to the pages of the tests
 
 //Sanitize the $_GET vars
 if (isset($_GET['test'])) {
@@ -45,6 +45,13 @@ switch ($test) {
   case "compliance1": //Menu - Tests - Compliance1
 		if (isset($_SESSION['uploadedfilepath'])) {
 			$page =  "pages/compliance1.php";
+		} else {
+			$page = "pages/front.php";
+		}
+		break;
+  case "transparency": //Menu - Tests - Compliance1
+		if (isset($_SESSION['uploadedfilepath'])) {
+      $page =  "pages/transparency_index.php";
 		} else {
 			$page = "pages/front.php";
 		}

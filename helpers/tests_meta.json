@@ -1,0 +1,98 @@
+{
+  "test": {
+        "Annual forward planning budget data for countries (Org File)": {
+          "id":1.01
+        },
+        "Timeliness of Activity Data" : {
+          "id":1.02
+        },
+        "Alignment with Recipient Financial Year": {
+          "id":1.03
+        },
+        "IATI activity identifier": {
+            "id":1.04,
+            "threashold":95, 
+            "score":1
+        },
+        "Activity Title or Description (Recipient language)": {
+            "id":1.05,
+            "threashold":50, 
+            "score":1
+        },
+        "Activity Dates (Start Date)": {
+            "id":1.06,
+            "threashold":95, 
+            "score":1
+        },
+        "Activity Dates (End Date)": {
+            "id":1.07,
+            "threashold":75, 
+            "score":1
+        },
+        "Participating Organisation (Implementing)": {
+            "id":1.08,
+            "threashold":50, 
+            "score":1
+        },
+        "Participating Organisation (Accountable)": {
+            "id":1.09,
+            "threashold":33, 
+            "score":1
+        },
+        "Sub-national Geographic Location (text)": {
+            "id":1.10,
+            "threashold":30, 
+            "score":1
+        },
+        "Sub-national Geographic Location (structure)": {
+            "id":1.101,
+            "threashold":30, 
+            "score":1
+        },
+        "Sector (DAC CRS)": {
+            "id":1.11,
+            "threashold":90, 
+            "score":1
+        },        
+        "Activity Budget / Planned Disbursement": {
+            "id":1.12,
+            "threashold":50, 
+            "score":2
+        },
+        "Economic Classification (Capital/Recurrent)" : {
+          "id":1.13        },
+        "Link to recipient budget classification" : {
+          "id":1.14
+        },
+        "Financial transaction (Commitment)": {
+            "id":1.15,
+            "threashold":95, 
+            "score":1
+        },
+        "Financial transaction (Disbursement & Expenditure)" :{
+            "id":1.16,
+            "threashold":80, 
+            "score":1
+        },
+        "Financial transaction recipient / Provider activity Id": {
+            "id":1.17,
+            "threashold":50, 
+            "score":1
+        },      
+        "Activity Documents": {
+            "id":1.18,
+            "threashold":0, 
+            "score":1
+        },
+        "Text of Conditions": {
+            "id":1.19,
+            "threashold":0, 
+            "score":1
+        },
+        "Results data": {
+            "id":1.20,
+            "threashold":0, 
+            "score":2
+        }
+    }
+}
