@@ -36,7 +36,7 @@
       $xml = new DOMDocument();
       if ($xml->load($file_path)) {
         if($xml->xmlEncoding == NULL) {
-          $encoding = "Non declared";
+          $encoding = "Encoding: Non declared";
         } else {
           $encoding = $xml->xmlEncoding;
         }
@@ -106,7 +106,7 @@
           if ($encoding != FALSE) {
             $basic['DetectEncoding'] = $encoding;
           } else {
-            $basic['DetectEncoding'] = "Not detected";
+            $basic['DetectEncoding'] = "Encoding: Not detected";
           }
 
           
@@ -227,22 +227,22 @@
                 echo '<div class="well span2">';
                 echo '<h3>Document </h3>';
                 if ($json->docDeclaration->version == "Assumed: XML 1.0") {
-                  echo "<p class=\"text-error\">" . $json->docDeclaration->version . "</p>";;
+                  echo "<span class=\"text-error text-error-small\">" . $json->docDeclaration->version . "</span><br/>";
                 } else {
                   echo  $json->docDeclaration->version . "<br/>";
                 }
-                if ($json->docDeclaration->encoding == "Non declared") {
-                  echo "<p class=\"text-error\">" . $json->docDeclaration->encoding . "</p>";;
+                if ($json->docDeclaration->encoding == "Encoding: Non declared") {
+                  echo "<span class=\"text-error text-error-small\">" . $json->docDeclaration->encoding . "</span><br/>";
                 } else {
                   echo "Encoding: " . $json->docDeclaration->encoding . "<br/>";
                 }
-                if ($json->docDeclaration->standalone != NULL) {
-                  echo "<p class=\"text-info\">Standalone: " . $json->docDeclaration->standalone . "</p>";
-                }
-                if ($json->DetectEncoding=="Not detected") {
-                  echo "<p class=\"text-error\">" . $json->DetectEncoding . "</p>";
+                if ($json->DetectEncoding=="Encoding: Not detected") {
+                  echo "<span class=\"text-error text-error-small\">" . $json->DetectEncoding . "</span><br/>";
                 } else {
-                  echo "<h5>Encoding detected:</h5> " . $json->DetectEncoding;
+                  echo "Encoding detected: " . $json->DetectEncoding . "<br/>";
+                }
+                 if ($json->docDeclaration->standalone != NULL) {
+                  echo "<span class=\"text-info text-info-small\">Standalone: " . $json->docDeclaration->standalone . "</span>";
                 }
                 echo '</div>';
                 

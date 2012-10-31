@@ -49,3 +49,12 @@ font-size:1.2em;
 color: #3A87AD;
 font-size:1.2em;
 }
+
+.text-error-small {
+font-size:1em;
+color: #B94A48;
+}
+.text-info-small {
+font-size:1em;
+color: #3A87AD;
+}
