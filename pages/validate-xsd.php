@@ -27,9 +27,22 @@
       }
 			$xml = new DOMDocument();
 			$xml->load($file_path);
-			  
+      
+      //Get the right schema to validate agianst
+      //First work out the version
+      if (isset($_SESSION["version"]) && in_array($_SESSION["version"],$iati_versions)) {
+        $version = $_SESSION["version"];
+      } else {
+        $version == $current_version; //$current_version is declared at the top of index.php
+      }
+        
+      if ($version == $current_version) { //Current version is always at downloads/
+        $version_string = "";
+      } else {
+        $version_string = $version . "/"; //Old versions are always at downloads/{version}/
+      } 
 			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
-			$xsd = "http://iatistandard.org/downloads/iati-activities-schema.xsd";
+			$xsd = "http://dev.iatistandard.org/downloads/" . $version_string . "iati-activities-schema.xsd";
 			//$xsd = $host . "/iati-schema/iati-activities-schema.xsd";
 			$schema = "Activity";
       //echo $file_path;
@@ -39,7 +52,7 @@
 			//  continue;
 			//}
 			} else {
-			$xsd = "http://iatistandard.org/downloads/iati-organisations-schema.xsd";
+			$xsd = "http://iatistandard.org/downloads/" . $version_string . "iati-organisations-schema.xsd";
 			$schema = "Organisation";
 			}
 			$reader = new XMLReader();
@@ -64,7 +77,7 @@
 			}
 			
 		?>
-		<h2>Validation against the IATI <?php echo $schema; ?> Schema</h2>
+		<h2>Validation against the IATI <?php echo $schema; ?> Schema (version <?php echo $version; ?>)</h2>
 		<ul class="nav nav-tabs" id="myTab">
 		  <li class="active"><a href="#status">Status</a></li>
 		  <?php if ($valid == FALSE): ?>
@@ -81,11 +94,11 @@
 						<div class="span5">-->
 							<?php if ($valid == TRUE): ?>
 								<h3 class="success">Success</h3>
-								<div class="alert alert-success">This file validates against the IATI <?php echo $schema; ?> Schema</div>
+								<div class="alert alert-success">This file validates against the IATI <?php echo $schema; ?> Schema (version <?php echo $version; ?>) </div>
 							<?php else: ?>
 								<h3 class="fail">Fail</h3>
 								<div id="intext">
-									<div class="alert alert-error">This file does NOT validate against the IATI <?php echo $schema; ?> Schema</div>
+									<div class="alert alert-error">This file does NOT validate against the IATI <?php echo $schema; ?> Schema (version <?php echo $version; ?>)</div>
 									<?php echo libxml_error_count(); ?> <br/><br/>
 									See <a href="#extra">Extra info</a> for details about the errors.
 								</div>

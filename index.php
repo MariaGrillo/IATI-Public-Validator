@@ -4,8 +4,27 @@ session_start(); //We use sessions to track the uploaded file through the applic
 include "settings.php"; //site installation specifics
 include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
 $tests = array('default','reset','xsd','elements','basic','compliance1','transparency'); //array of allowed $_GET values corresponding to the pages of the tests
+$iati_versions = array("1.01","1.02");
+$current_version = "1.01";
+
 
 //Sanitize the $_GET vars
+if (isset($_GET['version'])) {
+  if (filter_var($_GET['version'], FILTER_VALIDATE_FLOAT)) {
+    if ( in_array($_GET['version'], $iati_versions) ) {
+      $_SESSION["version"] = $_GET['version'];
+    }
+  }
+} else {
+  if ( !isset($_SESSION["version"]) ) {
+    $_SESSION["version"] = $current_version;
+  } else {
+    if (!in_array($_SESSION["version"], $iati_versions)) {
+      $_SESSION["version"] = $current_version;
+    }
+  }
+}
+
 if (isset($_GET['test'])) {
 	$test = filter_var($_GET['test'], FILTER_SANITIZE_STRING);
 	if (!in_array($test,$tests)) {
@@ -199,6 +218,22 @@ switch ($test) {
 			
       <!--Sidebar-->
 			<div class="span2" style="float:left">
+        
+        <!--Version Switcher-->
+				<div class="well sidebar-nav">
+          <form method="get" action="index.php">
+            <legend>Version</legend>
+            <label for="version">Schema version<br />
+            <select name="version" class="span1">
+              <option value="1.01">1.01</option>
+              <option <?php if (isset($_SESSION["version"]) && $_SESSION["version"] == 1.02 ) { echo 'selected="selected"'; } ?> value="1.02">1.02</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Switch</button>
+            <?php if (isset($test) && $test != "default" && in_array($test,$tests)) { echo '<input type="hidden" name="test" value="' . $test . '" />'; } ?>
+            <!--<input type="submit" value="Submit" />-->
+          </form>
+        </div> 
+        
         <!--Tests Navigation-->
 				<div class="well sidebar-nav">
 					<?php if (isset($_SESSION['uploadedfilepath'])): //Only show links if we have a file?>
@@ -225,7 +260,9 @@ switch ($test) {
             </ul>
           </div><!--/.well -->
         <?php endif; ?>
-				  
+        
+        
+        
 			</div><!--end Sidebar-->
 			
 		</div><!--end Row-->
