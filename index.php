@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 session_start(); //We use sessions to track the uploaded file through the application
 include "settings.php"; //site installation specifics
 include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
