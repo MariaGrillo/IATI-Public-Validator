@@ -73,6 +73,7 @@
         <div class="row">
           <div class="span9">
             <?php 
+              //$transparency_elements = array("conditions","document-link","result");
               if (count($json->found) > 0) {
                 //print_r($json->found);
                 echo '<div class="span4">';
@@ -90,7 +91,11 @@
                 echo '<ul>';
                 
                 foreach ($json->missing as $element) {
-                  echo '<li>'. $element .'</li>';
+                  //if (in_array($element,$transparency_elements)) {
+                  //  echo '<li class="text-info-small">'. $element .'</li>';
+                  //} else {
+                    echo '<li>'. $element .'</li>';
+                  //}
                 }
                 echo '</ul>';
                 echo '</div>';
