@@ -95,7 +95,7 @@
             $times[] = strtotime($time);
           }
           if ($times != NULL) {
-            print_r($times);
+            //print_r($times);
             sort($times);
             $most_recent = array_pop($times);
             $most_recent = date("Y-m-d",$most_recent) . "T" . date("H:i:s",$most_recent);

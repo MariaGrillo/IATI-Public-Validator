@@ -110,7 +110,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 				$error_detail . "</ul>";
 			} else {
 				$_SESSION['wellformed'] = TRUE;
-				$test_result = '<div class="alert alert-success"><strong>Great.</strong> This is a well formed xml file.</div>';
+				$test_result = '<div class="alert alert-success"><strong>Great.</strong> This is a well formed xml file.</div><div class="alert alert-info">This does NOT mean that it validates against the IATI schema.<br/><strong><a href="?test=xsd">Test Validation</a></strong></div>';
 			}
 		?>
 		<h2>Well Formed XML test</h2>
@@ -130,8 +130,9 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 					<div class="span9">
 						<div class="span5">-->
 							<!--<h3>Well-formed check:</h3>-->
-							<?php echo $test_result; ?>
+							
 							<div>This check tells us if machines are going to be able to read this file.<br/><br/></div>
+              <?php echo $test_result; ?>
 							<?php if (isset($error_detail)): ?>
 								<div id="intext">
 									See <a href="#extra">Extra info</a> for details about the errors.
