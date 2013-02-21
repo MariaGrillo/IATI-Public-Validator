@@ -12,6 +12,10 @@ Some basic statistics:
 * Elements found
 * Basic info
 
+Requirements
+------------
+PHP > 5.2.11 - for the use of `libxml_disable_entity_loader` to protect against xml injection attacks
+
 Quick Start
 -----------
 Checkout the files to your webserver.

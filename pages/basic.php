@@ -33,8 +33,37 @@
 
       include ('functions/xml_child_exists.php');
       //Load XML into the DOM to get file info
-      $xml = new DOMDocument();
-      if ($xml->load($file_path)) {
+      
+      $xml = file_get_contents($file_path);
+      $collapsedXML = preg_replace("/[[:space:]]/", '', $xml);
+      //echo $collapsedXML;
+      if(preg_match("/<!DOCTYPE/i", $collapsedXML)) {
+          //throw new InvalidArgumentException(
+         //     'Invalid XML: Detected use of illegal DOCTYPE'
+         // );
+          //echo "fail";
+        return FALSE;
+      }
+      $loadEntities  = libxml_disable_entity_loader(true);
+      $dom = new DOMDocument;
+      $dom->loadXML($xml);
+      foreach ($dom->childNodes as $child) {
+          if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
+              throw new Exception\ValueException(
+                  'Invalid XML: Detected use of illegal DOCTYPE'
+              );
+              libxml_disable_entity_loader($loadEntities);
+              die;;
+          }
+      }
+      libxml_disable_entity_loader($loadEntities);
+      
+      
+      
+      
+      
+      $xml = $dom;
+      //if ($xml->load($file_path)) {
         if($xml->xmlEncoding == NULL) {
           $encoding = "Encoding: Non declared";
         } else {
@@ -52,7 +81,7 @@
         } else {
           $version = "Declared: XML " . $xml->xmlVersion;
         }
-      }
+     // }
       //Covert to simpleXML for convenience
       if ($xml = simplexml_import_dom($xml)) {
       //if ($xml = simplexml_load_file($file_path)) {

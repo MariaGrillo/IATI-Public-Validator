@@ -18,7 +18,38 @@
         libxml_use_internal_errors(true);
         $result = array();
         //Which schema should we use - detect it in the xml!
-        $xml = simplexml_load_file($file_path);
+        //load the xml SAFELY
+        /* Some safety against XML Injection attack
+         * see: http://phpsecurity.readthedocs.org/en/latest/Injection-Attacks.html
+         * 
+         * Attempt a quickie detection of DOCTYPE - discard if it is present (cos it shouldn't be!)
+        */
+        $xml = file_get_contents($file_path);
+        $collapsedXML = preg_replace("/[[:space:]]/", '', $xml);
+        //echo $collapsedXML;
+        if(preg_match("/<!DOCTYPE/i", $collapsedXML)) {
+            //throw new InvalidArgumentException(
+           //     'Invalid XML: Detected use of illegal DOCTYPE'
+           // );
+            //echo "fail";
+          return FALSE;
+        }
+        $loadEntities  = libxml_disable_entity_loader(true);
+        $dom = new DOMDocument;
+        $dom->loadXML($xml);
+        foreach ($dom->childNodes as $child) {
+            if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
+                throw new Exception\ValueException(
+                    'Invalid XML: Detected use of illegal DOCTYPE'
+                );
+                libxml_disable_entity_loader($loadEntities);
+                return FALSE;
+            }
+        }
+        libxml_disable_entity_loader($loadEntities);
+        
+
+        $xml = simplexml_import_dom($dom);
         //**Test1
         //All activities should have a title
         //Fail is a fail

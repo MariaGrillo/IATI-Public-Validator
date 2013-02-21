@@ -24,7 +24,7 @@ function get_elements_from_schema($schema) {
 		default:
 			break;
 		}
-	$xml = simplexml_load_file($xsd);
+	$xml = simplexml_load_file($xsd); //this is fairly safe from XXE attack as we have hardcoded links and files hopefully - trusted source?
 	//print_r($xml);
 	$elements = $xml->xpath($xpath);
 	foreach ($elements as $element) {

@@ -25,8 +25,13 @@
 			if (file_exists($file_path)) {
         //echo "found file";
       }
+      /* Some safety against XML Injection attack
+     * see: http://phpsecurity.readthedocs.org/en/latest/Injection-Attacks.html
+     */
+      $loadEntities  = libxml_disable_entity_loader(true);
 			$xml = new DOMDocument();
 			$xml->load($file_path);
+      libxml_disable_entity_loader($loadEntities);
       
       //Get the right schema to validate agianst
       //First work out the version
