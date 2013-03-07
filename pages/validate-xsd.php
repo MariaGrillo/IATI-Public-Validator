@@ -28,9 +28,19 @@
       /* Some safety against XML Injection attack
      * see: http://phpsecurity.readthedocs.org/en/latest/Injection-Attacks.html
      */
+      $raw_xml = file_get_contents($file_path);
+      $collapsedXML = preg_replace("/[[:space:]]/", '', $raw_xml);
+      //echo $collapsedXML;
+      if(preg_match("/<!DOCTYPE/i", $collapsedXML)) {
+          //throw new InvalidArgumentException(
+         //     'Invalid XML: Detected use of illegal DOCTYPE'
+         // );
+          //echo "fail";
+        return FALSE;
+      }
       $loadEntities  = libxml_disable_entity_loader(true);
 			$xml = new DOMDocument();
-			$xml->load($file_path);
+			$xml->loadXML($raw_xml);
       libxml_disable_entity_loader($loadEntities);
       
       //Get the right schema to validate agianst
@@ -47,7 +57,7 @@
         $version_string = $version . "/"; //Old versions are always at downloads/{version}/
       } 
 			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
-			$xsd = "http://dev.iatistandard.org/downloads/" . $version_string . "iati-activities-schema.xsd";
+			$xsd = "http://iatistandard.org/downloads/" . $version_string . "iati-activities-schema.xsd";
 			//$xsd = $host . "/iati-schema/iati-activities-schema.xsd";
 			$schema = "Activity";
       //echo $file_path;

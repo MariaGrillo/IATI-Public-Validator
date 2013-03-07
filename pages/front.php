@@ -118,6 +118,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
       $loadEntities  = libxml_disable_entity_loader(true);
       $dom = new DOMDocument;
       $dom->loadXML($xml);
+      //echo $dom->saveXML();
       foreach ($dom->childNodes as $child) {
           if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
               throw new Exception\ValueException(
@@ -129,7 +130,9 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
       }
       libxml_disable_entity_loader($loadEntities);
       
-      $sxe = simplexml_import_dom($dom);
+      if (isset($dom)) {
+        $sxe = @simplexml_import_dom($dom);
+      }
 			//$sxe = simplexml_load_file($file_path);
 			if (!$sxe) {
 				$_SESSION['wellformed'] = FALSE;
@@ -143,6 +146,9 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 				$_SESSION['wellformed'] = TRUE;
 				$test_result = '<div class="alert alert-success"><strong>Great.</strong> This is a well formed xml file.</div><div class="alert alert-info">This does NOT mean that it validates against the IATI schema.<br/><strong><a href="?test=xsd">Test Validation</a></strong></div>';
 			}
+      //foreach (libxml_get_errors() as $error) {
+      //  echo $error;
+      //}
 		?>
 		<h2>Well Formed XML test</h2>
 		<ul class="nav nav-tabs" id="myTab">
