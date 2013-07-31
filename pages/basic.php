@@ -88,66 +88,94 @@
         $namespaces = $xml->getNamespaces(true);        
         
         //var_dump($namespaces);
-        if(!xml_child_exists($xml, "//iati-organisation")) {//ignore organisation files
-          $basic=array(); //array to store our values in. This will be encode to json
-          $basic['docDeclaration'] = array( "version" => $version,
-                                            "standalone" => $standalone,
-                                            "encoding" => $encoding
-                                            );
+        
+        //Common elements attributes tro both activity and organisation schema
+        $basic=array(); //array to store our values in. This will be encode to json
+        $basic['docDeclaration'] = array( "version" => $version,
+                                          "standalone" => $standalone,
+                                          "encoding" => $encoding
+                                          );
+        
+        //Metadata
+        $basic['generated'] = (string)$xml->attributes()->{'generated-datetime'};
+        $basic['version'] = (string)$xml->attributes()->version;
           
-          
-          $basic['generated'] = (string)$xml->attributes()->{'generated-datetime'};
-          $basic['version'] = (string)$xml->attributes()->version;
+        //Last Updated info
+        $last_updated = $xml->xpath("//@last-updated-datetime");
+        $last_updated = get_values($last_updated,"string");
+        foreach ($last_updated as $time) {
+          $times[] = strtotime($time);
+        }
+        if ($times != NULL) {
+          //print_r($times);
+          sort($times);
+          $most_recent = array_pop($times);
+          $most_recent = date("Y-m-d",$most_recent) . "T" . date("H:i:s",$most_recent);
+          $basic['mostRecent'] = $most_recent;
+        } else {
+          $basic['mostRecent'] = "Not Found";
+        }
+        
+        //Currency
+        $currencies = $xml->xpath("//@currency");
+        $default_currency = $xml->xpath("//@default-currency");
+        //print_r($default_currency);
+        $currencies = array_merge($default_currency,$currencies);
+        //print_r($currencies);
+        //$currencies = array_unique($currencies);
+        $basic['currencies'] = get_values($currencies,"string");
+        
+        //Language
+        $languages = $xml->xpath("//@xml:lang");
+        //print_r($languages);
+        $basic['languages'] = get_values($languages,"string");
+        
+        //Namespaces
+        $basic['namespaces'] = $namespaces;
+        
+        //Encoding
+        $string = file_get_contents($file_path);
+        $encoding = mb_detect_encoding($string,"UTF-8",true);
+        if ($encoding != FALSE) {
+          $basic['DetectEncoding'] = $encoding;
+        } else {
+          $basic['DetectEncoding'] = "Encoding: Not detected";
+        }
+        
+        //Activty or Organisation specific tests
+        if(xml_child_exists($xml, "//iati-activity")) {//ignore organisation files
+          $checking_activity_file = true;
           $basic['activities'] = count($xml->xpath("//iati-activity"));
           //$generated = $xml->attributes()->{'generated-datetime'};
           //$version = $xml->attributes()->version;
           //$activities = count($xml->xpath("//iati-activity"));
           
-          $languages = $xml->xpath("//@xml:lang");
-          //print_r($languages);
-          $basic['languages'] = get_values($languages,"string");
-          
-          $currencies = $xml->xpath("//@currency");
-          $default_currency = $xml->xpath("//@default-currency");
-          //print_r($default_currency);
-          $currencies = array_merge($default_currency,$currencies);
-          //print_r($currencies);
-          //$currencies = array_unique($currencies);
-          $basic['currencies'] = get_values($currencies,"string");
-          
           $hierarchies = $xml->xpath("//@hierarchy");
           $basic['hierarchies'] = get_values($hierarchies,"int");
           
-          $last_updated = $xml->xpath("//@last-updated-datetime");
-          $last_updated = get_values($last_updated,"string");
-          foreach ($last_updated as $time) {
-            $times[] = strtotime($time);
-          }
-          if ($times != NULL) {
-            //print_r($times);
-            sort($times);
-            $most_recent = array_pop($times);
-            $most_recent = date("Y-m-d",$most_recent) . "T" . date("H:i:s",$most_recent);
-            $basic['mostRecent'] = $most_recent;
-          } else {
-            $basic['mostRecent'] = "Not Found";
-          }
+        } elseif (xml_child_exists($xml, "//iati-organisation")) {
+          $checking_organisation_file = true;
+          $org_identifier = $xml->xpath("//iati-identifier");
+          $basic['org_iati_identifier'] = (string)$org_identifier[0];
+          //print_r($xml->xpath("//name")); die;
+          $org_name = $xml->xpath("//name"); //a simplexml object
+          $name = (string)$org_name[0];
+          $basic['org_name'] = $name;
+          //$basic['org_name'] = $basic['org_name']->0;
+          $org_ref = $xml->xpath("//reporting-org/@ref");
+          $basic['org_reporting_org_ref'] = (string)$org_ref[0];
+          $basic['org_recipient_country_budget'] = count($xml->xpath("//recipient-country-budget"));
+          $basic['org_recipient_org_budget'] = count($xml->xpath("//recipient-org-budget"));
+          $basic['org_total_budget'] = count($xml->xpath("//total-budget"));
+          $basic['org_document_link'] = count($xml->xpath("//document-link"));
+        }
+        
+        //Store the results in a json file
+        $basic_json = json_encode($basic);
+        file_put_contents($file_path . "_basic.json",$basic_json);
+        $json = json_decode($basic_json);
           
-          $basic['namespaces'] = $namespaces;
-
-          $string = file_get_contents($file_path);
-          $encoding = mb_detect_encoding($string,"UTF-8",true);
-          if ($encoding != FALSE) {
-            $basic['DetectEncoding'] = $encoding;
-          } else {
-            $basic['DetectEncoding'] = "Encoding: Not detected";
-          }
-
           
-          $basic_json = json_encode($basic);
-          file_put_contents($file_path . "_basic.json",$basic_json);
-          $json = json_decode($basic_json);
-      }
     }
 }
 
@@ -159,16 +187,17 @@
 			<!--<li><a href="#extra">Extra info</a></li>-->
 		  <?php //endif; ?>
 		</ul>
-		 
+    
+    <?php if (isset($checking_activity_file)) { //activity display?>
 		<div class="tab-content">
 		  <div class="tab-pane active" id="status">
-			<div class="row">
-				<div class="span9">
+        <div class="row">
+          <div class="span9">
 					<?php 
 						
 							echo '<div class="well span2">';
 							echo '<h3>IATI Version</h3>';
-							if (isset($json->version)) {
+							if (isset($json->version) && $json->version !=NULL ) {
 								echo $json->version;
 							} else {
 								echo "<p class=\"text-error\">Not declared</p>";
@@ -177,7 +206,7 @@
 							
 							echo '<div class="well span2">';
 							echo '<h3>Generated</h3>';
-							if (isset($json->generated)) {
+							if (isset($json->generated) && $json->generated !=NULL) {
 								echo $json->generated;
 							} else {
 								echo "<p class=\"text-error\">Not declared</p>";
@@ -185,14 +214,14 @@
 							echo '</div>';
 							
 							echo '<div class="well span2">';
-							echo '<h3>Activites</h3>';
-							if (isset($json->activities)) {
-								echo $json->activities;
-							} else {
-								echo "<p class=\"text-error\">No activities found</p>";
-							}	
-							echo '</div>';
 							
+							if (isset($json->activities)) { //We may have activities if it is an activity file, but not if it is an org file
+                echo '<h3>Activites</h3>';
+								echo $json->activities;
+              } else {
+                echo "<p class=\"text-error\">No activities found</p>";
+							}	
+							echo '</div>';						
 							
 									
 						/*} else {
@@ -203,7 +232,7 @@
 							
 					?>
 				</div><!--span9-->
-			</div>
+			</div><!--row-->
 			<div class="row">
 				<div class="span9">
 					<?php 							
@@ -254,7 +283,7 @@
 							
 					?>
 				</div><!--span9-->
-			</div>
+			</div><!--row-->
       <div class="row">
         <div class="span9">
             <?php 							
@@ -310,11 +339,220 @@
                 
             ?>
           </div><!--span9-->
-        </div>
-		</div>
+        </div><!--row-->
+		</div><!--tab-pane-->
+  </div><!--tab content-->
+  
+  <?php } else { //Organisation display?>
+		<div class="tab-content">
+		  <div class="tab-pane active" id="status">
+        <div class="row">
+          <div class="span9">
+					<?php 
+						
+							echo '<div class="well span2">';
+							echo '<h3>IATI Version</h3>';
+							if (isset($json->version) && $json->version !=NULL ) {
+								echo $json->version;
+							} else {
+								echo "<p class=\"text-error\">Not declared</p>";
+							}
+							echo '</div>';
+							
+							echo '<div class="well span2">';
+							echo '<h3>Generated</h3>';
+							if (isset($json->generated) && $json->generated !=NULL) {
+								echo $json->generated;
+							} else {
+								echo "<p class=\"text-error\">Not declared</p>";
+							}	
+							echo '</div>';
+              
+              echo '<div class="well span2">';
+              echo '<h3>Last Updated</h3>';
+              if (isset($json->mostRecent)) {
+                echo $json->mostRecent;
+              } else {
+                echo "<p class=\"text-error\">Not found</p>";
+              }
+              echo '</div>';
+							
+              
+							
+					?>
+				</div><!--span9-->
+			</div><!--row-->
+      <div class="row">
+          <div class="span9">
+					<?php 
 
-
-		</div>
+							echo '<div class="well span2">';
+							echo '<h3>IATI Identifier</h3>';
+							if (isset($json->org_iati_identifier) && $json->org_iati_identifier !=NULL ) {
+								echo $json->org_iati_identifier;
+							} else {
+								echo "<p class=\"text-error\">Not declared</p>";
+							}
+							echo '</div>';
+							
+							echo '<div class="well span2">';
+							echo '<h3>Name</h3>';
+							if (isset($json->org_name) && $json->org_name !=NULL) {
+								echo $json->org_name;
+							} else {
+								echo "<p class=\"text-error\">Not declared</p>";
+							}	
+							echo '</div>';
+							
+              echo '<div class="well span2">';
+							echo '<h3>Rep. Org. Ref</h3>';
+							if (isset($json->org_reporting_org_ref) && $json->org_reporting_org_ref != NULL) {
+								echo $json->org_reporting_org_ref;
+							} else {
+								echo "<p class=\"text-error\">Not declared</p>";
+							}
+							echo '</div>';
+							
+					?>
+				</div><!--span9-->
+			</div><!--row-->
+			<div class="row">
+				<div class="span9">
+					<?php 	
+              echo '<div class="well span2">';
+							echo '<h3>Recipient Country Budgets</h3>';
+                if ($json->org_recipient_country_budget != NULL) {
+                  echo $json->org_recipient_country_budget;
+                } else {
+                  echo "<p class=\"text-error\">None found</p>";
+                }	
+							echo '</div>';
+              
+             
+							echo '<div class="well span2">';
+              echo '<h3>Recipient Org Budgets</h3>';
+              if (isset($json->org_recipient_org_budget) && $json->org_recipient_org_budget !=NULL) {
+                  echo $json->org_recipient_org_budget;
+              } else {
+                echo "<p class=\"text-error\">None found</p>";
+							}	
+							echo '</div>';
+              
+              echo '<div class="well span2">';
+              echo '<h3>Total Budgets</h3>';
+              if (isset($json->org_total_budget) && $json->org_total_budget !=NULL) {
+                  echo $json->org_total_budget;
+              } else {
+                echo "<p class=\"text-error\">None found</p>";
+							}	
+							echo '</div>';
+              ?>
+				</div><!--span9-->
+			</div><!--row-->
+      <div class="row">
+        <div class="span9">
+					<?php 		
+							
+              
+              echo '<div class="well span2">';
+							echo '<h3>Document Links</h3>';
+							if (isset($json->org_document_link) && $json->org_document_link !=NULL) {
+                  echo $json->org_document_link;
+              } else {
+                echo "<p class=\"text-error\">None found</p>";
+							}	
+							echo '</div>';
+              
+							echo '<div class="well span2">';
+							echo '<h3>Currencies</h3>';
+							if (isset($json->currencies)) {
+								echo '<ul>';
+								foreach ($json->currencies as $currency) {
+									echo "<li>$currency</li>";
+								}
+								echo '<ul>';
+							} else {
+								echo "<p class=\"text-error\">No currencies found</p>";
+							}
+							echo '</div>';
+              
+              echo '<div class="well span2">';
+							echo '<h3>Languages</h3>';
+							if (isset($json->languages) && $json->languages != NULL) {
+								echo '<ul>';
+								foreach ($json->languages as $language) {
+									echo "<li>$language</li>";
+								}
+								echo '<ul>';
+							} else {
+								echo "<p class=\"text-error\">No languages found</p>";
+							}
+							echo '</div>';
+              
+							//echo '<div class="well span2" id="example" href="#popover" class="btn btn-large btn-danger" rel="popover" title="A Title" data-content="And here\'s some amazing content. It\'s very engaging. right?"><i class="icon-question-sign" style="text-align:right"></i>';
+							
+									
+						/*} else {
+							echo '<div class="span4">';
+							echo '<pclass="cross>We didn\'t find any top level IATI elements in the XML supplied</p>';
+							echo '</div>';
+						}*/
+							
+					?>
+				</div><!--span9-->
+			</div><!--row-->
+      <div class="row">
+        <div class="span9">
+            <?php 							
+                echo '<div class="well span2">';
+                echo '<h3>Document </h3>';
+                if ($json->docDeclaration->version == "Assumed: XML 1.0") {
+                  echo "<span class=\"text-error text-error-small\">" . $json->docDeclaration->version . "</span><br/>";
+                } else {
+                  echo  $json->docDeclaration->version . "<br/>";
+                }
+                if ($json->docDeclaration->encoding == "Encoding: Non declared") {
+                  echo "<span class=\"text-error text-error-small\">" . $json->docDeclaration->encoding . "</span><br/>";
+                } else {
+                  echo "Encoding: " . $json->docDeclaration->encoding . "<br/>";
+                }
+                if ($json->DetectEncoding=="Encoding: Not detected") {
+                  echo "<span class=\"text-error text-error-small\">" . $json->DetectEncoding . "</span><br/>";
+                } else {
+                  echo "Encoding detected: " . $json->DetectEncoding . "<br/>";
+                }
+                 if ($json->docDeclaration->standalone != NULL) {
+                  echo "<span class=\"text-info text-info-small\">Standalone: " . $json->docDeclaration->standalone . "</span>";
+                }
+                echo '</div>';
+                
+                
+                //echo '<div class="well span2" id="example" href="#popover" class="btn btn-large btn-danger" rel="popover" title="A Title" data-content="And here\'s some amazing content. It\'s very engaging. right?"><i class="icon-question-sign" style="text-align:right"></i>';
+                echo '<div class="well span2">';
+                echo '<h3>Namespaces</h3>';
+                if (isset($json->namespaces)) {
+                  echo '<ul>';
+                  foreach ($json->namespaces as $key=>$value) {
+                    echo '<li><a href="' . $value . '">' . $key . '</a></li>';
+                  }
+                  echo '<ul>';
+                } else {
+                  echo "<p class=\"text-error\">No currencies found</p>";
+                }
+                echo '</div>';
+                    
+              /*} else {
+                echo '<div class="span4">';
+                echo '<pclass="cross>We didn\'t find any top level IATI elements in the XML supplied</p>';
+                echo '</div>';
+              }*/
+                
+            ?>
+          </div><!--span9-->
+        </div><!--row-->
+		</div><!--tab-pane-->
+  </div><!--tab content-->
+  <?php }  ?>
  
 <?php endif; ?>
 <?php

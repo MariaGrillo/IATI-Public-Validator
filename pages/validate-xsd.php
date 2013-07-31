@@ -73,9 +73,10 @@
 			$reader = new XMLReader();
 
       $reader->open($file_path);
+      //$reader->setParserProperty(XMLReader::VALIDATE, true);
       $valid = $reader->setSchema($xsd); //Validate against our schema
       while ($reader->read()) {
-        if (! $reader->isValid()) {
+        if (!$reader->isValid()) {
           
           $invalid = TRUE;
           //echo "invalid";
@@ -83,13 +84,13 @@
           break;
         }
       }
-			if ($xml->schemaValidate($xsd)) {
+			/*if ($xml->schemaValidate($xsd)) {
 				//$valid = TRUE;
         //echo "yeeesss";
 			} else {
 				//$valid = FALSE;
 				//libxml_display_all_errors();
-			}
+			}*/
 			
 		?>
 		<h2>Validation against the IATI <?php echo $schema; ?> Schema (version <?php echo $version; ?>)</h2>
@@ -177,9 +178,15 @@ function libxml_display_all_errors() {
 			}
 			$i++;
 			print libxml_display_error($error,$class);
+      if (strstr($error->message, "anyURI")) {
+        $extra_message = 'The checking of URL\'s may be incorrect please see <a href="'. $host . 'common_errors.php">Common errors</a> for more info';
+      }
 		//}
     }
     print("</tbody></table>");
+    if (isset($extra_message)) {
+      echo '<br/><div class="alert alert-error">' . $extra_message . '</div>';
+    }
     libxml_clear_errors();
 }
 

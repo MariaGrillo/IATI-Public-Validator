@@ -121,6 +121,8 @@ include "settings.php";
       <p>This often refers to an unencoded ampersand (&amp;). These should be declared in your text as &amp;amp;</p>
       <hr>
 			<h3>Validation Errors</h3>
+      <h4>attribute 'url': ... is not a valid value of the atomic type 'xs:anyURI'.</h4>
+      <p>URLs must be 'encoded' in XML - so ampersands (&amp;) should be written as (&amp;amp;), spaces as %20, and so on. <br />N.B. The parser we use INCORRECTLY rejects some URLs in this service, so if you get this error a lot, then try another validation method.</p>
 			<h4>attribute 'iso-date': '' is not a valid value of the atomic type 'xs:date'.</h4>
 			<p>Dates in IATI should look like YYYY-MM-DD, e.g. the 22nd August 2012 would be written as: 2012-08-22.</p>
 			<h4> attribute 'generated-datetime': '2011-10-17 14:00:00' is not a valid value of the atomic type 'xs:dateTime'.</h4>

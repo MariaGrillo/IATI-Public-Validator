@@ -32,10 +32,12 @@
         //Set up an array of all top level elements in the schema
         $all_elements = get_elements_from_schema($schema);
         sort($all_elements);
+        //print_r($all_elements);
         
         //Set up an array of all the elements found in the supplied file
         $found_elements = get_elements_from_supplied_file($file_path); //this returns all elements
         if ($found_elements) {
+         
           $unique_found_elements_count = array_count_values($found_elements);
           $unique_found_elements = array_keys($unique_found_elements_count);
           //$unique_found_elements = array_unique($found_elements);
@@ -43,6 +45,7 @@
           $unique_found_elements = array();
         }
         sort($unique_found_elements);
+        //print_r($unique_found_elements);
            
         //Work out which ones are not there
         $missing_elements = array_diff($all_elements,$unique_found_elements);
