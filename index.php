@@ -3,10 +3,7 @@
 session_start(); //We use sessions to track the uploaded file through the application
 include "settings.php"; //site installation specifics
 include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
-$tests = array('default','reset','xsd','elements','basic','compliance1','transparency'); //array of allowed $_GET values corresponding to the pages of the tests
-$iati_versions = array("1.01","1.02");
-$current_version = "1.02";
-
+include "vars.php"; // contains definitions such as the test pages, and iati standard versions
 
 //Sanitize the $_GET vars
 if (isset($_GET['version'])) {
