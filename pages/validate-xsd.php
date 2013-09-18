@@ -53,13 +53,8 @@ require_once 'pages/validate-xsd_functions.php';
         $version == $current_version; //$current_version is declared at the top of index.php
       }
         
-      if ($version == $current_version) { //Current version is always at downloads/
-        $version_string = "";
-      } else {
-        $version_string = $version . "/"; //Old versions are always at downloads/{version}/
-      } 
 			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
-			$xsd = "http://iatistandard.org/downloads/" . $version_string . "iati-activities-schema.xsd";
+			$xsd = "http://iatistandard.org/downloads/" . $version . "/iati-activities-schema.xsd";
 			//$xsd = $host . "/iati-schema/iati-activities-schema.xsd";
 			$schema = "Activity";
       //echo $file_path;
