@@ -41,13 +41,25 @@ class StackTest extends PHPUnit_Framework_TestCase {
             $this->assertContains('Fail', $out);
         }
     }
-    public function test101() {
-        $version = '1.01';
+    private function version_independent($version) {
         $this->validate_xsd('./tests/stub.xml', $version, TRUE);
         $this->validate_xsd('./tests/66.xml', $version, TRUE);
         $this->validate_xsd('./tests/activity_schema_FAIL.xml', $version, FALSE);
         $this->validate_xsd('./tests/activity_schema_PASS.xml', $version, TRUE);
         //$this->validate_xsd('./tests/activity_schema_title_FAIL.xml', $version, FALSE);
+    }
+    public function test101() {
+        $version = '1.01';
+        $this->version_independent($version);
+        $this->validate_xsd('./tests/versions/101not102.xml', $version, TRUE);
+        $this->validate_xsd('./tests/versions/102not101.xml', $version, FALSE);
+    }
+    public function test102() {
+        $version = '1.02';
+        $this->version_independent($version);
+        $this->validate_xsd('./tests/versions/101not102.xml', $version, FALSE);
+        $this->validate_xsd('./tests/versions/102not101.xml', $version, TRUE);
+        $this->validate_xsd('./tests/versions/103not102.xml', $version, FALSE);
     }
     public function test_well_formed() {
         $this->well_formed('./tests/well_formed_PASS.xml', TRUE);
