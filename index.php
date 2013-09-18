@@ -222,8 +222,9 @@ switch ($test) {
             <legend>Version</legend>
             <label for="version">Schema version<br />
             <select name="version" class="span1">
-              <option value="1.01">1.01</option>
-              <option <?php if (isset($_SESSION["version"]) && $_SESSION["version"] == 1.02 ) { echo 'selected="selected"'; } ?> value="1.02">1.02</option>
+            <?php foreach ($iati_versions as $version) { ?>
+              <option <?php if (isset($_SESSION["version"]) && $_SESSION["version"] == $version) { echo 'selected="selected"'; } ?> value="<?php echo $version ?>"><?php echo $version ?></option>
+            <?php } ?>
             </select>
             <button type="submit" class="btn btn-primary">Switch</button>
             <?php if (isset($test) && $test != "default" && in_array($test,$tests)) { echo '<input type="hidden" name="test" value="' . $test . '" />'; } ?>
