@@ -60,8 +60,6 @@ Which page gets called is controlled by the `$_GET` variables passed by the URL.
 
 Tests
 -----
-The `test/` directory contains a number of XML files that will pass or fail the various tests
-
-We don't have any application tests in place.
+There are application tests in the `tests.php` file. These are run using [PHPUnit](https://github.com/sebastianbergmann/phpunit/#phpunit), `phpunit tests.php`. Individual XML files that should pass or fail various validator tests are found in the `tests/` directory.
 
 
