@@ -4,7 +4,8 @@ include("functions/log.php");
 if(sizeof($_FILES)!=0) {
 	//thanks: http://www.w3schools.com/php/php_file_upload.asp
 	$allowedExts = array("xml","XML");
-	$extension = end(explode(".", $_FILES["file"]["name"]));
+	$extension = explode(".", $_FILES["file"]["name"]);
+  $extension = end($extension);
 	if ((($_FILES["file"]["type"] == "text/xml")
 	|| ($_FILES["file"]["type"] == "application/xml")
 	|| ($_FILES["file"]["type"] == "application/x-xml"))
