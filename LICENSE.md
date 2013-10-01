@@ -31,7 +31,9 @@ Additional images have been added to the assets/img directory
  tick.png
  question.png
 ``
-are all derived from gnome icon sets: see http://art.gnome.org/themes/icon
+are all derived from the Ubuntu 10.04 Humanity icon sets: 
+https://launchpad.net/ubuntu/lucid/+source/humanity-icon-theme/0.5.1.9 
+released under the GPLv2
 
 `logo.png` is the IATI logo so please don't mess with that without asking!
 The faviocon.ico is derived from the tick.png above.
