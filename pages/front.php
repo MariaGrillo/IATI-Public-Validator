@@ -92,7 +92,16 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 			</div>			
 		</div>
 	</div>-->
-
+  <--Notification Area-->
+  <hr />
+  <div class="row">
+		<div class="span9">
+      <div class="alert alert-info">
+        <strong>New</strong><br/>
+          We've recently updated this application so that it tests IATI files up to and including version 1.03
+        </div>
+      </div>
+    </div>
 <?php else: ?>
 		<?php
 			if (isset($_SESSION['uploadedfilepath'])) {
