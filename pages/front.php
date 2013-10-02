@@ -92,7 +92,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 			</div>			
 		</div>
 	</div>-->
-  <--Notification Area-->
+  <!--Notification Area-->
   <hr />
   <div class="row">
 		<div class="span9">
