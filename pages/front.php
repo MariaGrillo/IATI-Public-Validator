@@ -16,7 +16,7 @@
 <?php endif; ?>	
 	
 
-<?php //Upload file not present, error meesage set, wellformed not set (this is set at false after data has been received and not yet tested)
+<?php //Upload file not present, error message set, wellformed not set (this is set at false after data has been received and not yet tested)
 if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error_msg) ) || !isset($_SESSION['wellformed']) ) :?>
 <?php //debug
   /*
@@ -110,38 +110,11 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 			if (isset($_SESSION['uploadedfilepath'])) {
 				$file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
 			}
-			libxml_use_internal_errors(true);
-      //load the xml SAFELY
-      /* Some safety against XML Injection attack
-       * see: http://phpsecurity.readthedocs.org/en/latest/Injection-Attacks.html
-       * 
-       * Attempt a quickie detection of DOCTYPE - discard if it is present (cos it shouldn't be!)
-      */
-      $xml = file_get_contents($file_path);
-      $collapsedXML = preg_replace("/[[:space:]]/", '', $xml);
-      //echo $collapsedXML;
-      if(preg_match("/<!DOCTYPE/i", $collapsedXML)) {
-          //throw new InvalidArgumentException(
-         //     'Invalid XML: Detected use of illegal DOCTYPE'
-         // );
-          //echo "fail";
-        return FALSE;
-      }
-      $loadEntities  = libxml_disable_entity_loader(true);
-      $dom = new DOMDocument;
-      $dom->loadXML($xml);
-      //echo $dom->saveXML();
-      foreach ($dom->childNodes as $child) {
-          if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
-              throw new Exception\ValueException(
-                  'Invalid XML: Detected use of illegal DOCTYPE'
-              );
-              libxml_disable_entity_loader($loadEntities);
-              return FALSE;
-          }
-      }
-      libxml_disable_entity_loader($loadEntities);
       
+      require_once 'functions/get_xml.php';
+      $dom = get_xml($file_path);
+      if($dom === FALSE) return FALSE;
+
       if (isset($dom)) {
         $sxe = @simplexml_import_dom($dom);
       }
@@ -174,7 +147,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 		 
 		<div class="tab-content">
 		  <div class="tab-pane active" id="status">
-			  <!--<h3>Status: We got a file!</h3>--?
+			  <!--<h3>Status: We got a file!</h3>-->
 				<!--<div class="row">
 					<div class="span9">
 						<div class="span5">-->

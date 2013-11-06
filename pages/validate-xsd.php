@@ -23,27 +23,10 @@ require_once 'pages/validate-xsd_functions.php';
 <?php else: ?>
 		<?php
 			$file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
-			libxml_use_internal_errors(true);
-			if (file_exists($file_path)) {
-        //echo "found file";
-      }
-      /* Some safety against XML Injection attack
-     * see: http://phpsecurity.readthedocs.org/en/latest/Injection-Attacks.html
-     */
-      $raw_xml = file_get_contents($file_path);
-      $collapsedXML = preg_replace("/[[:space:]]/", '', $raw_xml);
-      //echo $collapsedXML;
-      if(preg_match("/<!DOCTYPE/i", $collapsedXML)) {
-          //throw new InvalidArgumentException(
-         //     'Invalid XML: Detected use of illegal DOCTYPE'
-         // );
-          //echo "fail";
-        return FALSE;
-      }
-      $loadEntities  = libxml_disable_entity_loader(true);
-			$xml = new DOMDocument();
-			$xml->loadXML($raw_xml);
-      libxml_disable_entity_loader($loadEntities);
+      require_once 'functions/get_xml.php';
+      $xml = get_xml($file_path);
+      if($xml === FALSE) return FALSE; // Need this to prevent entity security problem
+
       
       //Get the right schema to validate agianst
       //First work out the version

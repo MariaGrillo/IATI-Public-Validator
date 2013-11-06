@@ -1,4 +1,11 @@
 <?php
-$tests = array('default','reset','xsd','elements','basic','compliance1','transparency'); //array of allowed $_GET values corresponding to the pages of the tests
+$tests = array(//array of allowed $_GET values corresponding to the pages of the tests
+    "basic"=>"pages/basic.php",
+    "xsd"=>"pages/validate-xsd.php",
+    "compliance1"=>"pages/compliance1.php",
+    "transparency"=>"pages/uploadedfilepath",
+    "elements"=>"pages/found_elements.php",
+    "reset"=>"pages/front.php"
+    );
 $iati_versions = array("1.01","1.02","1.03");
 $current_version = "1.03";
