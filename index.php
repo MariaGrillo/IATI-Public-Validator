@@ -4,7 +4,7 @@ session_start(); //We use sessions to track the uploaded file through the applic
 include "settings.php"; //site installation specifics
 include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
 include "vars.php"; // contains definitions such as the test pages, and iati standard versions
-include "functions/index.php";
+include "functions/index.php"; // contains the extra functions needed for this index page
 
 //Sanitize the $_GET vars
 if (isset($_GET['version'])) {

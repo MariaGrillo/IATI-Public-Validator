@@ -1,5 +1,7 @@
 <?php
 
+// Returns the filename of the appropriate PHP page to include for a given $test
+// (probably taken from $_GET['test'])
 function get_page($test) {
     global $tests;
     if ($test == 'reset') {
