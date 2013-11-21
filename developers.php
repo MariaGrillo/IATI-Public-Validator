@@ -24,7 +24,7 @@ include "header.php";
 			<h3>Validation files on your local machine</h3>
 			<p>xmllint is a really useful tool for checking file validation on your local machine. Information on <a href="http://wiki.iatistandard.org/tools/xml_validation/start">how to use xmllint with IATI data</a> can be found on our wiki.</p>
       <p>If you want to place the schema files on your local machine then be sure to place ALL the schema files in the same directory as they each reference each other. <br/>
-      See <a href="http://iatistandard.org/schema">Schema on iatistandard.org</a>.</p>
+      You can find the <a href="http://iatistandard.org/schema">schema on iatistandard.org</a> or in the <a href="https://github.com/IATI/IATI-Schemas">IATI-Schemas GitHub repository</a>.</p>
 			
 			<hr>
 			<h3>Online Validators</h3>
