@@ -1,0 +1,8 @@
+<iati-activities>
+    <iati-activity>
+        <document-link url="test://test:test:test/test:test" format="text/html">
+            <title>Contract: DFID: Public Financial Management Consultancy Support Uganda</title>
+            <category code="A11">Contract</category>
+        </document-link>
+    </iati-activity>
+</iati-activities>

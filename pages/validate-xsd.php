@@ -23,27 +23,10 @@ require_once 'pages/validate-xsd_functions.php';
 <?php else: ?>
 		<?php
 			$file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
-			libxml_use_internal_errors(true);
-			if (file_exists($file_path)) {
-        //echo "found file";
-      }
-      /* Some safety against XML Injection attack
-     * see: http://phpsecurity.readthedocs.org/en/latest/Injection-Attacks.html
-     */
-      $raw_xml = file_get_contents($file_path);
-      $collapsedXML = preg_replace("/[[:space:]]/", '', $raw_xml);
-      //echo $collapsedXML;
-      if(preg_match("/<!DOCTYPE/i", $collapsedXML)) {
-          //throw new InvalidArgumentException(
-         //     'Invalid XML: Detected use of illegal DOCTYPE'
-         // );
-          //echo "fail";
-        return FALSE;
-      }
-      $loadEntities  = libxml_disable_entity_loader(true);
-			$xml = new DOMDocument();
-			$xml->loadXML($raw_xml);
-      libxml_disable_entity_loader($loadEntities);
+      require_once 'functions/get_xml.php';
+      $xml = get_xml($file_path);
+      if($xml === FALSE) return FALSE; // Need this to prevent entity security problem
+
       
       //Get the right schema to validate agianst
       //First work out the version
@@ -55,39 +38,13 @@ require_once 'pages/validate-xsd_functions.php';
         
 			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
 			$xsd = "http://iatistandard.org/downloads/" . $version . "/iati-activities-schema.xsd";
-			//$xsd = $host . "/iati-schema/iati-activities-schema.xsd";
-			$schema = "Activity";
-      //echo $file_path;
-      //print_r($xml);
-			
-			//if ($myinputs['org'] == "1") { //sanitized $_GET['orgs']
-			//  continue;
-			//}
+          $schema = "Activity";
 			} else {
 			$xsd = "http://iatistandard.org/downloads/" . $version_string . "iati-organisations-schema.xsd";
-			$schema = "Organisation";
+          $schema = "Organisation";
 			}
-			$reader = new XMLReader();
 
-      $reader->open($file_path);
-      //$reader->setParserProperty(XMLReader::VALIDATE, true);
-      $valid = $reader->setSchema($xsd); //Validate against our schema
-      while ($reader->read()) {
-        if (!$reader->isValid()) {
-          
-          $invalid = TRUE;
-          //echo "invalid";
-          $valid = FALSE;
-          break;
-        }
-      }
-			/*if ($xml->schemaValidate($xsd)) {
-				//$valid = TRUE;
-        //echo "yeeesss";
-			} else {
-				//$valid = FALSE;
-				//libxml_display_all_errors();
-			}*/
+      $valid = $xml->schemaValidate($xsd); 
 			
 		?>
 		<h2>Validation against the IATI <?php echo $schema; ?> Schema (version <?php echo $version; ?>)</h2>

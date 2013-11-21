@@ -46,6 +46,8 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->validate_xsd('./tests/xml/66.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/activity_schema_FAIL.xml', $version, FALSE);
         $this->validate_xsd('./tests/xml/activity_schema_PASS.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/anyuri.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/anyuri_FAIL.xml', $version, FALSE);
     }
     public function test101() {
         $version = '1.01';

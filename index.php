@@ -4,6 +4,7 @@ session_start(); //We use sessions to track the uploaded file through the applic
 include "settings.php"; //site installation specifics
 include "functions/process_files.php"; //used to deal with file uploads, pasting of code and fetching data from urls
 include "vars.php"; // contains definitions such as the test pages, and iati standard versions
+include "functions/index.php"; // contains the extra functions needed for this index page
 
 //Sanitize the $_GET vars
 if (isset($_GET['version'])) {
@@ -24,7 +25,7 @@ if (isset($_GET['version'])) {
 
 if (isset($_GET['test'])) {
 	$test = filter_var($_GET['test'], FILTER_SANITIZE_STRING);
-	if (!in_array($test,$tests)) {
+	if (!array_key_exists($test,$tests)) {
 		$test = "default";
 	}
 } else {
@@ -33,65 +34,15 @@ if (isset($_GET['test'])) {
 
 if (isset($_GET['perm'])) {
 	$exisiting_file = filter_var($_GET['perm'], FILTER_SANITIZE_STRING);
-  //echo $exisiting_file;
 	if (file_exists("upload/" . $exisiting_file)) {
 		$_SESSION['uploadedfilepath'] = $file_path = "upload/" . $exisiting_file;
     $_SESSION['wellformed'] = FALSE; //Set this so we go straight to the wellformed results
     //echo $_SESSION['uploadedfilepath'];
 	} else {
-    $error_msg = "The tempory link you are trying to reach does not exist or has expired";
+    $error_msg = "The temporary link you are trying to reach does not exist or has expired";
   }
 }
-//Switch on test to decide which pages to load
-switch ($test) {
-	case "basic": //Menu - File Statistics - Basic info
-		if (isset($_SESSION['uploadedfilepath'])) {
-			$page =  "pages/basic.php";
-		} else {
-			$page = "pages/front.php";
-		}
-		break;
-	case "xsd": //Menu - Tests - Vaildate
-		if (isset($_SESSION['uploadedfilepath'])) {
-			$page =  "pages/validate-xsd.php";
-		} else {
-			$page = "pages/front.php";
-		}
-		break;
-  case "compliance1": //Menu - Tests - Compliance1
-		if (isset($_SESSION['uploadedfilepath'])) {
-			$page =  "pages/compliance1.php";
-		} else {
-			$page = "pages/front.php";
-		}
-		break;
-  case "transparency": //Menu - Tests - Compliance1
-		if (isset($_SESSION['uploadedfilepath'])) {
-      $page =  "pages/transparency_index.php";
-		} else {
-			$page = "pages/front.php";
-		}
-		break;
-	case "elements": //Menu - File Statistics - Elements
-		if (isset($_SESSION['uploadedfilepath'])) {
-			$page = "pages/found_elements.php";
-		} else {
-			$page = "pages/front.php";
-		}
-		break;
-	case "reset": //Load New File clicked
-		unset($_SESSION['uploadedfilepath']);
-		unset ($_SESSION['wellformed']);
-		unset($_SESSION['upload_msg']);
-		if (isset($_SESSION['url'])) {
-			unset($_SESSION['url']);
-		}
-		$page = "pages/front.php"; 
-		break;
-	default:
-		$page = "pages/front.php"; 
-		break;
-}
+
 
 $toptab = "home";
 include "header.php";
@@ -102,46 +53,9 @@ include "header.php";
 				<!-- Main hero unit for a primary marketing message or call to action -->
 				<div class="hero-unit">
 					<?php 
-            //This little routine gives us the name of the file being tested to display to the user
-            //It could be a file name or the URL or pasted code
-						if (isset($_SESSION['url'])) { //Is it a URL?
-							if (filter_var($_SESSION['url'], FILTER_VALIDATE_URL) == TRUE) {
-								//Note this should have already been sanitised, so this is an additional (uneccesary?) check
-								$testing_file_name = htmlentities($_SESSION['url']);
-							}
-						} elseif (isset($_SESSION['uploadedfilepath'])) { //Has it been either uploaded or pasted
-							if (strstr($_SESSION['uploadedfilepath'], "paste")) { //Pasted code is saved with the filename like pasted.time()
-								$testing_file_name = "Pasted code";
-							} else {
-                //Filename of type basename_time().xml
-								$testing_file_name = basename($_SESSION['uploadedfilepath']);
-                $extension = explode(".", $testing_file_name);
-                $extension = end($extension);
-                $testing_file_name = explode("_",$testing_file_name);
-                array_pop($testing_file_name);
-                $testing_file_name = implode("_",$testing_file_name) . "." . $extension;
-							}
-						}
-            //Finally only display the HTML if we have a file 
-						if (isset($_SESSION['uploadedfilepath'])) {
-              $day_time = get_time(basename($_SESSION['uploadedfilepath']));
-              $day = $day_time[1];
-              $time = $day_time[0];
-              $today = date("z");
-              if ($today == $day) {
-                $day = "Today";
-              } elseif ($today - $day == 1) {
-                $day = "Yesterday";
-              } else {
-                $day = $today - $day . " days ago";
-              }
-                
-							echo '<div class="alert alert-info"><strong>Testing:</strong> ' . $testing_file_name . '<br/><strong>Uploaded:</strong> ' . $day . ' at ' . $time . ' GMT</div>';
-						}
-					?>
-					<?php 
+            echo uploaded_file_info();
             //This is where the main subject of the page is rendered
-						include $page;
+						include get_page($test);
 					?>
 						
 				</div><!--end Hero unit-->
@@ -251,20 +165,3 @@ HTML;
 
 include "footer.php";
 
-/*
- * 
- * name: get_time
- * @param $file_path The path to a file saved via upload
- * @return $time A string of hours, mins and seconds 
- * 
- */
-
-function get_time($file_path) {
-  $time = explode("_",$file_path);
-  $time = array_pop($time);
-  $time = trim($time,".xml"); //for the paste case!
-  $day = date("z",$time);
-  $time = date("H:i:s",$time);
-  
-  return array($time,$day);
-}

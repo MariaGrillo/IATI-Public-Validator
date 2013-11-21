@@ -40,9 +40,6 @@ function libxml_display_all_errors() {
 			}
 			$i++;
 			print libxml_display_error($error,$class);
-      if (strstr($error->message, "anyURI")) {
-        $extra_message = 'The checking of URL\'s may be incorrect please see <a href="'. $host . 'common_errors.php">Common errors</a> for more info';
-      }
 		//}
     }
     print("</tbody></table>");

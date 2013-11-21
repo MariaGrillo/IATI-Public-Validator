@@ -82,5 +82,4 @@ if(sizeof($_FILES)!=0) {
   $_SESSION['wellformed'] = FALSE; //Assume it's wrong then test it!
   record_in_log('success','pasted','File of size: ' . round((filesize($file_path) / 1024),2) . ' Kb pasted');
 }
-//echo $file_path;
 ?> 
