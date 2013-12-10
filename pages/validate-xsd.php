@@ -40,7 +40,7 @@ require_once 'pages/validate-xsd_functions.php';
 			$xsd = "http://iatistandard.org/downloads/" . $version . "/iati-activities-schema.xsd";
           $schema = "Activity";
 			} else {
-			$xsd = "http://iatistandard.org/downloads/" . $version_string . "iati-organisations-schema.xsd";
+			$xsd = "http://iatistandard.org/downloads/" . $version . "iati-organisations-schema.xsd";
           $schema = "Organisation";
 			}
 
