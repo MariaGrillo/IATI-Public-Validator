@@ -58,7 +58,16 @@ if(sizeof($_FILES)!=0) {
 		$url = htmlentities($_REQUEST["url"]);
 		//$url = $_REQUEST["url"];
 		//echo $url;
-	
+    switch($_SERVER['REQUEST_METHOD']) {
+      case 'GET': 
+        record_in_log('request_method','GET',$url);
+        break;
+      case 'POST': 
+        record_in_log('request_method','POST',$url);
+        break;
+      default:
+        break;
+    }
     //Fetch the data from the URL
     include "functions/fetch_data_from_url.php";
     $cacheFile = "upload/" . nice_file_name($url) . "_" . time();

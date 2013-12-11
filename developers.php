@@ -19,6 +19,11 @@ include "header.php";
 			<hr>
 			<h3>About this tool</h3>
 			<p>This tool is built using PHP's XML parsers. (Both the <a href="http://www.php.net/manual/en/book.dom.php">DOM</a> and <a href="http://php.net/manual/en/book.simplexml.php">SimpleXML</a> parsers)</p>
+      
+      <hr>
+			<h3>Link your files to the tool</h3>
+			<p>If you want to create a simple link for other people to come to the validator and see results on your IATI XML, simply add a 'url' query parameter to the address.</p>
+      <pre class="prettyprint linenums">http://validator.iatistandard.org/?url=&lt;your URL here&gt;</pre>
 			
       <hr>
 			<h3>Validation files on your local machine</h3>
