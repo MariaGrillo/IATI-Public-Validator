@@ -53,10 +53,10 @@ if(sizeof($_FILES)!=0) {
  }
  
  //user submits file from a URL
- if (isset($_POST["url"]) && $_POST["url"]) {
-	 if (filter_var($_POST["url"], FILTER_VALIDATE_URL) == TRUE) {
-		$url = htmlentities($_POST["url"]);
-		//$url = $_POST["url"];
+ if (isset($_REQUEST["url"]) && $_REQUEST["url"]) {
+	 if (filter_var($_REQUEST["url"], FILTER_VALIDATE_URL) == TRUE) {
+		$url = htmlentities($_REQUEST["url"]);
+		//$url = $_REQUEST["url"];
 		//echo $url;
 	
     //Fetch the data from the URL
