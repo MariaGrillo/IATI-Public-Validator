@@ -1,0 +1,27 @@
+<iati-organisations xmlns:ir="http://iatiregistry.org/ns/record#" version="1" generated-datetime="2013-08-28T13:40:52.98">	<iati-organisation last-updated-datetime="2013-08-28T13:40:52.98" xml:lang="en" default-currency="USD">
+<ir:registry-record xml:lang="en" file-id="21020" source-url="http://maps.aidsalliance.org/iati/organisation.xml" publisher-id="21020" publisher-role="Reporting" contact-email="iati@aidsalliance.org" activity-period="All Periods" last-updated-datetime="2013-08-28T14:16:15Z" generated-datetime="2013-08-28T14:16:15Z" verification-status="1" format="xml" license="IATI" xmlns:ir="http://iatiregistry.org/ns/record#"/>
+<reporting-org ref="21020" type="21">	International HIV/AIDS Alliance	</reporting-org>
+<iati-identifier>	21020	</iati-identifier>	
+<name>	International HIV/AIDS Alliance	</name>	
+<total-budget>	
+<period-start iso-date="2012-01-01">	January 2012	</period-start>	
+<period-end iso-date="2012-12-31">	December 2012	</period-end>	
+<value currency="USD" value-date="2012-12-31">	131000000	</value>	  </total-budget>	
+<document-link url="http://www.aidsalliance.org/includes/Publication/Alliance_AR_2012_EN_WEB_Final.pdf"  format="application/pdf">	
+<title xml:lang="en">	Ambition and acceleration: Annual Review 2012 	</title>	
+<category code="B01" xml:lang="en">	Annual report	</category>	 
+</document-link>	
+<document-link url="http://www.aidsalliance.org/includes/Publication/1480_Report_and_Accounts_2012_FINAL_LR.pdf"  format="application/pdf">
+<title xml:lang="en">	Report and Accounts 2012	</title>
+<category code="B01" xml:lang="en">	Annual Financial Report	</category>
+</document-link>
+<document-link url="http://www.aidsalliance.org/includes/Publication/1694_Global_Strategy_June2013_WEB.pdf">
+<title xml:lang="en">HIV, health and rights: sustaining community action</title>
+<category code="B02" xml:lang="en">Alliance Strategic Framework</category>
+</document-link>
+<document-link url="http://www.aidsalliance.org/includes/Publication/Alliance-PPA-evaluation-2010.pdf">
+<title xml:lang="en">DFID PPA 2008-2010 Evaluation</title>
+<category code="A07" xml:lang="en">Review of Project performance and evaluation</category>
+</document-link>
+</iati-organisation>
+</iati-organisations>
