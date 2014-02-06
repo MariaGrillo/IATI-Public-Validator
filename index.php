@@ -88,6 +88,7 @@ include "header.php";
 					  <li><a href="<?php echo $host; ?>">Well Formed</a></li>
 					  <?php if (isset($_SESSION['wellformed']) && $_SESSION['wellformed'] == TRUE): //Only show validation options if we have a well formed file?>
               <li><a href="<?php echo $host; ?>?test=xsd">Validate</a></li>
+              <li><a href="<?php echo $host; ?>?test=rulesets">Rulesets</a></li>
 					  <?php endif; ?>
 					</ul>
 					<?php else: //We don't have a file to test so display some instructions?>

@@ -5,6 +5,7 @@ $tests = array(//array of allowed $_GET values corresponding to the pages of the
     "compliance1"=>"pages/compliance1.php",
     "transparency"=>"pages/uploadedfilepath",
     "elements"=>"pages/found_elements.php",
+    "rulesets"=>"pages/rulesets.php",
     "reset"=>"pages/front.php"
     );
 $iati_versions = array("1.01","1.02","1.03");
