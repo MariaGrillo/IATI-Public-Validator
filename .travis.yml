@@ -5,4 +5,5 @@ php:
   - 5.4
   - 5.5
 
+before_script: ./get_iati_schemas.sh
 script: phpunit tests/tests.php
