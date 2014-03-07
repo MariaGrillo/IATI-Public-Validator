@@ -49,7 +49,7 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <?php if (isset($extrascripts)) echo $extrascripts; // Extra scripts defined in index.php ?>
     <?php if (isset($zen_script)) { echo $zen_script; } //This is our zenddesk support code pulled from a custom settings.php file - most people can ignore this ?>

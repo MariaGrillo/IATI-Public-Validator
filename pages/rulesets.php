@@ -7,28 +7,21 @@ Ruleset:
 <input type="submit" value="Go" class="btn btn-primary"/>
 </form>
 
-<table>
-<thead>
-    <th>ID</th>
-    <th>Test Name</th>
-    <th>Test Paths</th>
-    <th>Test Condition</th>
-</thead>
-<tbody>
+
 <?php
 
-function print_table_row($id, $errors) {
-    foreach ($errors as $error) { ?>
-    <tr>
-        <td><?php echo $id; ?></td>
-        <td><?php echo $error['rule']; ?></td>
-        <td><?php foreach ($error['case']->paths as $path) { echo $path.'<br/>'; } ?></td>
-        <td><?php echo $error['case']->condition; ?></td>
-    </tr>
-<?php }
-}
 
 if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid'))) {
+?>
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#status">Status</a></li>
+    <li><a href="#details">Details</a></li>
+</ul>
+ 
+<div class="tab-content">
+  <div class="tab-pane active" id="status">
+<?php
+
     require_once 'IATI-Rulesets/testrules.php';
 
     $file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
@@ -37,16 +30,82 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
     if($xml === FALSE) return FALSE; // Need this to prevent entity security problem
 
     $ruleset = json_decode(file_get_contents('IATI-Rulesets/rulesets/'.$_GET['ruleset'].'.json'));
-    foreach ($xml->childNodes->item(0)->getElementsByTagName('iati-activity') as $activity) {
+    $activity_results = array();
+    $activity_nodes = $xml->childNodes->item(0)->getElementsByTagName('iati-activity');
+    $activities = count($activity_nodes);
+    $activities_with_errors = 0;
+    $rules = 0;
+    $rules_failed = 0;
+    foreach ($activity_nodes as $activity) {
         $doc = new DOMDocument;
         $doc->appendChild($doc->importNode($activity,true));
-        $errors = test_ruleset_dom($ruleset, $doc);
-        if (count($errors) > 0) {
-            print_table_row($activity->getElementsByTagName('iati-identifier')->item(0)->textContent, $errors);
+        $result = test_ruleset_dom($ruleset, $doc);
+        $rules += $result['rules_total'];
+        $rules_failed += $result['rules_failed'];
+        if ($result['rules_failed'] > 0)  $activities_with_errors += 1;
+        $result['iati-identifier'] = $activity->getElementsByTagName('iati-identifier')->item(0)->textContent;
+        $activity_results[] = $result;
         }
     }
-}
-
+    if ($activities_with_errors == 0) { ?>
+        <div class="alert alert-success">
+            <strong>Great.</strong>
+            This file passes this ruleset.
+        </div>
+    <?php }
+    else { ?>
+        <div class="alert alert-error">
+            This file does NOT pass this ruleset.
+        </div>
+    <?php }
+    echo "$activities_with_errors/$activities activities have errors </br>";
+    echo "Overall $rules_failed/$rules tests failed.</br>";
+    if ($rules_failed > 0) {
 ?>
-</tbody>
-</table>
+    <table class="table">
+        <thead>
+            <th>Activity ID</th>
+            <th>Tests Failed</th>
+            <th>Tests Total</th>
+        </thead>
+        <tbody>
+        <?php foreach ($activity_results as $result) {
+            if ($result['rules_failed'] > 0) { ?>
+            <tr>
+                <td><?php echo $result['iati-identifier']; ?></td>
+                <td><?php echo $result['rules_failed']; ?></td>
+                <td><?php echo $result['rules_total']; ?></td>
+            </tr>
+        <?php }
+        } ?>
+        </tbody>
+    </table>
+<?php } ?>
+  </div>
+  <div class="tab-pane" id="details">
+    <?php if ($rules_failed > 0) {?>
+    <table class="table">
+        <thead>
+            <th>Activity ID</th>
+            <th>Rule Name</th>
+            <th>Element/Attribute</th>
+            <th>Tested If</th>
+        </thead>
+        <tbody>
+<?php
+        foreach ($activity_results as $result) {
+            foreach ($result['errors'] as $error) { ?>
+            <tr>
+                <td><?php echo $result['iati-identifier']; ?></td>
+                <td><?php echo $error['rule']; ?></td>
+                <td><?php foreach ($error['case']->paths as $path) { echo $path.'<br/>'; } ?></td>
+                <td><?php if (isset($error['case']->condition)) echo $error['case']->condition; ?></td>
+            </tr><?php
+            }
+        }
+?>
+        </tbody>
+    </table>
+    <?php } ?>
+  </div>
+</div>
