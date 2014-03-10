@@ -45,7 +45,6 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
         if ($result['rules_failed'] > 0)  $activities_with_errors += 1;
         $result['iati-identifier'] = $activity->getElementsByTagName('iati-identifier')->item(0)->textContent;
         $activity_results[] = $result;
-        }
     }
     if ($activities_with_errors == 0) { ?>
         <div class="alert alert-success">
@@ -109,3 +108,4 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
     <?php } ?>
   </div>
 </div>
+<?php } ?>
