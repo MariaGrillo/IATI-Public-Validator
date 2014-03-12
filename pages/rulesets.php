@@ -86,8 +86,8 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
     <table class="table">
         <thead>
             <th>Activity ID</th>
-            <th>Rule Name</th>
             <th>Element/Attribute</th>
+            <th>Problem</th>
             <th>Tested If</th>
         </thead>
         <tbody>
@@ -96,8 +96,15 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
             foreach ($result['errors'] as $error) { ?>
             <tr>
                 <td><?php echo $result['iati-identifier']; ?></td>
-                <td><?php echo $error['rule']; ?></td>
-                <td><?php foreach ($error['case']->paths as $path) { echo $path.'<br/>'; } ?></td>
+                <td><?php if ($error['rule'] == 'date_order') { echo $error['case']->less.'<br/>'.$error['case']->more; }
+                          else { foreach ($error['case']->paths as $path) { echo $path.'<br/>'; } } ?></td>
+                <td><?php if ($error['rule'] == 'no_more_than_one') echo 'More than one';
+                          else if ($error['rule'] == 'atleast_one') echo 'Missing';
+                          else if ($error['rule'] == 'sum') echo "Don't sum to ".$error['case']->sum;
+                          else if ($error['rule'] == 'date_order') echo 'Dates in wrong order';
+                          else if ($error['rule'] == 'startswith') echo "Doesn't start with ".$error['case']->start;
+                          else if ($error['rule'] == 'unique') echo 'Not unique';
+                          else echo $error['rule']; ?></td>
                 <td><?php if (isset($error['case']->condition)) echo $error['case']->condition; ?></td>
             </tr><?php
             }
