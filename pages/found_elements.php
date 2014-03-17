@@ -21,7 +21,7 @@
         //Which schema should we use - detect it in the xml!
         $xml = new DOMDocument();
         $xml->load($file_path);
-          
+
         if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
           $schema = "activity";
         } else {
@@ -30,7 +30,7 @@
         unset($xml); //Destroy this now to #save memory
         
         //Set up an array of all top level elements in the schema
-        $all_elements = get_elements_from_schema($schema);
+        $all_elements = get_elements_from_schema($schema, $current_version);
         sort($all_elements);
         //print_r($all_elements);
         

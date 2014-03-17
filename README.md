@@ -17,7 +17,8 @@ Some basic statistics:
 
 Requirements
 ------------
-PHP > 5.2.11 - for the use of `libxml_disable_entity_loader` to protect against xml injection attacks
+PHP > 5.2.11 - for the use of `libxml_disable_entity_loader` to protect against xml injection attacks  
+php5-curl is used to fetch remote files, see `functions/fetch_data_from_url.php` (on Ubuntu sudo apt-get install php5-curl)
 
 Quick Start
 -----------
@@ -25,6 +26,7 @@ Quick Start
 * You will need to add an `upload` directory to the root of the project and make it writable by your webserver.
 * Make a copy of example.settings.php and rename it settings.php
 * Edit the configuration information in that file and save it. 
+* Download all versions of the IATI Schemas using `./get_iati_schemas.sh`
 * Don't forget to set a path for your log file. Basic info is collected about the use of the upload functions. You may need to enable write permissions on your log file.
 * To clear out the `upload` directory you can (copy) and alter the example.remove_files.php file and hit it on a cron run
 

@@ -9,16 +9,16 @@
 
 //$all_elements = get_elements_from_schema("../iati-schema/iati-activities-schema.xsd");
 //print_r($all_elements);
-function get_elements_from_schema($schema) {	
+function get_elements_from_schema($schema, $version) {	
 	switch ($schema) {
 		case "activity":
 			$elements = array('iati-activity'); //We need to include this here, as it's not included in the results using the xpath below
-			$xsd = "iati-schema/iati-activities-schema.xsd";
+			$xsd = "iati-schemas/$version/iati-activities-schema.xsd";
 			$xpath = "//xsd:schema/xsd:element[@name='iati-activity']/xsd:complexType/xsd:choice/xsd:element";
 			break;
 		case "organisation":
 			$elements = array('iati-organisation');
-			$xsd = "iati-schema/iati-organisations-schema.xsd";
+			$xsd = "iati-schemas/$version/iati-organisations-schema.xsd";
 			$xpath = "//xsd:schema/xsd:element[@name='iati-organisation']/xsd:complexType/xsd:choice/xsd:element";
 			break;
 		default:
