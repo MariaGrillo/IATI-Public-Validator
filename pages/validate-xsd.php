@@ -37,10 +37,10 @@ require_once 'pages/validate-xsd_functions.php';
       }
         
 			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
-			$xsd = "http://iatistandard.org/downloads/" . $version . "/iati-activities-schema.xsd";
+			$xsd = "iati-schemas/" . $version . "/iati-activities-schema.xsd";
           $schema = "Activity";
 			} else {
-			$xsd = "http://iatistandard.org/downloads/" . $version . "/iati-organisations-schema.xsd";
+			$xsd = "iati-schemas/" . $version . "/iati-organisations-schema.xsd";
           $schema = "Organisation";
 			}
 
