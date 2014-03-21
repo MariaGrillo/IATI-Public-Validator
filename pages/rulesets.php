@@ -86,6 +86,7 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
     <table class="table">
         <thead>
             <th>Activity ID</th>
+            <th>Context</th>
             <th>Element/Attribute</th>
             <th>Problem</th>
             <th>Tested If</th>
@@ -96,6 +97,7 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
             foreach ($result['errors'] as $error) { ?>
             <tr>
                 <td><?php echo $result['iati-identifier']; ?></td>
+                <td><?php echo $error['context']; ?></td>
                 <td><?php if ($error['rule'] == 'date_order') { echo $error['case']->less.'<br/>'.$error['case']->more; }
                           else { foreach ($error['case']->paths as $path) { echo $path.'<br/>'; } } ?></td>
                 <td><?php if ($error['rule'] == 'no_more_than_one') echo 'More than one';
