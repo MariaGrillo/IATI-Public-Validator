@@ -31,14 +31,14 @@
     <footer class="footer">
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>IATI-Public Validator is free software. <br/>Source on <a href="https://github.com/IATI/IATI-Public_Validator">GitHub</a>. <a href="https://github.com/IATI/IATI-Public_Validator/issues?state=open">Submit issues</a>.</p>
+        <p>IATI-Public Validator is free software. <br/>Source on <a href="https://github.com/IATI/IATI-Public-Validator">GitHub</a>. <a href="https://github.com/IATI/IATI-Public-Validator/issues?state=open">Submit issues</a>.</p>
         <p>
           Built with <a href="http://twitter.github.com/bootstrap">Bootstrap</a> Bootstrap is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.<br/>
           Icons from <a href="http://glyphicons.com">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
         </p>
         <!--<ul class="footer-links">
           <li><a href="http://blog.getbootstrap.com">Read the blog</a></li>
-          <li><a href="https://github.com/IATI/IATI-Public_Validator/issues?state=open">Submit issues</a></li>
+          <li><a href="https://github.com/IATI/IATI-Public-Validator/issues?state=open">Submit issues</a></li>
           <li><a href="https://github.com/twitter/bootstrap/wiki">Roadmap and changelog</a></li>
         </ul>-->
       </div>
