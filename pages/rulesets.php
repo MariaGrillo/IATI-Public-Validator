@@ -2,6 +2,7 @@ Ruleset:
 <form method="get">
 <input type="hidden" name="test" value="rulesets" />
 <select name="ruleset">
+    <option value="standard">Standard</option>
     <option value="dfid">DFID</option>
 </select>
 <input type="submit" value="Go" class="btn btn-primary"/>
@@ -11,8 +12,19 @@ Ruleset:
 <?php
 
 
-if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid'))) {
+if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid', 'standard'))) {
 ?>
+
+<p>
+    <?php if ($_GET['ruleset'] == 'dfid') { ?>
+    <a href="https://gist.github.com/Bjwebb/9683484">
+         DFID Ruleset</a>
+    <?php } else if ($_GET['ruleset'] == 'standard') { ?>
+    <a href="https://gist.github.com/Bjwebb/9952268">
+         Standard Ruleset</a>
+    <?php } ?>
+</p>
+
 <ul class="nav nav-tabs" id="myTab">
     <li class="active"><a href="#status">Status</a></li>
     <li><a href="#details">Details</a></li>
