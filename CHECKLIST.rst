@@ -16,7 +16,7 @@ David Carpenter caprenter@gmail.com
 Our projects/code should be appropriately branded
 -------------------------------------------------
 
-This has some IATI branding but could be reviewed. It is using a Twitter bootstrap theme.
+This has some IATI branding but could be reviewed. It is using a Twitter Bootstrap theme.
 
 Our code/projects should be in version control and present links to issue trackers and source code
 --------------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ GitHub, we could use the google group, the tool now has a notification area on t
 Users should be able to communicate with us about our code
 ----------------------------------------------------------
 
-This is ok. Support tab is present, github offers another route
+This is ok. Support tab is present, GitHub offers another route
 
 We should protect our users privacy
 -----------------------------------
