@@ -3,7 +3,7 @@
 class ValidatorTest extends PHPUnit_Framework_TestCase {
     private function well_formed($filepath, $success=TRUE) {
         include './vars.php';
-        include './settings.php';
+        include './example.settings.php';
         $_SESSION['uploadedfilepath'] = $filepath; 
         $_SESSION['wellformed'] = FALSE;
         $testing_file_name = 'test';
