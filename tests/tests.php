@@ -56,6 +56,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->validate_xsd('./tests/xml/versions/101not102.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/102not101.xml', $version, FALSE);
         $this->validate_xsd('./tests/xml/versions/103not102.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, FALSE);
     }
     public function test102() {
         $version = '1.02';
@@ -63,6 +64,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->validate_xsd('./tests/xml/versions/101not102.xml', $version, FALSE);
         $this->validate_xsd('./tests/xml/versions/102not101.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/103not102.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, FALSE);
     }
     public function test103() {
         $version = '1.03';
@@ -70,6 +72,15 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->validate_xsd('./tests/xml/versions/101not102.xml', $version, FALSE);
         $this->validate_xsd('./tests/xml/versions/102not101.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/103not102.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, FALSE);
+    }
+    public function test104() {
+        $version = '1.04';
+        $this->version_independent($version);
+        $this->validate_xsd('./tests/xml/versions/101not102.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/102not101.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/versions/103not102.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, TRUE);
     }
     public function test_well_formed() {
         $this->well_formed('./tests/xml/well_formed_PASS.xml', TRUE);

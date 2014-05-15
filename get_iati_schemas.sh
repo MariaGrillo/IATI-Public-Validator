@@ -1,9 +1,9 @@
 mkdir iati-schemas
 cd iati-schemas
-for v in 1.01 1.02 1.03; do
+for v in 1.01 1.02 1.03 1.04; do
     git clone https://github.com/IATI/IATI-Schemas.git $v
     cd $v
-    git checkout v$v
+    git checkout version-$v
     cd ..
 done
 

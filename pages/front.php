@@ -99,8 +99,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
       <div class="alert alert-info">
         <strong>New</strong><br/>
         <ul>
-          <li>We've moved. Note our new address: <a href="http://validator.iatistandard.org">validator.iatistandard.org</a></li>
-          <li>We've recently updated this application so that it tests IATI files up to and including version 1.03</li>
+          <li>We've recently updated this application so that it tests IATI files up to and including version 1.04</li>
         </ul>
       </div>
     </div>
