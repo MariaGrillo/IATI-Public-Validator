@@ -100,4 +100,3 @@ We should know that our code is working properly
 ------------------------------------------------
 
 There is a cron job required on this code.
-Some Unit Tests are in place, and Travis monitors GitHub commits.
