@@ -27,7 +27,7 @@ Can you improve the unit testing to make deployment more robust
 
 Fix a Bitesize issue
 --------------------
-We mark some of issues as 'Bitesize'. Generally these will help ease you into the code and help you find your way around.
+We mark some of issues as `'Bitesize' <https://github.com/IATI/IATI-Public-Validator/issues?labels=Bitesize&milestone=&page=1&state=open>`__. Generally these will help ease you into the code and help you find your way around.
 
 Talk to us
 ----------
