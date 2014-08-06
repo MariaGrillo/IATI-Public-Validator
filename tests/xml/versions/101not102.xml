@@ -1,4 +1,4 @@
-<iati-activities>
+<iati-activities version="1.01">
     <iati-activity>
         <document-link language="en" url="http://iati.bjwebb.co.uk/validate">
             <title>Title</title>

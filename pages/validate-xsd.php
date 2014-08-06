@@ -8,6 +8,7 @@
 */
 
 require_once 'pages/validate-xsd_functions.php';
+require_once 'functions/check_iati_version.php';
 ?>
 <?php if(isset($error_msg)) :?>
 		<div class="alert alert-error">
@@ -28,13 +29,28 @@ require_once 'pages/validate-xsd_functions.php';
       if($xml === FALSE) return FALSE; // Need this to prevent entity security problem
 
       
-      //Get the right schema to validate agianst
-      //First work out the version
+      //Get the right schema to validate against
+      //Has the version been set by the user to a valid IATI version?
+      //echo $_SESSION["version"];
+      if(!isset($version) || $version == "auto") { //We put this in place so tests work! tests.php specifies the version already by this point.
       if (isset($_SESSION["version"]) && in_array($_SESSION["version"],$iati_versions)) {
+        //$detected_version = check_iati_version($xml);
         $version = $_SESSION["version"];
+        //echo $version;
       } else {
-        $version == $current_version; //$current_version is declared at the top of index.php
+        //..else..lets try to detect the version
+        //NB id user has selected auto detect, then we end up here as well
+        $version = check_iati_version($xml);
+        //echo $version;
+      } 
+      //If by now we don't have a valid version...
+      if(!isset($version) || $version==FALSE) {
+        //Use the default. Default is current live version of the standard.
+        //echo "true"; echo $current_version;
+        $version = $current_version; //$current_version is declared at the top of index.php
       }
+      }
+      //echo $version; //die;
         
 			if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
 			$xsd = "iati-schemas/" . $version . "/iati-activities-schema.xsd";

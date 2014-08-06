@@ -23,6 +23,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
     }
     private function validate_xsd($filepath, $version, $success=TRUE) {
         include './vars.php';
+        //global $iati_versions;
         include './example.settings.php';
         $_SESSION['uploadedfilepath'] = $filepath; 
         ob_start();
@@ -78,6 +79,14 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $version = '1.04';
         $this->version_independent($version);
         $this->validate_xsd('./tests/xml/versions/101not102.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/102not101.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/versions/103not102.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, TRUE);
+    }
+    public function testAuto() {
+        $version = 'auto';
+        $this->version_independent($version);
+        $this->validate_xsd('./tests/xml/versions/101not102.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/102not101.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/103not102.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, TRUE);

@@ -58,3 +58,7 @@ color: #B94A48;
 font-size:1em;
 color: #3A87AD;
 }
+
+#version-drop-down, #switch {
+width:120px;
+}

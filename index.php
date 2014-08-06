@@ -12,13 +12,19 @@ if (isset($_GET['version'])) {
     if ( in_array($_GET['version'], $iati_versions) ) {
       $_SESSION["version"] = $_GET['version'];
     }
+  } else {
+    if ($_GET['version'] === "auto") {
+      $_SESSION["version"] = "auto";
+    }
   }
 } else {
   if ( !isset($_SESSION["version"]) ) {
-    $_SESSION["version"] = $current_version;
+    //$_SESSION["version"] = $current_version;
+    $_SESSION["version"] = "auto";
   } else {
-    if (!in_array($_SESSION["version"], $iati_versions)) {
-      $_SESSION["version"] = $current_version;
+    if (!in_array($_SESSION["version"], $iati_versions) && $_SESSION["version"] != "auto") {
+      //$_SESSION["version"] = $current_version;
+      $_SESSION["version"] = "auto";
     }
   }
 }
@@ -69,12 +75,13 @@ include "header.php";
           <form method="get" action="index.php">
             <legend>Version</legend>
             <label for="version">Schema version<br />
-            <select name="version" class="span1">
+            <select id="version-drop-down" name="version" class="span1">
+              <option <?php if (!isset($_SESSION["version"]) || $_SESSION["version"] == "auto") { echo 'selected="selected"'; } ?> value="auto">Auto Detect</option>
             <?php foreach ($iati_versions as $version) { ?>
               <option <?php if (isset($_SESSION["version"]) && $_SESSION["version"] == $version) { echo 'selected="selected"'; } ?> value="<?php echo $version ?>"><?php echo $version ?></option>
             <?php } ?>
             </select>
-            <button type="submit" class="btn btn-primary">Switch</button>
+            <button id="switch" type="submit" class="btn btn-primary">Switch</button>
             <?php if (isset($test) && $test != "default" && in_array($test,$tests)) { echo '<input type="hidden" name="test" value="' . $test . '" />'; } ?>
             <!--<input type="submit" value="Submit" />-->
           </form>
