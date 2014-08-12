@@ -44,7 +44,7 @@ if (array_key_exists('ruleset', $_GET) && in_array($_GET['ruleset'], array('dfid
     $ruleset = json_decode(file_get_contents('IATI-Rulesets/rulesets/'.$_GET['ruleset'].'.json'));
     $activity_results = array();
     $activity_nodes = $xml->childNodes->item(0)->getElementsByTagName('iati-activity');
-    $activities = count($activity_nodes);
+    $activities = $activity_nodes->length;
     $activities_with_errors = 0;
     $rules = 0;
     $rules_failed = 0;
