@@ -34,12 +34,33 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         //$text = preg_replace('/\s+/', ' ', strip_tags($out));
         $this->assertContains("version $version", $out);
         if ($success) {
-            $this->assertContains('Success', $out);
-            $this->assertNotContains('Fail', $out);
+            $this->assertContains('This file validates', $out);
+            $this->assertNotContains('This file does NOT validate', $out);
         }
         else {
-            $this->assertNotContains('Success', $out);
-            $this->assertContains('Fail', $out);
+            $this->assertNotContains('This file validates', $out);
+            $this->assertContains('This file does NOT validate', $out);
+        }
+    }
+     private function valid_version($filepath, $version, $success=TRUE) {
+        include './vars.php';
+        //global $iati_versions;
+        include './example.settings.php';
+        $_SESSION['uploadedfilepath'] = $filepath; 
+        ob_start();
+        include './pages/validate-xsd.php';
+        $out = ob_get_contents();
+        ob_end_clean();
+
+        //$text = preg_replace('/\s+/', ' ', strip_tags($out));
+        $this->assertContains("version $version", $out);
+        if ($success) {
+            $this->assertContains('which is a recognised version of the schema', $out);
+            $this->assertNotContains('You should use a recognised version of the schema', $out);
+        }
+        else {
+            $this->assertNotContains('which is a recognised version of the schema', $out);
+            $this->assertContains('You should use a recognised version of the schema', $out);
         }
     }
     private function version_independent($version) {
@@ -50,6 +71,12 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->validate_xsd('./tests/xml/anyuri.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/anyuri_FAIL.xml', $version, FALSE);
         $this->validate_xsd('./tests/xml/organisation.xml', $version, TRUE); //Organisation file valid for 1.03,1.02,1.01
+        $this->validate_xsd('./tests/xml/two-iati-activities.xml', $version, FALSE);
+        $this->valid_version('./tests/xml/wrong_version_declared.xml', $version, FALSE);
+        $this->valid_version('./tests/xml/versions/101not102.xml', $version, TRUE);
+        $this->valid_version('./tests/xml/versions/102not101.xml', $version, TRUE);
+        $this->valid_version('./tests/xml/versions/103not102.xml', $version, TRUE);
+        $this->valid_version('./tests/xml/versions/104not103.xml', $version, TRUE);
     }
     public function test101() {
         $version = '1.01';
@@ -95,6 +122,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->well_formed('./tests/xml/well_formed_PASS.xml', TRUE);
         $this->well_formed('./tests/xml/well_formed_FAIL.xml', FALSE);
     }
+    
     //compliance1 test
     //$this->validate_xsd('./tests/xml/activity_schema_title_FAIL.xml', $version, FALSE);
 
