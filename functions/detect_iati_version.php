@@ -10,12 +10,19 @@ function detect_iati_version ($xml) {
   include './vars.php'; //to bring in $iati_versions. Use this rather than global so that tests.php still works
   //global $iati_versions;
   //Get all iati-activities elements. There should only be one!
-  $version = $xml->getElementsByTagName( "iati-activities" );
+  if ($xml->getElementsByTagName("iati-organisation")->length == 0) {
+    $version = $xml->getElementsByTagName( "iati-activities" );
+    $root_element = "iati-activities";
+  } else {
+    $version = $xml->getElementsByTagName( "iati-organisations" );
+    $root_element = "iati-organisations";
+  }
+  
   //Check there is only one. If there is more then one, return false
   if ($version->length != 1) {
     //echo "FALSE";
     global $error_msg;
-    $error_msg .= "More than one iati-activities element was found - cannot check version";
+    $error_msg .= "More than one " . $root_element . " element was found - cannot check version";
     return FALSE;
     
   }
