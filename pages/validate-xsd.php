@@ -80,6 +80,7 @@ require_once 'functions/detect_iati_version.php';
     <?php endif; ?>	
     
 		<h2>Validation against the IATI <?php echo $schema; ?> Schema (version <?php echo $version; ?>)</h2>
+    <p><?php echo $file_path; ?></p>
 		<ul class="nav nav-tabs" id="myTab">
 		  <li class="active"><a href="#status">Status</a></li>
 		  <?php if ($valid == FALSE): ?>
