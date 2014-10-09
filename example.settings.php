@@ -1,7 +1,7 @@
 <?php
 //$host = $_SERVER['HTTP_HOST'];
 $host = "http://localhost/Webs/validate-me/";
-define('DEVELOPMENT', true);
+$development_server = true;
 date_default_timezone_set('GMT');
 //in the logs/ directory there is a sample log viewer that can be run from the command line.
 //you may want to store your log files in that directory, but feel free to put them elsewhere
