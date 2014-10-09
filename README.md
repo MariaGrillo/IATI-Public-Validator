@@ -64,4 +64,10 @@ Tests
 -----
 There are application tests in the `tests.php` file. These are run using [PHPUnit](https://github.com/sebastianbergmann/phpunit/#phpunit), `phpunit tests.php`. Individual XML files that should pass or fail various validator tests are found in the `tests/` directory.
 
+Upgrades
+--------
+To upgrade the application you need to update the files, and sometimes you will need to update the IATI Schema.
 
+To upgrade the files, if you use git, a git pull on the appropriate directory will update your files. Alternatively, re-install using the Quick Start instructions.
+
+To make sure you have the latest schema files, run `./get_iati_schemas.sh`
