@@ -62,3 +62,9 @@ color: #3A87AD;
 #version-drop-down, #switch {
 width:120px;
 }
+
+#development {
+background: paleturquoise;
+color: #000;
+text-align: center;
+}
