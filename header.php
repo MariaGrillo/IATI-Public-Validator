@@ -30,7 +30,7 @@
 
   <body>
     <?php 
-      if (constant('DEVELOPMENT')) {
+      if (isset($development_server) && $development_server == true) {
         echo '<div id="development">NOTE: This is a development version. Do not rely on it.</div>';
       }
     ?>
