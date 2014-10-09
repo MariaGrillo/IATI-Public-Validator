@@ -11,6 +11,7 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="assets/css/validate-me.css" rel="stylesheet">
+    
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -28,7 +29,12 @@
   </head>
 
   <body>
-
+    <?php 
+      if (constant('DEVELOPMENT')) {
+        echo '<div id="development">NOTE: This is a development version. Do not rely on it.</div>';
+      }
+    ?>
+      
     <div class="navbar navbar-inverse navbar-static-top">
       <div class="navbar-inner">
         <div class="container">
