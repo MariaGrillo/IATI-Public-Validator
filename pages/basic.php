@@ -165,7 +165,7 @@
 		  <?php //endif; ?>
 		</ul>
     
-    <?php if (isset($checking_activity_file)) { //activity display?>
+    <?php if (isset($json->activities)) { //activity display?>
 		<div class="tab-content">
 		  <div class="tab-pane active" id="status">
         <div class="row">
