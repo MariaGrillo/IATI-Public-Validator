@@ -124,7 +124,17 @@ require_once 'functions/detect_iati_version.php';
 								<h3 class="fail">Fail</h3>
 								<div id="intext">
 									<div class="alert alert-error">This file does NOT validate against the IATI <?php echo $schema; ?> Schema (version <?php echo $version; ?>)</div>
-									<?php echo libxml_error_count(); ?> <br/><br/>
+									
+                  <?php if ($version == "2.01") {
+                            echo '<div class="alert alert-info">NOTE: In version 2.01, order of elements in the data is enforced.<br/>If only 1 error message is reported this MAY be because the order of elements is wrong. In this case, fix the error, and then try again</div>';
+                          }
+                  ?>
+                  
+                  <h4>Errors and Warnings</h4>
+                  <div class="well well-large">
+                    <?php echo libxml_error_count(); ?>
+                  </div>
+
 									See <a href="#extra">Extra info</a> for details about the errors.
                   
                   <?php 
@@ -150,7 +160,7 @@ require_once 'functions/detect_iati_version.php';
                 ?>
                 
 								</div>
-									See <a href="<?php echo $host; ?>common_errors.php">Common errors</a> for help in understanding the errors.
+									See <a href="<?php echo $host; ?>/common_errors.php">Common errors</a> for help in understanding the errors.
 								
 							<?php endif; ?>
 						<!--</div>

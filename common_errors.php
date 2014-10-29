@@ -24,6 +24,8 @@ include "header.php";
       <p>This often refers to an unencoded ampersand (&amp;). These should be declared in your text as &amp;amp;</p>
       <hr>
 			<h3>Validation Errors</h3>
+      <h4>Element 'xxxxxxx': This element is not expected. Expected is ( xxxxxxxx ).</h4>
+      <p>This is an error specific to 2.01 data. In 2.01 the order in which elements are published is important. Validation stops if something is found in the wrong place. This is reported as a single error, although the same error may occur many times within your file. Once you fix this error, you can try to revalidate.</p>
       <h4>attribute 'url': ... is not a valid value of the atomic type 'xs:anyURI'.</h4>
       <p>URLs must be 'encoded' in XML - so ampersands (&amp;) should be written as (&amp;amp;), spaces as %20, and so on. <br />N.B. The parser we use INCORRECTLY rejects some URLs in this service, so if you get this error a lot, then try another validation method.</p>
 			<h4>attribute 'iso-date': '' is not a valid value of the atomic type 'xs:date'.</h4>
