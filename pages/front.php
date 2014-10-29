@@ -99,8 +99,8 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
       <div class="alert alert-info">
         <strong>New</strong><br/>
         <ul>
-          <li>Use Auto Detect in the version selector and the application will try to test your data to the version it finds.</li>
-          <li>We've recently updated this application so that it tests IATI files up to and including version 1.05.</li>
+         <li>We've recently updated this application so that it tests IATI files up to and including version 2.01.<br/>NOTE: 2.01 is released but not live - for more info see: <a>http://iatistandard.org/upgrades/all-versions/</a><br/></li>
+         <li>Use Auto Detect in the version selector and the application will try to test your data to the version it finds.</li>
         </ul>
       </div>
     </div>

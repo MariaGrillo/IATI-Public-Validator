@@ -35,7 +35,7 @@ if (isset($_GET['test'])) {
 		$test = "default";
 	}
 } else {
-	$test = "default";
+	$test = "default"; //NB default will return us to the front page but retain session info
 }
 
 if (isset($_GET['perm'])) {
@@ -59,7 +59,9 @@ include "header.php";
 				<!-- Main hero unit for a primary marketing message or call to action -->
 				<div class="hero-unit">
 					<?php 
-            echo uploaded_file_info();
+            if (isset ($test) && $test != "reset") { //we need this because session info does not get reset until we call get_page("reset") below!
+              echo uploaded_file_info();
+            }
             //This is where the main subject of the page is rendered
 						include get_page($test);
 					?>
