@@ -160,7 +160,7 @@ require_once 'functions/detect_iati_version.php';
                 ?>
                 
 								</div>
-									See <a href="<?php echo $host; ?>/common_errors.php">Common errors</a> for help in understanding the errors.
+									See <a href="<?php echo $host; ?>common_errors.php">Common errors</a> for help in understanding the errors.
 								
 							<?php endif; ?>
 						<!--</div>
