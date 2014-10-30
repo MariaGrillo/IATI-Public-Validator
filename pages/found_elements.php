@@ -63,7 +63,7 @@
           $version = $current_version; //$current_version is declared at the top of index.php
         }
       //}
-      echo $version; //die;
+      //echo $version; //die;
       
       //We prefer to use cached results - so if the exist use them
       //Files get a version attached to them so that if we switch versions we regenerate the results
