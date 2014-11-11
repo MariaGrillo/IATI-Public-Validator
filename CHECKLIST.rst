@@ -58,7 +58,9 @@ We should know how our code is being used - logs!
 Our code will need to adapt with schema changes and changes to external systems upon which it relies
 ----------------------------------------------------------------------------------------------------
 
-This application does need to react to changes to the schema. In future it may need to react to changes in codelists and rulesets.
+| This application does need to react to changes to the schema. 
+| Instructions on what to do when upgrading are gioven in the README.md file.
+| In future it may need to react to changes in codelists and rulesets.
 
 Developers should be able to find useful resources and help easily
 ------------------------------------------------------------------
