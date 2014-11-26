@@ -61,11 +61,11 @@
       <div class="row">
         <div class="span10">
           <p class="lead">
-            <a href="<?php echo $host; ?>"><img src="assets/img/logo.png" width="" height="" alt="IATI Logo" /></a>
+            <a href="<?php echo $host; ?>"><img src="assets/img/logo.png" width="269" height="70" alt="IATI Logo" /></a>
             IATI Public Validator
           </p>
         </div>
-        <div span="2" class="reset">
+        <div class="span2 reset">
           <?php if (isset($_SESSION['uploadedfilepath'])) :?>
             <p class="lead"><br/><a href="<?php echo $host; ?>?test=reset" class="btn btn-large btn-success">Load New File</a></p>
           <?php endif; ?>

@@ -39,59 +39,46 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 				<div class="tab-pane active" id="status">
 					<div class="span6">
 						<form action="index.php" method="post" enctype="multipart/form-data"  >
-							<legend>Upload File</legend>
-							<label for="file">File:</label>
-							<input type="file" name="file" class="span5"/>
-							<span class="help-block">Upload an XML file of IATI data.</span>
-							<!--<input type="submit" name="submit" value="Submit" />-->
-							<button type="submit" class="btn btn-primary">Upload</button>
+              <fieldset>
+                <legend>Upload File</legend>
+                <label for="file">File:</label>
+                <input type="file" name="file" id="file" class="span5"/>
+                <span class="help-block">Upload an XML file of IATI data.</span>
+                <button type="submit" class="btn btn-primary">Upload</button>
+              </fieldset>
 						</form>
 					</div>
 				</div>
-				<div class="tab-pane" id="file">
+				<div class="tab-pane" id="file-tab">
 					<!--<div class="span1">OR:</div>-->
 					<div class="span6">
 						<form method="post" action="index.php">
-							<legend>Fetch data from the Web</legend>
-							<label for="url">URL of file:<br />
-							<input type="text" placeholder="Paste URL here" name="url" class="span5" /> 
-							<span class="help-block">Enter an address of an IATI compliant XML file.</span>
-							<button type="submit" class="btn btn-primary">Fetch Data</button>
-							<!--<input type="submit" value="Submit" />-->
+              <fieldset>
+                <legend>Fetch data from the Web</legend>
+                <label for="url">URL of file:</label>
+                <input type="text" placeholder="Paste URL here" name="url" id="url" class="span5" /> 
+                <span class="help-block">Enter an address of an IATI compliant XML file.</span>
+                <button type="submit" class="btn btn-primary">Fetch Data</button>
+              </fieldset>
 						</form>
 					</div>
 				</div>
 				<div class="tab-pane" id="extra">
 					<div class="span6">
 						<form action="index.php" method="post">
-							<legend>Paste XML</legend>
-							<label for="paste">XML:</label>
-							<textarea rows="8" class="span5" name="paste" id="paste"></textarea>
-							<span class="help-block">Paste your XML here.</span>
-							<!--<input type="submit" name="submit" value="Submit" />-->
-							<button type="submit" class="btn btn-primary">Submit</button>
+              <fieldset>
+                <legend>Paste XML</legend>
+                <label for="paste">XML:</label>
+                <textarea rows="8" class="span5" name="paste" id="paste"></textarea>
+                <span class="help-block">Paste your XML here.</span>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </fieldset>
 						</form>
 					</div>	
 				</div>	
 			</div>	
 		</div>
 	</div>
-	<!--<hr>
-	<div>OR:</div>
-	<div class="row">
-		<div class="span10" style="margin-left:0">
-			<div class="span8">
-				<form action="index.php" method="post">
-					<legend>Paste XML</legend>
-					<label for="file">XML:</label>
-					<textarea rows="8" class="span5" name="paste" id="paste"></textarea>
-					<span class="help-block">Paste your XML here.</span>
-					<!--<input type="submit" name="submit" value="Submit" />-->
-					<!--<button type="submit" class="btn btn-primary">Submit</button>
-				</form>
-			</div>			
-		</div>
-	</div>-->
   <!--Notification Area-->
   <hr />
   <div class="row">
