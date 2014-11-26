@@ -75,17 +75,19 @@ include "header.php";
         <!--Version Switcher-->
 				<div class="well sidebar-nav">
           <form method="get" action="index.php">
-            <legend>Version</legend>
-            <label for="version">Schema version<br />
-            <select id="version-drop-down" name="version" class="span1">
-              <option <?php if (!isset($_SESSION["version"]) || $_SESSION["version"] == "auto") { echo 'selected="selected"'; } ?> value="auto">Auto Detect</option>
-            <?php foreach ($iati_versions as $version) { ?>
-              <option <?php if (isset($_SESSION["version"]) && $_SESSION["version"] == $version) { echo 'selected="selected"'; } ?> value="<?php echo $version ?>"><?php echo $version ?></option>
-            <?php } ?>
-            </select>
-            <button id="switch" type="submit" class="btn btn-primary">Switch</button>
-            <?php if (isset($test) && $test != "default" && in_array($test,$tests)) { echo '<input type="hidden" name="test" value="' . $test . '" />'; } ?>
-            <!--<input type="submit" value="Submit" />-->
+            <fieldset>
+              <legend>Version</legend>
+              <label for="version-drop-down">Schema version</label>
+              <select id="version-drop-down" name="version-drop-down" class="span1">
+                <option <?php if (!isset($_SESSION["version"]) || $_SESSION["version"] == "auto") { echo 'selected="selected"'; } ?> value="auto">Auto Detect</option>
+              <?php foreach ($iati_versions as $version) { ?>
+                <option <?php if (isset($_SESSION["version"]) && $_SESSION["version"] == $version) { echo 'selected="selected"'; } ?> value="<?php echo $version ?>"><?php echo $version ?></option>
+              <?php } ?>
+              </select>
+              <button id="switch" type="submit" class="btn btn-primary">Switch</button>
+              <?php if (isset($test) && $test != "default" && in_array($test,$tests)) { echo '<input type="hidden" name="test" value="' . $test . '" />'; } ?>
+              <!--<input type="submit" value="Submit" />-->
+            </fieldset>
           </form>
         </div> 
         
