@@ -1,8 +1,6 @@
 IATI Public Validator Checklist
 ===============================
 
-https://github.com/IATI/IATI-Developer-Documentation/blob/master/code-checklist.rst
-
 We should know which code is 'ours'
 -----------------------------------
 
@@ -21,15 +19,13 @@ This has some IATI branding but could be reviewed. It is using a Twitter Bootstr
 Our code/projects should be in version control and present links to issue trackers and source code
 --------------------------------------------------------------------------------------------------
 
-| https://github.com/IATI/IATI-Public-Validator
-| Live code has links to issuer tracker and source code, and to IATI support
+This is in GitHub. Live code has links to issuer tracker, source code, and to IATI support
 
 Each piece of code should have a document(!), a roadmap, and estimate of resources, and a licence
 -------------------------------------------------------------------------------------------------
 
 | Licence is present  AGPLv3, this is the document, 
-| No roadmap, or estimate of resources.
-| We also have http://wiki.iatistandard.org/tools/iati_public_validator/start
+| No real roadmap, or estimate of resources.
 
 We should be confident that updates to our code will not break existing functionality
 -------------------------------------------------------------------------------------
@@ -46,7 +42,7 @@ Our code should be on our servers - we should be able to monitor the performance
 It should make sense in the way people access our tools/code
 ------------------------------------------------------------
 
-http://validator.iatistandard.org/
+Yes, this on our domain: http://validator.iatistandard.org/
 
 We should know how our code is being used - logs!
 -------------------------------------------------
@@ -55,11 +51,13 @@ We should know how our code is being used - logs!
 | How many uploads, links pastes.
 | Some idea about size of files tested.
 
+Google Analytics is also used.
+
 Our code will need to adapt with schema changes and changes to external systems upon which it relies
 ----------------------------------------------------------------------------------------------------
 
 | This application does need to react to changes to the schema. 
-| Instructions on what to do when upgrading are gioven in the README.md file.
+| Instructions on what to do when upgrading are given in the README.md file.
 | In future it may need to react to changes in codelists and rulesets.
 
 Developers should be able to find useful resources and help easily
@@ -70,7 +68,7 @@ This project has a CONTRIBUTING.rst file
 We should be able to communicate with the users of our code
 -----------------------------------------------------------
 
-GitHub, we could use the google group, the tool now has a notification area on the front page
+The tool has a notification area on the front page
 
 Users should be able to communicate with us about our code
 ----------------------------------------------------------
@@ -80,17 +78,21 @@ This is ok. Support tab is present, GitHub offers another route
 We should protect our users privacy
 -----------------------------------
 
-| Cookies are not addressed. 
+| Cookies disclaimer is in the footer. 
 | Submitted files should be deleted after 3 days, provided the cron job is running
 
 We should be clear about how we work with contractors
 -----------------------------------------------------
 
+Not applicable currently
+
 If our code works with IATI data, have we considered how it will work as the IATI datasets grow, both in terms of individual file size and as a corpus
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-| Size of IATI data/files - Currently has a 10MB upload limit
-| Revise/review upload limits? Maybe need to set up some test files of various sizes to see how it responds.
+The main issue for this application is the Size of IATI data/files. Currently we set a 10MB upload limit in the application.
+Over time we may need to revise/review upload limits.
+We also clear out uploaded files after 3 days. If use increased significantly we may need more hard disk space, or to clean out 
+more regularly. We keep files for three days so people can share short term permalinks to results data.
 
 Our code should be secure
 -------------------------
@@ -101,4 +103,4 @@ Our code should be secure
 We should know that our code is working properly
 ------------------------------------------------
 
-There is a cron job required on this code.
+There is a cron job required on this code. This removes uploaded files that are three days old.
