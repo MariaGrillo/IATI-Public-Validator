@@ -164,7 +164,7 @@ $extrascripts = <<<HTML
       })
       $(function () {
         $('#myTab a[href="#status"]').tab('show');
-        $('#myTab a[href="#file"]').tab();
+        $('#myTab a[href="#fileTab"]').tab();
         $('#myTab a[href="#extra"]').tab();
         $('#myTab a[href="#passed"]').tab();
         $('#myTab a[href="#failed"]').tab();
