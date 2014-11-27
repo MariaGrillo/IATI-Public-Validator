@@ -32,7 +32,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 		<div class="span9">
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="active"><a href="#status">Upload</a></li>
-				<li><a href="#file">Fetch file from web</a></li>
+				<li><a href="#fileTab">Fetch file from web</a></li>
 				<li><a href="#extra">Paste XML</a></li>
 			</ul>
 			<div class="tab-content">
@@ -49,7 +49,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 						</form>
 					</div>
 				</div>
-				<div class="tab-pane" id="file-tab">
+				<div class="tab-pane" id="fileTab">
 					<!--<div class="span1">OR:</div>-->
 					<div class="span6">
 						<form method="post" action="index.php">
@@ -125,7 +125,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 		<h2>Well Formed XML test</h2>
 		<ul class="nav nav-tabs" id="myTab">
 		  <li class="active"><a href="#status">Status</a></li>
-		  <li><a href="#file">File Details</a></li>
+		  <li><a href="#fileTab">File Details</a></li>
 		  <?php if (isset($error_detail)): ?>
 			<li><a href="#extra">Extra info</a></li>
 		  <?php endif; ?>
@@ -153,7 +153,7 @@ if( (sizeof($_FILES)==0 && !isset($_SESSION['uploadedfilepath']) || isset($error
 					</div>
 				</div>-->
 		    </div>
-			<div class="tab-pane" id="file">
+			<div class="tab-pane" id="fileTab">
 			  <!--<div class="span3">-->
 					<!--<h3>File Details:</h3>-->
 					<div>
