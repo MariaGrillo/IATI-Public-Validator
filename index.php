@@ -7,13 +7,13 @@ include "vars.php"; // contains definitions such as the test pages, and iati sta
 include "functions/index.php"; // contains the extra functions needed for this index page
 
 //Sanitize the $_GET vars
-if (isset($_GET['version'])) {
-  if (filter_var($_GET['version'], FILTER_VALIDATE_FLOAT)) {
-    if ( in_array($_GET['version'], $iati_versions) ) {
-      $_SESSION["version"] = $_GET['version'];
+if (isset($_GET['version-drop-down'])) {
+  if (filter_var($_GET['version-drop-down'], FILTER_VALIDATE_FLOAT)) {
+    if ( in_array($_GET['version-drop-down'], $iati_versions) ) {
+      $_SESSION["version"] = $_GET['version-drop-down'];
     }
   } else {
-    if ($_GET['version'] === "auto") {
+    if ($_GET['version-drop-down'] === "auto") {
       $_SESSION["version"] = "auto";
     }
   }
