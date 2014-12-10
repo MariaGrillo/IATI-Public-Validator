@@ -14,22 +14,37 @@ function get_elements_from_schema($schema, $version) {
 		case "activity":
 			$elements = array('iati-activity'); //We need to include this here, as it's not included in the results using the xpath below
 			$xsd = "iati-schemas/$version/iati-activities-schema.xsd";
-			$xpath = "//xsd:schema/xsd:element[@name='iati-activity']/xsd:complexType/xsd:choice/xsd:element";
+      if (intval($version) < 2) { //i.e. version 1.x
+        $xpath = "//xsd:schema/xsd:element[@name='iati-activity']/xsd:complexType/xsd:choice/xsd:element";
+      } else { //i.e. version 2.x
+        $xpath = "//xsd:schema/xsd:element[@name='iati-activity']/xsd:complexType/xsd:sequence/xsd:element";
+      }
 			break;
 		case "organisation":
 			$elements = array('iati-organisation');
 			$xsd = "iati-schemas/$version/iati-organisations-schema.xsd";
+      if (intval($version) < 2) { //i.e. version 1.x
 			$xpath = "//xsd:schema/xsd:element[@name='iati-organisation']/xsd:complexType/xsd:choice/xsd:element";
+      } else { //i.e. version 2.x
+        $xpath = "//xsd:schema/xsd:element[@name='iati-organisation']/xsd:complexType/xsd:sequence/xsd:element";
+      }
 			break;
 		default:
 			break;
 		}
+    //echo $xsd;
 	$xml = simplexml_load_file($xsd); //this is fairly safe from XXE attack as we have hardcoded links and files hopefully - trusted source?
-	//print_r($xml);
+	//print_r($xml); 
+  //var_dump($xml); die;
 	$elements = $xml->xpath($xpath);
 	foreach ($elements as $element) {
 		//echo $element->attributes()->ref .PHP_EOL;
-		$name = (string)$element->attributes()->ref;
+    if (isset($element->attributes()->ref)) {
+      $name = (string)$element->attributes()->ref;
+    } elseif (isset($element->attributes()->name)) {
+      $name = (string)$element->attributes()->name;
+    }
+    //echo $name;
 		$all_elements[] = $name;
 	}
 	/*die;
