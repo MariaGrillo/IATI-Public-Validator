@@ -21,7 +21,7 @@
       } else {
         $schema = "organisation";
       }
-    
+      //echo $schema; die;
       //We need to establish the version of the schema we are working with
       //Note there is a similar routine set in validate-xsd.php, but we can't rely on that being run yet
       //It might be an idea to set this globally much earlier on 
@@ -77,16 +77,19 @@
         include("functions/get_elements_from_supplied_file.php");
         //$file_path = $_SESSION['uploadedfilepath']; //Sanitise/Check this?
         
-        
+        //echo $schema;
         //Set up an array of all top level elements in the schema
         if (isset($version) && in_array($version,$iati_versions)) { //This should already be safe by now, but doesn't hurt to check
           //This should always be true at this stage, so the else is just a fallback
+          //echo "got this far"; //die;
           $all_elements = get_elements_from_schema($schema, $version);
+          //var_dump($all_elements); die;
         } else {
           $all_elements = get_elements_from_schema($schema, $current_version);
         }
-        sort($all_elements);
         //print_r($all_elements);
+        sort($all_elements);
+       
         
         //Set up an array of all the elements found in the supplied file
         $found_elements = get_elements_from_supplied_file($file_path); //this returns all elements
@@ -98,6 +101,7 @@
         } else {
           $unique_found_elements = array();
         }
+        //print_r($unique_found_elements);
         sort($unique_found_elements);
         //print_r($unique_found_elements);
            
@@ -110,6 +114,7 @@
         $elements['missing'] = $missing_elements;
         $elements['counts'] = $unique_found_elements_count;
         $elements_json = json_encode($elements);
+        //When debugging, comment this line out to stop it caching.
         file_put_contents($file_path . "_elements_" . $version . ".json",$elements_json);
         
         //decode again to use it below. !
