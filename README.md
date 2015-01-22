@@ -1,6 +1,12 @@
 IATI-Public Validator
 =====================
 
+[![Build Status](https://travis-ci.org/IATI/IATI-Public-Validator.svg?branch=master)](https://travis-ci.org/IATI/IATI-Public-Validator)
+[![License: MIT](https://img.shields.io/badge/license-AGPLv3-blue.svg)](https://github.com/IATI/IATI-Public-Validator/blob/master/LICENSE.md)
+
+Introduction
+------------
+
 This is an application to help people check any random file for IATI complience.
 
 the plan is to build a modular application adding tests as we go.
