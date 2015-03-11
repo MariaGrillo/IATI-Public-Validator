@@ -104,6 +104,7 @@ include "header.php";
 					<?php else: //We don't have a file to test so display some instructions?>
             <p>Let us test your data.</p>
             <p>Upload a file, paste some code or point us to a file on the internet and we can give you some basic information about how well the data performs against the IATI standard.</p>
+            <p>Files over 10MB in size may be rejected by the application.</p>
 					<?php endif; ?>
         </div><!--/.well -->
         
