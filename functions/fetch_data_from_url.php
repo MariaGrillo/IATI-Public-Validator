@@ -15,7 +15,7 @@ function fetch_data_from_url ($xurl, $cacheFile) {
 		
 		// set URL and other appropriate options
 		curl_setopt($ch, CURLOPT_URL, $xml_url);
-		curl_setopt($ch,CURLOPT_TIMEOUT,30);
+		curl_setopt($ch,CURLOPT_TIMEOUT,300);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		//Follow re-directs:
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
