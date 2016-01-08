@@ -1,4 +1,4 @@
-<iati-organisations xmlns:ir="http://iatiregistry.org/ns/record#" version="1" generated-datetime="2013-08-28T13:40:52.98">	<iati-organisation last-updated-datetime="2013-08-28T13:40:52.98" xml:lang="en" default-currency="USD">
+<iati-organisations xmlns:ir="http://iatiregistry.org/ns/record#" version="1.05" generated-datetime="2013-08-28T13:40:52.98">	<iati-organisation last-updated-datetime="2013-08-28T13:40:52.98" xml:lang="en" default-currency="USD">
 <ir:registry-record xml:lang="en" file-id="21020" source-url="http://maps.aidsalliance.org/iati/organisation.xml" publisher-id="21020" publisher-role="Reporting" contact-email="iati@aidsalliance.org" activity-period="All Periods" last-updated-datetime="2013-08-28T14:16:15Z" generated-datetime="2013-08-28T14:16:15Z" verification-status="1" format="xml" license="IATI" xmlns:ir="http://iatiregistry.org/ns/record#"/>
 <reporting-org ref="21020" type="21">	International HIV/AIDS Alliance	</reporting-org>
 <iati-identifier>	21020	</iati-identifier>	

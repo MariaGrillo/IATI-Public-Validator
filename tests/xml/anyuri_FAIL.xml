@@ -1,4 +1,4 @@
-<iati-activities>
+<iati-activities version="1.05">
     <iati-activity>
         <document-link url="test://test:test:test/test:test" format="text/html">
             <title>Contract: DFID: Public Financial Management Consultancy Support Uganda</title>
