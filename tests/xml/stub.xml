@@ -1,4 +1,4 @@
-<iati-activities>
+<iati-activities version="1.01">
     <iati-activity>
         <activity-website>http://iati.bjwebb.co.uk/validate</activity-website>
     </iati-activity>
