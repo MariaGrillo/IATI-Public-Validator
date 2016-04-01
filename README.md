@@ -36,6 +36,15 @@ Quick Start
 * Don't forget to set a path for your log file. Basic info is collected about the use of the upload functions. You may need to enable write permissions on your log file.
 * To clear out the `upload` directory you can (copy) and alter the example.remove_files.php file and hit it on a cron run
 
+Running a local development version
+-----------------------------------
+A local version of the is possible using the PHP in-built webserver. Using terminal, navigate to the the folder when you have cloned this repository to and enter the following command:
+
+   php -S localhost:8000
+
+Vising `http://localhost:8000/` in your browser should load the homepage for the validator.
+
+
 About file upload size
 ----------------------
 The application sets a limit in the `functions/process_files.php` file, BUT your webserver will probably also have an upload limit in place.
@@ -68,7 +77,11 @@ Which page gets called is controlled by the `$_GET` variables passed by the URL.
 
 Tests
 -----
-There are application tests in the `tests.php` file. These are run using [PHPUnit](https://github.com/sebastianbergmann/phpunit/#phpunit), `phpunit tests.php`. Individual XML files that should pass or fail various validator tests are found in the `tests/` directory.
+There are application tests in the `tests/tests.php` file. These are run using [PHPUnit](https://github.com/sebastianbergmann/phpunit/#phpunit):
+
+    phpunit tests/tests.php 
+
+Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory.  Note recent versions of PHPUnit require PHP version 5.6 or above.  These tests were written retrospectively, and therefore take more of a start-to-end functional approach, rather than testing lowe level functionality (for example functions/methods).
 
 Upgrades
 --------
