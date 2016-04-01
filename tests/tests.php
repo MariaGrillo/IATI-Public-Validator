@@ -142,6 +142,17 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->validate_xsd('./tests/xml/versions/105not103.xml', $version, FALSE);
         $this->validate_xsd('./tests/xml/versions/201not1x.xml', $version, TRUE);
     }
+    public function test202() {
+        $version = '2.02';
+        $this->version2_independent($version);
+        $this->validate_xsd('./tests/xml/versions/101not102.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/102not101.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/103not102.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/105not103.xml', $version, FALSE);
+        $this->validate_xsd('./tests/xml/versions/201not1x.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/versions/202not201.xml', $version, TRUE);
+    }
     public function testAuto() {
         $version = 'auto';
         $this->version1_independent($version);
@@ -152,6 +163,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->validate_xsd('./tests/xml/versions/104not103.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/105not103.xml', $version, TRUE);
         $this->validate_xsd('./tests/xml/versions/201not1x.xml', $version, TRUE);
+        $this->validate_xsd('./tests/xml/versions/202not201.xml', $version, TRUE);
     }
     public function test_well_formed() {
         $this->well_formed('./tests/xml/well_formed_PASS.xml', TRUE);
