@@ -40,7 +40,7 @@ Running a local development version
 -----------------------------------
 A local version of the is possible using the PHP in-built webserver. Using terminal, navigate to the the folder when you have cloned this repository to and enter the following command:
 
-   php -S localhost:8000
+    php -S localhost:8000
 
 Vising `http://localhost:8000/` in your browser should load the homepage for the validator.
 
@@ -81,7 +81,7 @@ There are application tests in the `tests/tests.php` file. These are run using [
 
     phpunit tests/tests.php 
 
-Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory.  Note recent versions of PHPUnit require PHP version 5.6 or above.  These tests were written retrospectively, and therefore take more of a start-to-end functional approach, rather than testing lowe level functionality (for example functions/methods).
+Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory.  Note recent versions of PHPUnit require PHP version 5.6 or above.  These tests were written retrospectively, and therefore take more of a start-to-end functional approach, rather than testing lower level functionality (for example functions/methods).
 
 Upgrades
 --------
