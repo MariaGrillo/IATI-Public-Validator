@@ -45,8 +45,8 @@ The planned implementation is to use Python Flask with the [Flask-RESTful]( http
 git clone 
 cd IATI-Public-Validator
 
-# Create a virtual environment (recommended)
-virtualenv pyenv
+# Create a virtual environment using python 3 (recommended)
+virtualenv -p python3 pyenv
 source pyenv/bin/activate
 
 # Install python depencies

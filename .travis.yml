@@ -1,9 +1,8 @@
-language: php
-
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-
-before_script: ./get_iati_schemas.sh
-script: phpunit tests/tests.php
+language: python
+python:
+  - "3.4"
+install:
+  - pip install -r requirements_dev.txt
+  - ./get_iati_schemas.sh
+script:  py.test --cov .
+after_success:  coveralls
