@@ -1,92 +1,85 @@
-IATI-Public Validator
-=====================
+# IATI-Public Validator
 
 [![Build Status](https://travis-ci.org/IATI/IATI-Public-Validator.svg?branch=master)](https://travis-ci.org/IATI/IATI-Public-Validator)
 [![License: MIT](https://img.shields.io/badge/license-AGPLv3-blue.svg)](https://github.com/IATI/IATI-Public-Validator/blob/master/LICENSE.md)
 
-Introduction
-------------
 
-This is an application to help people check any random file for IATI complience.
+## Introduction
 
-the plan is to build a modular application adding tests as we go.
+This branch contains a new version the IATI Public Validator. The current version can be accessed at: http://validator.iatistandard.org/
 
-Basic functions are:
+The aim of the application is to help people check a given  file for complience against the [IATI Standard](http://www.iatistandard.org/).
 
-* Test for well formedness
-* Test for validation against the iati schema
-
-Some basic statistics:
-
-* Elements found
-* Basic info
-
-Requirements
-------------
-PHP > 5.2.11 - for the use of `libxml_disable_entity_loader` to protect against xml injection attacks  
-php5-curl is used to fetch remote files, see `functions/fetch_data_from_url.php` (on Ubuntu sudo apt-get install php5-curl)
-
-Quick Start
------------
-* Checkout the files to your webserver.
-* You will need to add an `upload` directory to the root of the project and make it writable by your webserver.
-* Make a copy of example.settings.php and rename it settings.php
-* Edit the configuration information in that file and save it. 
-* Download all versions of the IATI Schemas using `./get_iati_schemas.sh`
-* Don't forget to set a path for your log file. Basic info is collected about the use of the upload functions. You may need to enable write permissions on your log file.
-* To clear out the `upload` directory you can (copy) and alter the example.remove_files.php file and hit it on a cron run
-
-Running a local development version
------------------------------------
-A local version of the is possible using the PHP in-built webserver. Using terminal, navigate to the the folder when you have cloned this repository to and enter the following command:
-
-    php -S localhost:8000
-
-Vising `http://localhost:8000/` in your browser should load the homepage for the validator.
+A new version is needed in order to validate against the IATI Rulesets as well as to offer some content checking (aginst allowed codelist values, etc). The plan is to build a modular application adding tests as we go.
 
 
-About file upload size
-----------------------
-The application sets a limit in the `functions/process_files.php` file, BUT your webserver will probably also have an upload limit in place.
-Alter your php.ini file or checkout the override rules in the `.htaccess` file included in the project. Obviously this only works if your webserver reads the `.htaccess` file.
+## Development plan
+Sprint 1 (three weeks to Wednesday 20th July) will focus on
 
-IATI Schema
------------
-Currently the application is a bit inconsistent in the way it refrences the schema. Sometimes it uses the remote URL at others it links to downloaded files.
+* Python Flask project set-up
+* UI & API functionality to:
+  * Input XML by POST (API) or paste (UI)
+  * Test for well-formed XML
+  * Test for validation against the IATI activity schema
 
-Sorry about that!
+For reference, a sample API output is contained within `sample_api_output.json`.
 
-Cron (Tidy Up)
---------------
-The upload directory will store files people upload to the service.
-The file `example.remove_files.php` when run will remove files older than a specified time.
-You should edit this file to set the path to your upload directory, and alter the time period.
+Detailed sprint planning is available in the [sprint 1 Google sheet](https://docs.google.com/spreadsheets/d/1yGL0MC6p7Ul9EeWNctXqnL8fehkt94OaMa2GVEnsrfI/edit?usp=sharing).
 
-How it works
-------------
 
-Once a file is uploaded or pulled from the web, the path to the file (and file details) are saved in session variable.
-Files are stored locally with an appended time stamp. This way more than one person can load a file of the same name (or from the same URL).
-Data generated against that file can then also be stored uniquely.
+## Requirements
 
-Once we have a file, we can perform various tests.
-The index.php file controls all page views. 
-Each test is contained in it's own 'page' within the `pages/` directory.
-Apart from the well formed and validation checks, results are stored in files in json format. This is then used to display the results.
-Which page gets called is controlled by the `$_GET` variables passed by the URL. These are sanitised by an array of allowed values at the top of index.php
+* python-virtualenv
+* libxml2-dev
 
-Tests
------
-There are application tests in the `tests/tests.php` file. These are run using [PHPUnit](https://github.com/sebastianbergmann/phpunit/#phpunit):
 
-    phpunit tests/tests.php 
+## Technology overview
 
-Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory.  Note recent versions of PHPUnit require PHP version 5.6 or above.  These tests were written retrospectively, and therefore take more of a start-to-end functional approach, rather than testing lower level functionality (for example functions/methods).
+The planned implementation is to use Python Flask with the [Flask-RESTful]( http://flask-restful-cn.readthedocs.io) extension. Schema validation will be done using the [lxml library](http://lxml.de/).
 
-Upgrades
---------
+
+## Installation
+
+```
+# Clone this repository and enter into it
+git clone 
+cd IATI-Public-Validator
+
+# Create a virtual environment (recommended)
+virtualenv pyenv
+source pyenv/bin/activate
+
+# Install python depencies
+pip install -r requirements.txt
+
+# Download all versions of the IATI Schemas 
+./get_iati_schemas.sh
+```
+
+[More to follow]
+
+
+## Running a local development version
+
+[To follow]
+
+
+## About file upload size
+
+[To follow]
+
+
+## Tests
+
+There will be application tests in the `tests` folder. These are run using [Pytest](http://pytest.org/latest/):
+
+Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory
+
+
+## Upgrades
+
 To upgrade the application you need to update the files, and sometimes you will need to update the IATI Schema.
 
-To upgrade the files, if you use git, a git pull on the appropriate directory will update your files. Alternatively, re-install using the Quick Start instructions.
+To upgrade the files, if you use git, a git pull on the appropriate directory will update your files. Alternatively, re-install using the installation instructions.
 
 To make sure you have the latest schema files, run `./get_iati_schemas.sh`

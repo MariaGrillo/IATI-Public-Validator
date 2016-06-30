@@ -1,0 +1,42 @@
+{
+    "status": {
+        "overall_status": "fail",
+        "status_detail": {
+            "status_well_formed_xml": "pass",
+            "status_schema": "fail",
+            "status_rulesets": "not checked",
+            "status_content_check": "not checked"
+        }
+    },
+
+    "metadata": {
+        "file_size_bytes": "2048",
+        "began": "2016-06-30T18:25:43.511Z",
+        "completed": "2016-06-30T18:25:43.511Z",
+        "temporary_share_link_api": "http://validator.iatistandard.org/api/result/1467121050",
+        "temporary_share_link_ui": "http://validator.iatistandard.org/result/1467121050",
+        "type": "paste",
+        "version": {
+            "version_tested": "2.02",
+            "type": "detected"
+        }
+    },
+
+    "error_count": "2",
+
+    "errors": [{
+        "type": "schema_error",
+        "iati-identifier": "AA-AAA-123456789-ABC123",
+        "element": "sector",
+        "narrative": "Element 'sector': The attribute 'code' is required but missing.",
+        "line_number": "50",
+        "xml_context": "<sector>"
+    }, {
+        "type": "schema_error",
+        "iati-identifier": "AA-AAA-123456789-ABC123",
+        "element": "value",
+        "narrative": "Element 'value': The attribute 'value-date' is required but missing.",
+        "line_number": "54",
+        "xml_context": "<value>"
+    }]
+}
