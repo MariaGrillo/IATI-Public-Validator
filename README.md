@@ -40,6 +40,7 @@ The planned implementation is to use Python Flask with the [Flask-RESTful]( http
 
 ## Installation
 
+
 ```
 # Clone this repository and enter into it
 git clone 
@@ -54,6 +55,11 @@ pip install -r requirements.txt
 
 # Download all versions of the IATI Schemas 
 ./get_iati_schemas.sh
+
+# Run the server in development mode
+python app.py
+
+# API requests can be made to http://127.0.0.1:5000/
 ```
 
 [More to follow]

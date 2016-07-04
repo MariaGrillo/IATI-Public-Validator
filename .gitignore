@@ -1,1 +1,4 @@
 *.swp
+
+# Exlude iati-schemas
+iati-schemas/*
