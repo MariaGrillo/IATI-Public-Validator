@@ -29,8 +29,15 @@ Detailed sprint planning is available in the [sprint 1 Google sheet](https://doc
 
 ## Requirements
 
-* python-virtualenv
+The following are [lxml dependencies](http://lxml.de/installation.html#requirements):
+
 * libxml2-dev
+* libxslt-dev
+* python-dev
+
+Recommended: 
+
+* python-virtualenv
 
 
 ## Technology overview
@@ -39,7 +46,6 @@ The planned implementation is to use Python Flask with the [Flask-RESTful]( http
 
 
 ## Installation
-
 
 ```
 # Clone this repository and enter into it
@@ -70,6 +76,11 @@ python app.py
 [To follow]
 
 
+## Sample API requests
+
+See `temp/api-examples.md` for details.
+
+
 ## About file upload size
 
 [To follow]
@@ -80,6 +91,12 @@ python app.py
 There will be application tests in the `tests` folder. These are run using [Pytest](http://pytest.org/latest/):
 
 Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory
+
+To run the tests, ensure you have run `pip install -r requirements_dev.txt` and then run pytest:
+
+```
+PYTHONPATH=. py.test --cov .
+```
 
 
 ## Upgrades

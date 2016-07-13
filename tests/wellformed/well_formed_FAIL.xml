@@ -8,7 +8,10 @@
 <recipient-country code="MM" percentage="100" >Myanmar</recipient-country>
 <title>	Three Diseases Fund for Myanmar</title>
 <description type="1">The three dieseases fund aims to contribute to achieving the UN Millennium Development goals in Myanmar by reducuing the burden of communicable disease morbidity/mortality. Activities will be undertaken to reduce transmission and enhance provision of treatment and care for HIV and AIDS,turberculosis (TB) and malaria</description>
+
+<!-- MISMATCHING OPEN AND CLOSING TAGS -->
 <activity-ate type="start-actual" iso-date="2007-05-15">2007-05-15</tactivity-date>
+
 <activity-date type="start-planned" iso-date="2007-05-15">2007-05-15</activity-date>
 <activity-date type="end-actual" iso-date="2012-06-30">2012-06-30</activity-date>
 <activity-date type="end-planned" iso-date="2012-06-30">2012-06-30</activity-date>
