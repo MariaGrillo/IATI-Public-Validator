@@ -4,5 +4,5 @@ python:
 install:
   - pip install -r requirements_dev.txt
   - ./get_iati_schemas.sh
-script:  py.test --cov .
+script:  PYTHONPATH=. py.test --cov .
 after_success:  coveralls

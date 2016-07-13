@@ -92,7 +92,7 @@ There will be application tests in the `tests` folder. These are run using [Pyte
 
 Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory
 
-To run the tests, ensure you have run `pip install -r requirements_dev.txt` and then run pytest:
+To run the tests, ensure you have run `pip install -r requirements_dev.txt`. Pytest can then be run using a python path to enable relative imports to be imported correctly:
 
 ```
 PYTHONPATH=. py.test --cov .
