@@ -38,5 +38,23 @@
         "narrative": "Element 'value': The attribute 'value-date' is required but missing.",
         "line_number": "54",
         "xml_context": "<value>"
+    }],
+
+    "warning_count": "2",
+
+    "warnings": [{
+        "type": "file_warning",
+        "iati-identifier": "",
+        "element": "",
+        "narrative": "File exceeds 40MB.",
+        "line_number": "",
+        "xml_context": ""
+    }, {
+        "type": "schema_warning",
+        "iati-identifier": "AA-AAA-123456789-ABC123",
+        "element": "country-budget-element",
+        "narrative": "Element 'country-budget-element': This element is deprecated and is a candidate for removal in future versions of the IATI standard.",
+        "line_number": "54",
+        "xml_context": "<country-budget-items vocabulary=\"2\">\n...\n</country-budget-items>"
     }]
 }
