@@ -1,4 +1,6 @@
-*.swp
+# Exclude cache and compiled files
+__pycache__
+*.pyc
 
 # Exlude iati-schemas
 iati-schemas/*
