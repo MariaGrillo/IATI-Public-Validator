@@ -6,9 +6,9 @@
 
 ## Introduction
 
-This branch contains a new version the IATI Public Validator. The current version can be accessed at: http://validator.iatistandard.org/
+This branch contains a new version the IATI Public Validator. The current (development) version can be accessed at: http://dev.validator.iatistandard.org/api/docs
 
-The aim of the application is to help people check a given  file for complience against the [IATI Standard](http://www.iatistandard.org/).
+The aim of the application is to help people check a given file for complience against the [IATI Standard](http://www.iatistandard.org/).
 
 A new version is needed in order to validate against the IATI Rulesets as well as to offer some content checking (aginst allowed codelist values, etc). The plan is to build a modular application adding tests as we go.
 
@@ -62,18 +62,24 @@ pip install -r requirements.txt
 # Download all versions of the IATI Schemas 
 ./get_iati_schemas.sh
 
+```
+
+
+### Running a local development version
+
+```
 # Run the server in development mode
 python app.py
 
 # API requests can be made to http://127.0.0.1:5000/
 ```
 
-[More to follow]
 
+### Deploying to a server
 
-## Running a local development version
+The application can be deployed using [Apache](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps), [Nginx](http://vladikk.com/2013/09/12/serving-flask-with-nginx-on-ubuntu/), [Heroku](https://community.nitrous.io/tutorials/deploying-a-flask-application-to-heroku) or other server software.
 
-[To follow]
+The official instance is currently deployed using Apache. A wsgi file `deploy.wsgi` is provided for your convenience, although the installation paths may require editing.
 
 
 ## Sample API requests
