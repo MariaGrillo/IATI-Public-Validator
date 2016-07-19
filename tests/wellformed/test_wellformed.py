@@ -1,11 +1,5 @@
-import os
-
 from validate import Validate_IATI_XML
-
-
-def get_abs_path(rel_fname):
-	script_dir = os.path.dirname(__file__) # Absolute dir the script is in
-	return os.path.join(script_dir, rel_fname)
+import os
 
 
 def test_wellformed_pass_simple():
@@ -29,7 +23,7 @@ def test_wellformed_pass_simple():
 
 
 def test_wellformed_pass_complex():
-	with open(get_abs_path("well_formed_PASS.xml"), 'r') as xmlfile:
+	with open("{}/well_formed_PASS.xml".format(os.path.dirname(os.path.abspath(__file__))), 'r') as xmlfile:
 		validator = Validate_IATI_XML(xmlfile.read())
 
 	assert validator.status_overall == "Pass"
@@ -57,7 +51,7 @@ def test_wellformed_fail_simple():
 
 
 def test_wellformed_fail_complex():
-	with open(get_abs_path("well_formed_FAIL.xml"), 'r') as xmlfile:
+	with open("{}/well_formed_FAIL.xml".format(os.path.dirname(os.path.abspath(__file__))), 'r') as xmlfile:
 		validator = Validate_IATI_XML(xmlfile.read())
 
 	assert validator.status_overall == "Fail"

@@ -1,5 +1,7 @@
 import datetime
+from io import StringIO
 from lxml import etree
+import os
 import re
 import sys
 
@@ -8,14 +10,22 @@ class Validate_IATI_XML():
     # Set object defaults
     status_overall = None # Overall status of the test itself
     status = {
-        'status_well_formed_xml': "Not checked"
+        'status_well_formed_xml': "Not checked",
+        'status_schema': "Not checked"
     } # Output for the status of each test
-    xml = "" # XML input string
+    xml_raw = {
+        'xml': "", # XML input string
+        'etree_obj': None # lxml etree object
+        }
+    xml_pretty = {
+        'xml': "", # 'Prettified' (i.e. formatted) version of the raw XML
+        'etree_obj': None, # lxml etree object
+        'xpath_map': {} # Dict of xpaths to line number
+        }
     iati_version = {
         'version_tested': None,
         'type': None
-        } # IATI version that self.xml will be validated against
-    iati_etree = None # lxml etree object
+        } # IATI version that self.xml_raw['xml'] will be validated against
     errors = [] # Empty list for any errors that are found
     warnings = []
     start_time = None
@@ -25,10 +35,10 @@ class Validate_IATI_XML():
     def __init__(self, xml=None, iati_version=None):
         self.start_time = datetime.datetime.now()
         if xml is not None:
-            self.xml = xml
+            self.xml_raw['xml'] = xml
 
         # Perform well-formed check
-        if self.validate_well_formed(): # Will set self.iati_etree if successful
+        if self.validate_well_formed(): # Will set self.xml_raw['etree_obj'] if successful
             # Continue to validate if the data is well formed
             
             if iati_version is None:
@@ -39,6 +49,8 @@ class Validate_IATI_XML():
                 self.iati_version['version_tested'] = iati_version
                 self.iati_version['type'] = "Input"
 
+            self.validate_schema()
+
         # Set final output data, based on results
         self.completed_time = datetime.datetime.now()
         self.status_overall = 'Pass' if all(
@@ -46,15 +58,20 @@ class Validate_IATI_XML():
             ) else 'Fail'
         return
 
+
+    def prettified_xml_loader(self):
+        self.xml_pretty['xml'] = etree.tostring(self.xml_raw['etree_obj'], pretty_print=True)
+
     
     def get_version(self):
+        # FIXME - Check user-submitted version number is in the Version codelist
         """
-        Attept to get the version number specified in iati-activities/@version. 
+        Attempt to get the version number specified in iati-activities/@version. 
         If no version present, set as the latest version number.
         Returns:
           Dict containing data with the version found
         """
-        detected_version = self.iati_etree.xpath('//@version')
+        detected_version = self.xml_raw['etree_obj'].xpath('//@version')
         out = {}
         if detected_version:
             out['version'] = detected_version[0]
@@ -71,13 +88,16 @@ class Validate_IATI_XML():
 
     
     def validate(self):
-        well_formed = Validate_well_formed(self.xml)
+        """
+        METHOD NOT CALLED: Candidate for deletion
+        """
+        well_formed = Validate_well_formed(self.xml_raw['xml'])
         return True
 
     
     def get_metadata(self):
         return {
-            'file_size_bytes': sys.getsizeof(self.xml),
+            'file_size_bytes': sys.getsizeof(self.xml_raw['xml']),
             'began': self.start_time,
             'completed': self.completed_time,
             'version': self.iati_version,
@@ -92,7 +112,7 @@ class Validate_IATI_XML():
           False -- if failed
         """
         try:
-            self.iati_etree = etree.fromstring(self.xml)
+            self.xml_raw['etree_obj'] = etree.fromstring(self.xml_raw['xml'])
             self.status['status_well_formed_xml'] = "Pass"
             return True
         except etree.XMLSyntaxError as exception_obj:
@@ -132,3 +152,61 @@ class Validate_IATI_XML():
             'line_number': line_number[0] if line_number else None,
             'xml_context': None
             }
+
+
+    def validate_schema(self, schema_type="activity"):
+        """
+        Validate XML against the IATI schema.
+        Input:
+          schema_type -- The IATI schema to be tested. Should be "activity" or "organisation".
+        Returns:
+          True -- if successfully set-up an etree object
+          False -- if failed
+        """
+
+        # Determine the path to the schema
+        if schema_type == "organisation":
+            schema_path =  "{}/iati-schemas/{}/iati-organisations-schema.xsd".format(
+                os.path.abspath(os.path.dirname(__file__)), 
+                self.iati_version['version_tested']
+                )
+        else:
+            schema_path = "{}/iati-schemas/{}/iati-activities-schema.xsd".format(
+                os.path.abspath(os.path.dirname(__file__)),
+                self.iati_version['version_tested']
+                )
+
+        # Load the activity schema
+        xmlschema_doc = etree.parse(schema_path)
+        xmlschema = etree.XMLSchema(xmlschema_doc)
+
+        # Attempt to validate
+        try:
+            xmlschema.assertValid(self.xml_raw['etree_obj'])
+            self.status['status_schema'] = "Pass"
+            return True
+        except etree.DocumentInvalid as exception_obj:
+            self.status['status_schema'] = "Fail"
+            for error in exception_obj.error_log:
+                self.errors.append(self.schema_error_handler(error))
+            return False
+
+
+    def schema_error_handler(self, error):
+        """
+        Return a dict containing details of the schema error.
+        Input:
+          error -- A line of the error_log of an etree.DocumentInvalid object.
+        Returns:
+          A dict containing lineno, error type, xml context and detailed error narrative.
+        """
+
+        return {
+                'type': 'schema_error',
+                'iati-identifier': None,
+                'narrative': error.message,
+                'element': None,
+                'line_number': error.line,
+                'column': error.column,
+                'xml_context': None
+                }
