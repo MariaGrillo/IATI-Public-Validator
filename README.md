@@ -35,6 +35,12 @@ The following are [lxml dependencies](http://lxml.de/installation.html#requireme
 * libxslt-dev
 * python-dev
 
+Some systems may also require:
+
+* libxslt1-dev
+* python3-dev
+* zlib1g-dev
+
 Recommended: 
 
 * python-virtualenv
@@ -49,8 +55,11 @@ The planned implementation is to use Python Flask with the [Flask-RESTful]( http
 
 ```
 # Clone this repository and enter into it
-git clone 
+git clone https://github.com/IATI/IATI-Public-Validator.git
 cd IATI-Public-Validator
+
+# Switch to the development branch
+git checkout 81-validator-rewrite
 
 # Create a virtual environment using python 3 (recommended)
 virtualenv -p python3 pyenv
