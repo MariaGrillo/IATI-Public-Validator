@@ -18,15 +18,12 @@ def test_wellformed_pass_simple():
 	"""
 
 	validator = Validate_IATI_XML(xml)
-	assert validator.status_overall == "Pass"
 	assert validator.status['status_well_formed_xml'] == "Pass"
 
 
 def test_wellformed_pass_complex():
 	with open("{}/well_formed_PASS.xml".format(os.path.dirname(os.path.abspath(__file__))), 'r') as xmlfile:
 		validator = Validate_IATI_XML(xmlfile.read())
-
-	assert validator.status_overall == "Pass"
 	assert validator.status['status_well_formed_xml'] == "Pass"
 
 
@@ -46,7 +43,7 @@ def test_wellformed_fail_simple():
 	"""
 
 	validator = Validate_IATI_XML(xml)
-	assert validator.status_overall == "Fail"
+	assert validator.status_overall == "Fail" # If at least one test fails, overall test status should be fail.
 	assert validator.status['status_well_formed_xml'] == "Fail"
 
 
@@ -54,5 +51,5 @@ def test_wellformed_fail_complex():
 	with open("{}/well_formed_FAIL.xml".format(os.path.dirname(os.path.abspath(__file__))), 'r') as xmlfile:
 		validator = Validate_IATI_XML(xmlfile.read())
 
-	assert validator.status_overall == "Fail"
+	assert validator.status_overall == "Fail" # If at least one test fails, overall test status should be fail.
 	assert validator.status['status_well_formed_xml'] == "Fail"
