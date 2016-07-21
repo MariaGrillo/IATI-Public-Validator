@@ -13,3 +13,10 @@ xml=<iati-activities generated-datetime="2014-09-10T07:15:37Z" version="2.01" li
   </iati-activity>
 EOF
 ```
+
+
+## Validating the contents of a file
+
+```
+curl --data-urlencode "xml@path/to/file" http://127.0.0.1:5000/api/validate/xml
+```
