@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, redirect
 from flask_restful import Resource, Api, reqparse
 from validate import Validate_IATI_XML
 
@@ -87,8 +87,9 @@ api.add_resource(Validate_Raw_XML, '/api/validate/xml')
 def docs():
     """
     #FIXME API documentation page to be rendered here
+    For now, refirect to the API examples on github
     """
-    return "Documentation site"
+    return redirect("https://github.com/IATI/IATI-Public-Validator/blob/81-validator-rewrite/temp/api-examples.md", code=302)
 
 if __name__ == '__main__':
     app.run(debug=True)
