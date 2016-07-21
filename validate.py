@@ -33,6 +33,7 @@ class Validate_IATI_XML():
 
     
     def __init__(self, xml=None, iati_version=None):
+        self.errors = []
         self.start_time = datetime.datetime.now()
         if xml is not None:
             self.xml_raw['xml'] = xml
