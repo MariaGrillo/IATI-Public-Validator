@@ -14,17 +14,15 @@ A new version is needed in order to validate against the IATI Rulesets as well a
 
 
 ## Development plan
-Sprint 1 (three weeks to Wednesday 20th July) will focus on
+Sprint 2 (three weeks to Friday 26th August) will focus on
 
-* Python Flask project set-up
-* UI & API functionality to:
-  * Input XML by POST (API) or paste (UI)
-  * Test for well-formed XML
-  * Test for validation against the IATI activity schema
+* Adding API documentation
+* Adding a point-and-click user interface to test for well-formed XML and schema validation
+* Adding logging
 
-For reference, a sample API output is contained within `sample_api_output.json`.
+For reference, current API examples are in `temp/api-examples.md`. An example API output is contained within `temp/sample_api_output.json`.
 
-Detailed sprint planning is available in the [sprint 1 Google sheet](https://docs.google.com/spreadsheets/d/1yGL0MC6p7Ul9EeWNctXqnL8fehkt94OaMa2GVEnsrfI/edit?usp=sharing).
+Detailed sprint planning is available in the [sprint 2 Google sheet](https://docs.google.com/spreadsheets/d/10XzACbHT4UvRljrnmT0AJsjYuif3w0Lz3QcKFERxcj0/edit?usp=sharing).
 
 
 ## Requirements
