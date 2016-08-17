@@ -101,14 +101,25 @@ See `temp/api-examples.md` for details.
 
 ## Tests
 
-There will be application tests in the `tests` folder. These are run using [Pytest](http://pytest.org/latest/):
+There will be application tests in the `tests` folder. These are run using [Pytest](http://pytest.org/latest/).
 
-Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory
+Individual XML files that should pass or fail various validator tests are found in the `tests/xml/` directory.
 
 To run the tests, ensure you have run `pip install -r requirements_dev.txt`. Pytest can then be run using a python path to enable relative imports to be imported correctly:
 
 ```
 PYTHONPATH=. py.test --cov .
+```
+
+
+## Logging
+
+The [standard python logging library](https://docs.python.org/3/library/logging.html) is used and configured by `logging_config.yaml`. Logs are written to `info.log` and `errors.log`.
+
+Seperate configuration files can be run using an environment variable, for example:
+
+```
+LOG_CFG=new_logging_config.yaml python app.py
 ```
 
 

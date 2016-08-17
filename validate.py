@@ -1,9 +1,12 @@
 import datetime
 from io import StringIO
+import logging
 from lxml import etree
 import os
 import re
 import sys
+
+logger = logging.getLogger(__name__)
 
 
 class Validate_IATI_XML():
@@ -33,6 +36,10 @@ class Validate_IATI_XML():
 
     
     def __init__(self, xml=None, iati_version=None):
+        logger.info("__init__() method")
+        logger.debug('xml={}'.format(xml))
+        logger.debug('iati_version={}'.format(iati_version))
+
         self.errors = []
         self.start_time = datetime.datetime.now()
         if xml is not None:
@@ -72,6 +79,7 @@ class Validate_IATI_XML():
         Returns:
           Dict containing data with the version found
         """
+        logger.info("get_version() method")
         detected_version = self.xml_raw['etree_obj'].xpath('//@version')
         out = {}
         if detected_version:
@@ -85,6 +93,7 @@ class Validate_IATI_XML():
     
     def get_latest_version(self):
         # FIXME - get latest version number from the Version codelist
+        logger.info("get_latest_version() method")
         return '2.02'
 
     
@@ -92,11 +101,13 @@ class Validate_IATI_XML():
         """
         METHOD NOT CALLED: Candidate for deletion
         """
+        logger.info("validate() method")
         well_formed = Validate_well_formed(self.xml_raw['xml'])
         return True
 
     
     def get_metadata(self):
+        logger.info("get_metadata() method")
         return {
             'file_size_bytes': sys.getsizeof(self.xml_raw['xml']),
             'began': self.start_time,
@@ -112,13 +123,17 @@ class Validate_IATI_XML():
           True -- if successfully set-up an etree object
           False -- if failed
         """
+        logger.info("validate_well_formed() method")
         try:
             self.xml_raw['etree_obj'] = etree.fromstring(self.xml_raw['xml'])
             self.status['status_well_formed_xml'] = "Pass"
+            logger.info("Passed well-formed check")
             return True
+            
         except etree.XMLSyntaxError as exception_obj:
             # exception_obj = XMLSyntaxError('Premature end of data in tag reporting-org line 2, line 6, column 1',)
             self.status['status_well_formed_xml'] = "Fail"
+            logger.info("Failed well-formed check")
             self.errors.append(self.well_formed_error_handler(exception_obj))
             return False
 
@@ -138,6 +153,8 @@ class Validate_IATI_XML():
         Raw libxml logs are available using exception_obj.error_log.filter_from_level(etree.ErrorLevels.FATAL)
         However the data from these appears to be more confusing in some cases than the overall error message returned in the exception.
         """
+        logger.info("well_formed_error_handler() method")
+        logger.debug('exception_obj={}'.format(exception_obj))
 
         # Capture data using regex
         iati_identifier = "" #TODO: Could add regex: Before last <iati-activity element, capture text witin <iati-identifier>...</iati-identifier>
@@ -164,6 +181,8 @@ class Validate_IATI_XML():
           True -- if successfully set-up an etree object
           False -- if failed
         """
+        logger.info("validate_schema() method")
+        logger.debug('schema_type={}'.format(schema_type))
 
         # Determine the path to the schema
         if schema_type == "organisation":
@@ -185,9 +204,12 @@ class Validate_IATI_XML():
         try:
             xmlschema.assertValid(self.xml_raw['etree_obj'])
             self.status['status_schema'] = "Pass"
+            logger.info("Passed schema check")
             return True
+
         except etree.DocumentInvalid as exception_obj:
             self.status['status_schema'] = "Fail"
+            logger.info("Failed schema check")
             for error in exception_obj.error_log:
                 self.errors.append(self.schema_error_handler(error))
             return False
@@ -201,6 +223,8 @@ class Validate_IATI_XML():
         Returns:
           A dict containing lineno, error type, xml context and detailed error narrative.
         """
+        logger.info("schema_error_handler() method")
+        logger.debug('error={}'.format(error))
 
         return {
                 'type': 'schema_error',

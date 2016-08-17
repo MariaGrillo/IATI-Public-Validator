@@ -1,26 +1,33 @@
 from flask import Flask, jsonify, redirect
 from flask_restful import Resource, Api, reqparse
 from validate import Validate_IATI_XML
+from logging_setup import setup_logging
+import logging
+
+setup_logging()
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 api = Api(app)
-
+logger.info("Started app.py")
 
 class Validate_Raw_XML(Resource):
     def get(self):
         """
-        #FIXME This will return an error - post method only
+        #FIXME This will return an error (stating that only POST methods are accepted to this endpoint)
         """
+        logger.info("Validate_Raw_XML GET request made")
         return jsonify({'error': 'Raw XML data can be validated using a POST request.'})
 
     def post(self):
         """
-        Post method to receive a raw IATI XML string and run the validation process.
+        POST method to receive a raw IATI XML string and run the validation process.
 
         #TODO Add a Validate_IATI_XML.get_response() method to return the data, rather than 
               building on the fly.
 
         """
+        logger.info("Validate_Raw_XML POST request made")
 
         # Set-up parser
         parser = reqparse.RequestParser()
@@ -32,6 +39,7 @@ class Validate_Raw_XML(Resource):
         validator = Validate_IATI_XML(xml)
         
         # Return result
+        logger.info("Returning result")
         return jsonify({
             'metadata': validator.get_metadata(),
             'status': {
