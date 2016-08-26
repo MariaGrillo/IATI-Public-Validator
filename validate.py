@@ -6,6 +6,8 @@ import os
 import re
 import sys
 
+from common import get_all_versions
+
 logger = logging.getLogger(__name__)
 
 
@@ -86,15 +88,9 @@ class Validate_IATI_XML():
             out['version'] = detected_version[0]
             out['type'] = "Detected"
         else:
-            out['version'] = self.get_latest_version()
+            out['version'] = max(get_all_versions())
             out['type'] = "Version not found, set to latest version."
         return out
-
-    
-    def get_latest_version(self):
-        # FIXME - get latest version number from the Version codelist
-        logger.info("get_latest_version() method")
-        return '2.02'
 
     
     def validate(self):

@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, redirect
 from flask_restful import Resource, Api, reqparse
-from validate import Validate_IATI_XML
-from logging_setup import setup_logging
 import logging
+
+from common import get_all_versions
+from logging_setup import setup_logging
+from validate import Validate_IATI_XML
+
 
 setup_logging()
 logger = logging.getLogger(__name__)
