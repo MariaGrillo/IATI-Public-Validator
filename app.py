@@ -22,10 +22,6 @@ class Validate_Raw_XML(Resource):
     def post(self):
         """
         POST method to receive a raw IATI XML string and run the validation process.
-
-        #TODO Add a Validate_IATI_XML.get_response() method to return the data, rather than 
-              building on the fly.
-
         """
         logger.info("Validate_Raw_XML POST request made")
 
@@ -34,21 +30,12 @@ class Validate_Raw_XML(Resource):
         parser.add_argument('xml', type=str, help='IATI XML string to be validated')
         args = parser.parse_args()
 
-        # Get XML and store validation object
+        # Get XML
         xml = str(args['xml'])
-        validator = Validate_IATI_XML(xml)
         
         # Return result
         logger.info("Returning result")
-        return jsonify({
-            'metadata': validator.get_metadata(),
-            'status': {
-                'status_overall': validator.status_overall,
-                'status_detail': validator.status
-                },
-            'error_count': len(validator.errors),
-            'error_detail': validator.errors
-            })
+        return jsonify(Validate_IATI_XML(xml).get_response())
 
 api.add_resource(Validate_Raw_XML, '/api/validate/xml')
 

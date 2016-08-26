@@ -116,6 +116,23 @@ class Validate_IATI_XML():
         }
 
 
+    def get_response(self):
+        """
+        Get the full results of the validation.
+        Returns:
+          Dictionary containing reponse data.
+        """
+        return {
+            'metadata': self.get_metadata(),
+            'status': {
+                'status_overall': self.status_overall,
+                'status_detail': self.status
+                },
+            'error_count': len(self.errors),
+            'error_detail': self.errors
+            }
+
+
     def validate_well_formed(self):
         """
         Specific methods for validating that an XML file can be read and contains no syntax errors
