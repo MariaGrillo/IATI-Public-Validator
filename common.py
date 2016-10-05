@@ -17,5 +17,7 @@ def get_all_versions():
     logger.info("get_all_versions() function")
     
     # Get a list of all items in the 'iati-schemas' directory that are not files
-    return [dir_item for dir_item in os.listdir('iati-schemas') 
+    versions = [dir_item for dir_item in os.listdir('iati-schemas') 
        if not os.path.isfile(os.path.join('iati-schemas', dir_item))]
+
+    return sorted(versions)
