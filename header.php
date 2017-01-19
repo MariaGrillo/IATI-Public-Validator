@@ -11,7 +11,7 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="assets/css/validate-me.css" rel="stylesheet">
-    
+
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -24,17 +24,17 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">-->
-    <?php if (isset($zen_css)) { echo $zen_css; } //This is our zenddesk support code pulled from a custom settings.php file - most people can ignore this ?>
     <?php if (isset($google_analytics_code)) { echo $google_analytics_code; } ?>
+    <?php if (isset($zen_script)) { echo $zen_script; } //This is our zenddesk support code pulled from a custom settings.php file - most people can ignore this ?>
   </head>
 
   <body>
-    <?php 
+    <?php
       if (isset($development_server) && $development_server == true) {
         echo '<div id="development">NOTE: This is a development version. Do not rely on it.</div>';
       }
     ?>
-      
+
     <div class="navbar navbar-inverse navbar-static-top">
       <div class="navbar-inner">
         <div class="container">
