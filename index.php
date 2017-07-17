@@ -52,26 +52,26 @@ if (isset($_GET['perm'])) {
 
 $toptab = "home";
 include "header.php";
-?>	
+?>
 	<div class="container">
 		<div class="row">
       <div class="span10" style="float:right">
 				<!-- Main hero unit for a primary marketing message or call to action -->
 				<div class="hero-unit">
-					<?php 
+					<?php
             if (isset ($test) && $test != "reset") { //we need this because session info does not get reset until we call get_page("reset") below!
               echo uploaded_file_info();
             }
             //This is where the main subject of the page is rendered
 						include get_page($test);
 					?>
-						
+
 				</div><!--end Hero unit-->
 			</div><!--end Row-->
-			
+
       <!--Sidebar-->
 			<div class="span2" style="float:left">
-        
+
         <!--Version Switcher-->
 				<div class="well sidebar-nav">
           <form method="get" action="index.php">
@@ -89,8 +89,8 @@ include "header.php";
               <!--<input type="submit" value="Submit" />-->
             </fieldset>
           </form>
-        </div> 
-        
+        </div>
+
         <!--Tests Navigation-->
 				<div class="well sidebar-nav">
 					<?php if (isset($_SESSION['uploadedfilepath'])): //Only show links if we have a file?>
@@ -107,7 +107,7 @@ include "header.php";
             <p>Files over 10MB in size may be rejected by the application.</p>
 					<?php endif; ?>
         </div><!--/.well -->
-        
+
         <!--File Statistics Navigation-->
         <?php if (isset($_SESSION['wellformed']) && $_SESSION['wellformed'] == TRUE): ?>
           <div class="well sidebar-nav">
@@ -118,13 +118,13 @@ include "header.php";
             </ul>
           </div><!--/.well -->
         <?php endif; ?>
-        
-        
-        
+
+
+
 			</div><!--end Sidebar-->
-			
+
 		</div><!--end Row-->
-		
+
     <?php if (isset($_SESSION['uploadedfilepath'])) : ?>
 		<div class="row">
       <div class="span10 offset2">
@@ -145,7 +145,6 @@ include "header.php";
         <p>This is a designed as a quick, simple service to allow people to check their IATI XML files.</p>
         <p>Because IATI files can be varied, complex or even very simple depending on the reporting organisation's needs, 'validation' is a difficult concept.</p>
         <p>This tool performs some basic checks around the XML, and then some compliance checks against the IATI Standard, an agreed set of political desires, that are not enforced by the IATI schema.</p>
-        <p>Data submitted to the site is saved to allow us to test the data. Files are removed every three days as part of regular server maintenance.</p>
       </div>
     </div>
 
@@ -176,4 +175,3 @@ $extrascripts = <<<HTML
 HTML;
 
 include "footer.php";
-
